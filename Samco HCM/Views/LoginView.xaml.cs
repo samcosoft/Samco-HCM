@@ -67,7 +67,7 @@ public partial class LoginView
         selUser.lastLogin = DateTime.Now;
         selUser.Save();
 
-        SamcoSoftShared.LoggedUser = new LoggedUser(selUser);
+        SamcoSoftShared.CurrentUser = new LoggedUser(selUser);
         Application.Current.Resources["CurrentUserName"] = selUser.realname;
 
         var parentWindow = (WinUIDialogWindow)Parent;
@@ -90,16 +90,10 @@ public partial class LoginView
         return builder.ToString();
     }
 
-    private class LoginUser
+    private class LoginUser(Users user)
     {
-        public string Username { get; set; }
-        public string RealName { get; set; }
-
-        public LoginUser(Users user)
-        {
-            Username = user.username;
-            RealName = user.realname;
-        }
+        public string Username { get; set; } = user.username;
+        public string RealName { get; set; } = user.realname;
     }
 
     private void ThemeButton_OnChecked(object sender, RoutedEventArgs e)

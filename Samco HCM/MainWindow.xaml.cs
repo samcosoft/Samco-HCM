@@ -2,7 +2,6 @@
 using System.Linq;
 using HandyControl.Tools;
 using System.Windows;
-using System.Windows.Media;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpo;
 using HCMData;
@@ -15,6 +14,8 @@ using Samco_HCM.Views;
 using Samco_HCM_Shared.Classes;
 using Samco_HCM.Classes;
 using Samco_HCM.Views.Settings;
+using Samco_HCM_Shared;
+using FontFamily = System.Windows.Media.FontFamily;
 
 namespace Samco_HCM
 {
@@ -45,7 +46,7 @@ namespace Samco_HCM
             WaitIndic.IsSplashScreenShown = true;
             CreateLoadSetting(settingDir);
             //Set theme
-            if (Samco_HCM_Shared.SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = Samco_HCM_Shared.SamcoSoftShared.LoadedSettings?.AppThemeName;
+            if (SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = SamcoSoftShared.LoadedSettings?.AppThemeName;
             if (CheckDatabase() == false)
             {
                 //Setup new database
@@ -70,19 +71,11 @@ namespace Samco_HCM
 
             if (LoginUser() == false)
             {
-                Application.Current.Shutdown();
                 return;
             }
 
-            WaitIndic.IsSplashScreenShown = true;
-
-            NavFrame.Navigate(new Dashboard());
-            NavFrame.Journal.ClearNavigationHistory();
-            NavFrame.Journal.ClearNavigationCache();
-            WaitIndic.IsSplashScreenShown = false;
-
             //Save backup from setting file
-            Samco_HCM_Shared.SamcoSoftShared.LoadedSettings!.SaveBackup();
+            SamcoSoftShared.LoadedSettings!.SaveBackup();
         }
         private void CreateLoadSetting(string settingDir)
         {
@@ -92,7 +85,7 @@ namespace Samco_HCM
             {
                 try
                 {
-                    Samco_HCM_Shared.SamcoSoftShared.LoadedSettings = Samco_HCM_Shared.SamcoSoftShared.ReadFromJsonFile<HCMSettings>(settingFile);
+                    SamcoSoftShared.LoadedSettings = SamcoSoftShared.ReadFromJsonFile<HCMSettings>(settingFile);
                 }
                 catch (Exception)
                 {
@@ -108,7 +101,7 @@ namespace Samco_HCM
                             return;
                         }
 
-                    Samco_HCM_Shared.SamcoSoftShared.LoadedSettings = new HCMSettings();
+                    SamcoSoftShared.LoadedSettings = new HCMSettings();
                 }
             }
             else
@@ -124,7 +117,7 @@ namespace Samco_HCM
                     {
                         var oldSetting = ReadFromXmlFile<OldSettings>(oldSettingPath);
                         //Transfer all data
-                        Samco_HCM_Shared.SamcoSoftShared.LoadedSettings = new HCMSettings
+                        SamcoSoftShared.LoadedSettings = new HCMSettings
                         {
                             AppThemeName = oldSetting.AppThemeName,
                             DatabaseFilePath = oldSetting.DatabaseFilePath,
@@ -151,17 +144,17 @@ namespace Samco_HCM
                     }
                 }
 
-                Samco_HCM_Shared.SamcoSoftShared.LoadedSettings ??= new HCMSettings();
+                SamcoSoftShared.LoadedSettings ??= new HCMSettings();
             }
 
-            Samco_HCM_Shared.SamcoSoftShared.LoadedSettings!.SettingDirectory = settingDir;
+            SamcoSoftShared.LoadedSettings!.SettingDirectory = settingDir;
         }
         private bool CheckDatabase()
         {
-            if (Samco_HCM_Shared.SamcoSoftShared.LoadedSettings!.ConnectionString != null)
+            if (SamcoSoftShared.LoadedSettings!.ConnectionString != null)
             {
                 string errorMessage = null;
-                if (Samco_HCM_Shared.SamcoSoftShared.LoadDatabase(Samco_HCM_Shared.SamcoSoftShared.LoadedSettings.ConnectionString, ref errorMessage)) return true;
+                if (SamcoSoftShared.LoadDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, ref errorMessage)) return true;
 
                 WaitIndic.IsSplashScreenShown = false;
                 WinUIMessageBox.Show(GetWindow(this), "در ارتباط با پایگاه داده مشکل زیر رخ داده است. لطفاً تنظیمات پایگاه داده را دوباره بررسی کنید." + "\n" + ('\n' + errorMessage), "بازگردانی تنظیمات", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign, FloatingMode.Adorner, true);
@@ -182,7 +175,30 @@ namespace Samco_HCM
                 FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Vazirmatn"),
                 FontSize = 16
             };
-            return loginDial.ShowDialog().GetValueOrDefault(false);
+            var result = loginDial.ShowDialog();
+            if (result == false)
+            {
+                Application.Current.Shutdown();
+                return false;
+            }
+            WaitIndic.IsSplashScreenShown = true;
+
+            NavFrame.Navigate(new Dashboard());
+            NavFrame.Journal.ClearNavigationHistory();
+            NavFrame.Journal.ClearNavigationCache();
+
+            //Load profile photo
+            if (SamcoSoftShared.CurrentUser?.Avatar == null)
+            {
+                ProfilePic.Id = SamcoSoftShared.CurrentUser!.Username;
+            }
+            else
+            {
+                ProfilePic.Source = SamcoSoftShared.LoadImage(SamcoSoftShared.CurrentUser!.Avatar);
+            }
+
+            WaitIndic.IsSplashScreenShown = false;
+            return true;
         }
         public T ReadFromXmlFile<T>(string filePath)
         {
@@ -212,7 +228,25 @@ namespace Samco_HCM
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            //var dialRes = WinUIMessageBox.Show(this, "آیا مایل به چاپ گزارش روزانه هستید؟", "خروج کاربر",
+            //    MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Cancel,
+            //    MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign, FloatingMode.Adorner, true);
+
+            //if (dialRes == MessageBoxResult.Yes)
+            //{
+            //Get visits
+            //    var session1 = new Session();
+            //    var visitInfo = session1.Query<Visits>().Where(x => x.visitDate <= DateTime.Now &&
+            //                                                        x.visitDate >= SamcoSoftShared.CurrentUser
+            //                                                            .LastLoginTime).ToList();
+
+            //}
+
+            SamcoSoftShared.CurrentUser = null;
+            Application.Current.Resources["CurrentUserName"] = string.Empty;
+            ProfilePic.Id = string.Empty;
+            ProfilePic.Source = null;
+            LoginUser();
         }
     }
 }

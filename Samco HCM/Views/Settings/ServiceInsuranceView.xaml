@@ -12,7 +12,7 @@
                       mc:Ignorable="d" FlowDirection="RightToLeft"
                       d:DesignHeight="700" d:DesignWidth="1250">
     <Grid>
-            <dxwui:PageAdornerControl Header="تنظیمات بیمه‌ها و خدمات">
+        <dxwui:PageAdornerControl Header="تنظیمات بیمه‌ها و خدمات">
             <dx:BackgroundPanel>
                 <dxlc:LayoutControl>
                     <dxlc:LayoutGroup Orientation="Vertical">

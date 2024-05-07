@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="150" d:DesignWidth="450">
     <Grid>
-        <dxlc:LayoutControl Orientation="Vertical">
+        <dxlc:LayoutControl Orientation="Vertical" MaxWidth="600">
             <dxlc:LayoutGroup Name="InsuranceEdit">               
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="نام بیمه:" LabelPosition="Top" MinWidth="250">

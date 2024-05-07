@@ -11,9 +11,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <dxlc:LayoutControl Orientation="Vertical">
-            <dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical">
+        <dxlc:LayoutControl Orientation="Vertical" MaxWidth="600">
+            <dxlc:LayoutGroup View="Tabs">
+                <dxlc:LayoutGroup Orientation="Vertical" Header="اطلاعات خدمات">
                     <dxlc:LayoutGroup Name="MainInfoGrp">
                         <dxlc:LayoutItem Label="نام خدمت:" LabelPosition="Top">
                             <dxe:TextEdit Name="ServiceNameBx" Text="{Binding name}" NullText="الزامی" Validate="ServiceNameBx_OnValidate"/>
@@ -55,7 +55,7 @@
                         </dxlc:LayoutItem>
                     </dxlc:LayoutGroup>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical" Name="DefEquipGrp" Visibility="Collapsed">
+                <dxlc:LayoutGroup Orientation="Vertical" Name="DefEquipGrp" Header="تجهیزات مصرفی خدمت" Visibility="Collapsed">
                     <dxlc:LayoutItem Label="لیست تجهیزات پیش فرض:" LabelPosition="Top">
                         <dxg:GridControl x:Name="EquipGrid" MaxHeight="700" EnableSmartColumnsGeneration="True" FontSize="16" SelectionMode="Row">
                             <dxg:GridControl.View>

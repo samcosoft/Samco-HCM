@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              MinHeight="80" MinWidth="450">
     <Grid>
-        <dxlc:LayoutControl>
+        <dxlc:LayoutControl MaxWidth="600">
             <dxlc:LayoutItem MinWidth="250">
                 <dxe:TextEdit Name="RoleBox" NullText="لطفاً نام نقش را وارد کنید..."/>
             </dxlc:LayoutItem>

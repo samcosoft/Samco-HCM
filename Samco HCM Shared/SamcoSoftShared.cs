@@ -68,8 +68,8 @@ public static class SamcoSoftShared
         }
     }
 
-    public static LoggedUser? LoggedUser;
-    public static bool ClosedDay;
+    public static LoggedUser? CurrentUser;
+    public static bool ClosedDay { get; set; }
 
     #region Setting Manager Codes
 
@@ -107,18 +107,13 @@ public class BackColorMaker
     }
 }
 
-public class LoggedUser
+public class LoggedUser(Users selUser)
 {
-    public static int Oid { get; set; }
-    public static string? Username { get; set; }
-    public static string? Group { get; set; }
-    public static string? RealName { get; set; }
+    public int Oid { get; set; } = selUser.Oid;
+    public string? Username { get; set; } = selUser.username;
+    public string? Group { get; set; } = selUser.group;
+    public string? RealName { get; set; } = selUser.realname;
+    public DateTime? LastLoginTime { get; set; } = selUser.lastLogin;
 
-    public LoggedUser(Users selUser)
-    {
-        Oid = selUser.Oid;
-        Username = selUser.username;
-        Group = selUser.group;
-        RealName = selUser.realname;
-    }
+    public byte[] Avatar { get; set; } = selUser.photo;
 }

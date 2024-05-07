@@ -26,7 +26,7 @@
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <Separator VerticalAlignment="Top"/>
-                <dxlc:LayoutGroup Orientation="Vertical">
+                <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="10">
                     <dxlc:LayoutItem Name="FirstUserNotif" Visibility="Collapsed">
                         <TextBlock Foreground="DarkRed">نام کاربری و کلمه عبور پیش‌فرض admin است.</TextBlock>
                     </dxlc:LayoutItem>

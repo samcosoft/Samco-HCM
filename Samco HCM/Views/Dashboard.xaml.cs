@@ -155,9 +155,9 @@ public partial class Dashboard
             Navigation.SetNavigateTo(databaseSetting, new SettingView());
             MainTilLayout.Children.Add(databaseSetting);
         }
-        //var userSetting = SamcoAdd.GetTile("تنظیمات کاربری", TileSize.Small,Resources["UserSettingIcon"],SamcoAdd.UserIsAdmin(),"تنظیمات");
-        //Navigation.SetNavigateTo(userSetting, new UserManagement());
-        //MainTilLayout.Children.Add(userSetting);
+        var userSetting = SamcoAdd.GetTile("تنظیمات کاربری", TileSize.Small, "UserSettingIcon.samco", !SamcoAdd.UserIsAdmin(), "تنظیمات");
+        Navigation.SetNavigateTo(userSetting, new UserView());
+        MainTilLayout.Children.Add(userSetting);
         ((MainWindow)Application.Current.MainWindow)!.WaitIndic.IsSplashScreenShown = false;
     }
 

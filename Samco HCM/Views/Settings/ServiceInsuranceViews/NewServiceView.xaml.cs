@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.WindowsUI;
 using DevExpress.Xpo;
-using HandyControl.Tools.Extension;
 using HCMData;
 using Samco_HCM.Classes;
 using Samco_HCM_Shared;
@@ -13,7 +13,7 @@ namespace Samco_HCM.Views.Settings.ServiceInsuranceViews;
 /// <summary>
 /// Interaction logic for NewServiceView.xaml
 /// </summary>
-public partial class NewServiceView
+public partial class NewServiceView : IDisposable
 {
     private readonly Session _session1 = new();
     private readonly HealthServices _healthServices;
@@ -63,7 +63,7 @@ public partial class NewServiceView
             var parentItem = ParentBx.Items.Cast<ComboBoxEditItem>()
                 .Where(itm => itm.Tag.Equals(_healthServices.parent.Oid)).ToList();
 
-            if (parentItem.Any()) ParentBx.SelectedItem = parentItem.First();
+            if (parentItem.Count != 0) ParentBx.SelectedItem = parentItem.First();
         }
     }
 
@@ -181,5 +181,10 @@ public partial class NewServiceView
             return;
         }
         ((DefEquip)EquipGrid.SelectedItem).Delete();
+    }
+
+    public void Dispose()
+    {
+        _session1?.Dispose();
     }
 }

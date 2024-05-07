@@ -72,6 +72,12 @@
                 <Setter Property="Height" Value="32"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
             </Style>
+            <Style x:Key="ButtonEdit" BasedOn="{StaticResource ButtonInfo}" TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Height" Value="32"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
             <Style TargetType="{x:Type dxlc:LayoutGroup}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>

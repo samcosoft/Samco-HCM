@@ -1,0 +1,53 @@
+﻿<dxwui:NavigationPage x:Class="Samco_HCM.Views.Settings.UserView"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                      xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+                      xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+                      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                      xmlns:userViews="clr-namespace:Samco_HCM.Views.Settings.UserViews"
+                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                      mc:Ignorable="d" FlowDirection="RightToLeft"
+                      d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <dxwui:PageAdornerControl Header="تنظیمات کاربران">
+            <dx:BackgroundPanel>
+                <dxlc:LayoutControl>
+                    <dxlc:LayoutGroup View="Tabs">
+                        <dxlc:LayoutGroup Orientation="Vertical" IsCollapsible="False" Header="پروفایل کاربری" Height="{Binding ActualHeight, ElementName=UserSelGrp}">
+                            <userViews:UserInfo/>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup x:Name="UserSelectGrp" View="GroupBox" Orientation="Vertical" IsCollapsible="False" Header="لیست کاربران فعلی">
+                            <dxg:GridControl x:Name="UserGrid" MinHeight="150" SelectionMode="Row" FontSize="16" FontFamily="{StaticResource IranSansX}"
+                                         CustomUnboundColumnData="UserGridUnbound" MouseDoubleClick="UserGrid_OnMouseDoubleClick">
+                                <dxg:GridControl.View>
+                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AutoWidth="True" AllowEditing="False" />
+                                </dxg:GridControl.View>
+                                <dxg:GridColumn FieldName="username" Header="نام کاربری" IsSmart="True" />
+                                <dxg:GridColumn FieldName="realname" Header="نام حقیقی" IsSmart="True" />
+                                <dxg:GridColumn FieldName="phone" Header="تلفن تماس" IsSmart="True" />
+                                <dxg:GridColumn FieldName="Role" UnboundDataType="{x:Type sys:String}" Header="نقش کاربر" IsSmart="True" />
+                            </dxg:GridControl>
+                            <dxlc:LayoutGroup Margin="0,10,0,0" ItemSpace="20">
+                                <dxlc:LayoutItem HorizontalContentAlignment="Right">
+                                    <Button Content="کاربر جدید" MinWidth="200" Height="30" MaxWidth="200"
+                                        Style="{StaticResource ButtonOk}" Click="NewUser_OnClick"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem HorizontalContentAlignment="Center">
+                                    <Button Content="ویرایش کاربر" MinWidth="200" Height="30" MaxWidth="200"
+                                        Style="{StaticResource ButtonEdit}" Click="EditUser_OnClick"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem HorizontalContentAlignment="Left">
+                                    <Button Content="حذف کاربر" MinWidth="200" Height="30" MaxWidth="200"
+                                        Style="{StaticResource ButtonCancel}" Click="DeleteUser_OnClick"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutControl>
+            </dx:BackgroundPanel>
+        </dxwui:PageAdornerControl>
+    </Grid>
+</dxwui:NavigationPage>

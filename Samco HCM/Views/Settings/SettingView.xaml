@@ -206,7 +206,7 @@
                         </dxlc:LayoutGroup>-->
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup>
-                        <dxlc:LayoutItem>
+                        <dxlc:LayoutItem Margin="0,20,0,0">
                             <dx:SimpleButton Content="ذخیره تنظیمات" Background="{DynamicResource SuccessBrush}" IsDefault="True" Margin="0,5,0,0" MaxWidth="200" Click="SetDataConBtn_Click"/>
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Name="GetSettGrp" Visibility="Collapsed">

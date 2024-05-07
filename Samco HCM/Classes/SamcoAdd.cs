@@ -10,6 +10,7 @@ using DevExpress.Xpf.LayoutControl;
 using DevExpress.Xpf.WindowsUI.Navigation;
 using HCMData;
 using Samco_HCM.Views;
+using Samco_HCM_Shared;
 
 namespace Samco_HCM.Classes
 {
@@ -22,7 +23,7 @@ namespace Samco_HCM.Classes
 
         internal static bool UserIsAdmin()
         {
-            return Samco_HCM_Shared.LoggedUser.Group is "A" or "O";
+            return SamcoSoftShared.CurrentUser?.Group is "A" or "O";
         }
 
         #region Tile Control
