@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="Samco_HCM.Views.Settings.ServiceInsuranceViews.NewServiceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:hcmdata="clr-namespace:HCMData;assembly=Samco_HCM_Shared"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             d:DataContext="{d:DesignInstance Type=hcmdata:HealthServices}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <dxlc:LayoutControl Orientation="Vertical">
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutGroup Name="MainInfoGrp">
+                        <dxlc:LayoutItem Label="نام خدمت:" LabelPosition="Top">
+                            <dxe:TextEdit Name="ServiceNameBx" Text="{Binding name}" NullText="الزامی" Validate="ServiceNameBx_OnValidate"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="گروه خدمت:" LabelPosition="Top">
+                            <dxe:ComboBoxEdit Name="ServiceTypeBx" IsTextEditable="False" SelectedIndexChanged="ServiceTypeBx_OnSelectedIndexChanged">
+                                <dxe:ComboBoxEditItem Content="ویزیت" Tag="visit"/>
+                                <dxe:ComboBoxEditItem Content="پاراکلینیک و سایر خدمات" Tag="other"/>
+                                <dxe:ComboBoxEditItem Content="اورژانس" Tag="emergency"/>
+                            </dxe:ComboBoxEdit>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="زیرمجموعه:" LabelPosition="Top">
+                            <dxe:ComboBoxEdit Name="ParentBx" NullText="" ShowCustomItems="True" IsTextEditable="False"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="تصویر خدمت (اختیاری)" LabelPosition="Top" VerticalAlignment="Top">
+                            <dxe:PopupImageEdit Name="ImageBx" Height="30" EditValue="{Binding image}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutItem Label="ارائه دهنده خدمت:" LabelPosition="Top" VerticalAlignment="Top">
+                        <dxe:ComboBoxEdit Name="RoleSelBx" Height="30" IncrementalFiltering="True" ImmediatePopup="True"
+                                          AutoComplete="True" IsTextEditable="False" InvalidValueBehavior="AllowLeaveEditor"
+                                          Validate="RoleSelBx_OnValidate" ShowCustomItems="True">
+                            <dxe:ComboBoxEdit.StyleSettings>
+                                <dxe:CheckedTokenComboBoxStyleSettings/>
+                            </dxe:ComboBoxEdit.StyleSettings>
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem>
+                            <dxe:CheckEdit Name="ShowInReportBx" Content="نمایش در آمار" IsChecked="{Binding ShowInReport}" NullValue="" NullText="الزامی" InvalidValueBehavior="AllowLeaveEditor"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem>
+                            <dxe:CheckEdit Name="CanReserveBx" Content="قابل رزرو" IsChecked="{Binding CanReserve}" NullValue="" NullText="الزامی" InvalidValueBehavior="AllowLeaveEditor"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="هزینه رزرو (تومان)" IsEnabled="{Binding ElementName=CanReserveBx, Path=IsChecked}">
+                            <dxe:TextEdit Name="ReservePriceBx" Text="{Binding ReservePrice}" MaskType="Numeric" Mask="d" MinWidth="200" InvalidValueBehavior="AllowLeaveEditor"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical" Name="DefEquipGrp" Visibility="Collapsed">
+                    <dxlc:LayoutItem Label="لیست تجهیزات پیش فرض:" LabelPosition="Top">
+                        <dxg:GridControl x:Name="EquipGrid" MaxHeight="700" EnableSmartColumnsGeneration="True" FontSize="16" SelectionMode="Row">
+                            <dxg:GridControl.View>
+                                <dxg:TableView AllowEditing="True" AllowPerPixelScrolling="True" AutoWidth="True" NavigationStyle="Row" SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowTotalSummary="True" ShowFilterPanelMode="Never" ShowGroupPanel="False" EditFormShowMode="InlineHideRow"/>
+                            </dxg:GridControl.View>
+                            <dxg:GridColumn FieldName="EquipName.Name" ReadOnly="True" Header="نام تجهیز" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="Count" Header="تعداد" IsSmart="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:SpinEditSettings MinValue="1" IsFloatValue="False"/>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                        </dxg:GridControl>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="نام تجهیز:">
+                            <dxe:ComboBoxEdit Name="EquipCombo" DisplayMember="Name" ValueMember="Oid" IsTextEditable="False" AutoComplete="True" IncrementalSearch="True"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="تعداد:">
+                            <dxe:SpinEdit Name="EquipCount" MinValue="1" Value="1" IsFloatValue="False" HorizontalContentAlignment="Center"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem>
+                            <Button x:Name="AddEquipBtn" Content="افزودن" Click="AddEquipBtn_OnClick"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem>
+                            <Button x:Name="DelEquipBtn" Content="حذف" Click="DelEquipBtn_OnClick"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Margin="0,10,0,0">
+                <dxlc:LayoutItem>
+                    <Button x:Name="SaveBtn" Content="ثبت خدمت" IsDefault="True" Style="{StaticResource ButtonOk}"
+                            Click="SaveBtn_OnClick"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem>
+                    <Button x:Name="CancelBtn" Content="انصراف" Style="{StaticResource ButtonCancel}" Click="CancelBtn_OnClick"/>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </Grid>
+</UserControl>

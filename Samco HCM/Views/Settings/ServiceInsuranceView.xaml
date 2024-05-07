@@ -1,0 +1,150 @@
+﻿<dxwui:NavigationPage x:Class="Samco_HCM.Views.Settings.ServiceInsuranceView"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                      xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+                      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                      xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+                      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                      xmlns:hc="https://handyorg.github.io/handycontrol"
+                      mc:Ignorable="d" FlowDirection="RightToLeft"
+                      d:DesignHeight="700" d:DesignWidth="1250">
+    <Grid>
+            <dxwui:PageAdornerControl Header="تنظیمات بیمه‌ها و خدمات">
+            <dx:BackgroundPanel>
+                <dxlc:LayoutControl>
+                    <dxlc:LayoutGroup Orientation="Vertical">
+                        <dxlc:LayoutGroup Orientation="Vertical" Header="لیست بیمه‌ها" View="GroupBox">
+                            <dxlc:LayoutItem Label="بیمه‌های ثبت شده" LabelPosition="Top" VerticalAlignment="Stretch">
+                                <dxe:ListBoxEdit x:Name="InsList" MinHeight="150" DisplayMember="name" ValueMember="Oid" MouseDoubleClick="InsList_MouseDoubleClick"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <hc:ButtonGroup Margin="0,5,0,0" Style="{StaticResource ButtonGroupSolid}">
+                                    <Button Content="افزودن بیمه" Click="NewInsBtn_Click"/>
+                                    <Button Content="ویرایش بیمه" Click="EditInsBtn_Click"/>
+                                    <Button Content="حذف بیمه" Click="DelInsBtn_Click"/>
+                                </hc:ButtonGroup>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup Orientation="Vertical" Header="لیست خدمات" View="GroupBox">
+                            <dxlc:LayoutItem Label="خدمات تعریف شده" LabelPosition="Top" VerticalAlignment="Stretch">
+                                <dxe:ListBoxEdit x:Name="ServiceList" MinHeight="150" DisplayMember="name" ValueMember="Oid" MouseDoubleClick="ServiceList_MouseDoubleClick"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <hc:ButtonGroup Margin="0,5,0,0" Style="{StaticResource ButtonGroupSolid}">
+                                    <Button Content="افزودن خدمت" Click="NewServiceBtn_Click"/>
+                                    <Button Content="ویرایش خدمت" Click="EditServiceBtn_Click"/>
+                                    <Button Content="حذف خدمت" Click="DelServiceBtn_Click"/>
+                                </hc:ButtonGroup>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Orientation="Vertical">
+                        <dxlc:LayoutGroup Orientation="Vertical" Header="خدمات دهندگان" View="GroupBox">
+                            <dxlc:LayoutItem Label="نقش‌ها" LabelPosition="Top" VerticalAlignment="Stretch">
+                                <dxe:ListBoxEdit Name="RoleList" MinHeight="150" SelectionMode="Single" MouseDoubleClick="RoleList_MouseDoubleClick"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <hc:ButtonGroup Margin="0,5,0,0" Style="{StaticResource ButtonGroupSolid}">
+                                    <Button Content="افزودن نقش" Click="NewRoleBtn_Click"/>
+                                    <Button Content="ویرایش نقش" Click="EditRoleBtn_Click"/>
+                                    <Button Content="حذف نقش" Click="DelRoleBtn_OnClick"/>
+                                </hc:ButtonGroup>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup Orientation="Vertical" Header="لیست تجهیزات" View="GroupBox">
+                            <dxlc:LayoutItem Label="تجهیزات تعریف شده" LabelPosition="Top" VerticalAlignment="Stretch">
+                                <dxe:ListBoxEdit x:Name="EquipList" MinHeight="150" DisplayMember="Name" ValueMember="Oid" MouseDoubleClick="EquipList_MouseDoubleClick"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <hc:ButtonGroup Margin="0,5,0,0" Style="{StaticResource ButtonGroupSolid}">
+                                    <Button Content="افزودن تجهیزات" Click="NewEquipBtn_Click"/>
+                                    <Button Content="ویرایش تجهیزات" Click="EditEquipBtn_Click"/>
+                                    <Button Content="حذف تجهیزات" Click="DelEquipBtn_Click"/>
+                                </hc:ButtonGroup>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Orientation="Vertical">
+                        <dxlc:LayoutGroup Orientation="Vertical" Header="لیست تعرفه‌ها" View="GroupBox">
+                            <dxlc:LayoutItem>
+                                <dxe:ComboBoxEdit Name="ServiceSelCbx" NullText="یک خدمت را انتخاب کنید..." DisplayMember="name" ValueMember="Oid"  ShowCustomItems="True"
+                                                  IncrementalFiltering="True" SelectedIndexChanged="ServiceSelCbx_SelectedIndexChanged" IsTextEditable="False"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem VerticalAlignment="Stretch">
+                                <dxg:GridControl Name="PriceListGrid" FontFamily="{StaticResource IranSansX}" MinHeight="250" MaxHeight="600" SelectionMode="Row"
+                                                 MouseDoubleClick="PriceListGrid_MouseDoubleClick">
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" />
+                                    </dxg:GridControl.View>
+                                    <dxg:GridColumn FieldName="insType.name" Header="نام بیمه" IsSmart="True" />
+                                    <dxg:GridColumn FieldName="service.name" Header="خدمت" IsSmart="True" GroupIndex="0" />
+                                    <dxg:GridColumn FieldName="price1" Header="تعرفه صبح (تومان)" IsSmart="True" />
+                                    <dxg:GridColumn FieldName="price2" Header="تعرفه عصر (تومان)" IsSmart="True" />
+                                </dxg:GridControl>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutGroup>
+                                <dxlc:LayoutItem>
+                                    <dx:SimpleButton x:Name="NewPriceBtn" Content="افزودن تعرفه" Click="NewPriceBtn_Click"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem>
+                                    <dx:SimpleButton x:Name="EditPriceBtn" Content="ویرایش تعرفه" />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem>
+                                    <dx:SimpleButton x:Name="DeletePriceBtn" Content="حذف تعرفه" Click="DeletePriceBtn_Click"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Name="NewPriceBox" Header="ثبت تعرفه جدید" Visibility="Collapsed" View="GroupBox" Orientation="Vertical" Margin="0,20,0,0">
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem Label="انتخاب بیمه:">
+                                        <dxe:ComboBoxEdit Name="InsCbx" DisplayMember="name" ValueMember="Oid" InvalidValueBehavior="AllowLeaveEditor" Validate="InsCbx_Validate"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem Label="انتخاب خدمت:">
+                                        <dxe:ComboBoxEdit Name="SvcCbx" DisplayMember="name" ValueMember="Oid" InvalidValueBehavior="AllowLeaveEditor" Validate="SvcCbx_Validate"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem Label="مبلغ صبح (تومان):">
+                                        <dxe:TextEdit Name="Price1Bx" InvalidValueBehavior="AllowLeaveEditor" MaskType="Numeric" Mask="d" Validate="PriceBx_Validate"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem Label="مبلغ عصر (تومان):">
+                                        <dxe:TextEdit Name="Price2Bx" InvalidValueBehavior="AllowLeaveEditor" MaskType="Numeric" Mask="d" Validate="PriceBx_Validate"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem>
+                                        <dx:SimpleButton x:Name="SavePriceBtn" Content="ذخیره اطلاعات" Click="SavePriceBtn_Click"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem>
+                                        <dx:SimpleButton x:Name="CancelBtn" Content="انصراف" Click="CancelBtn_Click"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Header="تنظیم ساعت شیفت" Orientation="Vertical">
+                            <dxlc:LayoutItem Label="ساعت شروع شیفت صبح:" LabelPosition="Top">
+                                <dxe:DateEdit Name="ShiftStartTime" Mask="T" MaskUseAsDisplayFormat="True"
+                                              MinValue="01/01/2001" FlowDirection="LeftToRight">
+                                    <dxe:DateEdit.StyleSettings>
+                                        <dxe:DateEditTimePickerStyleSettings/>
+                                    </dxe:DateEdit.StyleSettings>
+                                </dxe:DateEdit>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="ساعت شروع شیفت شب:" LabelPosition="Top">
+                                <dxe:DateEdit Name="ShiftEndTime" Mask="T" MaskUseAsDisplayFormat="True"
+                                              MinValue="01/01/2001" FlowDirection="LeftToRight">
+                                    <dxe:DateEdit.StyleSettings>
+                                        <dxe:DateEditTimePickerStyleSettings/>
+                                    </dxe:DateEdit.StyleSettings>
+                                </dxe:DateEdit>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+
+                </dxlc:LayoutControl>
+            </dx:BackgroundPanel>
+        </dxwui:PageAdornerControl>
+    </Grid>
+</dxwui:NavigationPage>
