@@ -5,7 +5,6 @@ using DevExpress.Xpf.WindowsUI;
 using DevExpress.Xpo;
 using HCMData;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -15,7 +14,6 @@ using NavigationEventArgs = DevExpress.Xpf.WindowsUI.Navigation.NavigationEventA
 using Samco_HCM.Classes;
 using Samco_HCM.Views.Settings;
 using Samco_HCM_Shared.Classes;
-using DevExpress.Xpo.Helpers;
 
 namespace Samco_HCM.Views;
 
@@ -134,9 +132,9 @@ public partial class Dashboard
 
         if (SamcoAdd.UserIsAdmin())
         {
-            //var editBil = SamcoAdd.GetTile("ویرایش قبض", TileSize.Small, Resources["BillEditIcon"], true, "ویرایش اطلاعات");
-            //Navigation.SetNavigateTo(editBil, new BillEdit());
-            //MainTilLayout.Children.Add(editBil);
+            var editBil = SamcoAdd.GetTile("ویرایش قبض", TileSize.Small, "BillEditIcon.samco", true, "ویرایش اطلاعات");
+            Navigation.SetNavigateTo(editBil, new BillEditorView());
+            MainTilLayout.Children.Add(editBil);
 
             //editBil = SamcoAdd.GetTile("ویرایش اطلاعات بیماران", TileSize.Large, Resources["BillEditIcon"]);
             //Navigation.SetNavigateTo(editBil, new PatientEditor());

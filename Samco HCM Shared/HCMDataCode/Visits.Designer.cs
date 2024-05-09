@@ -24,12 +24,6 @@ namespace HCMData
             get { return fvisitDate; }
             set { SetPropertyValue<DateTime>("visitDate", ref fvisitDate, value); }
         }
-        string fTempName;
-        public string TempName
-        {
-            get { return fTempName; }
-            set { SetPropertyValue<string>("TempName", ref fTempName, value); }
-        }
         PatientInfo fpatient;
         [Association(@"VisitsReferencesPatientInfo")]
         public PatientInfo patient

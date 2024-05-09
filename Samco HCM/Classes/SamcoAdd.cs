@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using DevExpress.Xpf.LayoutControl;
+using DevExpress.Xpf.Navigation;
 using DevExpress.Xpf.WindowsUI.Navigation;
 using HCMData;
 using Samco_HCM.Views;
@@ -61,10 +62,20 @@ namespace Samco_HCM.Classes
         }
 
         // For insurance list on Insurance page
-        internal static Tile GetTile(insuranceType insuranceInfo, bool isFirst = false)
+        internal static TileBarItem GetTile(insuranceType insuranceInfo)
         {
-            var newTile = new Tile { Header = insuranceInfo.name, Size = insuranceInfo.name.Length > 17 ? TileSize.Large : TileSize.Small, Background = GetTileRandomColor(), Content = GetTileIcon(insuranceInfo.image), Tag = insuranceInfo.Oid, UseLayoutRounding = true };
-            FlowLayoutControl.SetIsFlowBreak(newTile, isFirst);
+            var newTile = new TileBarItem
+            {
+                Content = insuranceInfo.name,
+                Size = DevExpress.Xpf.Navigation.Internal.TileSize.Auto,
+                Background = GetTileRandomColor(),
+                TileGlyph= GetImageSource(insuranceInfo.image),
+                Width = 170,
+                Foreground = new SolidColorBrush(Colors.White),
+                HorizontalContentAlignment = HorizontalAlignment.Right,
+                Tag = insuranceInfo.Oid,
+                UseLayoutRounding = true
+            };
             return newTile;
         }
 
@@ -110,7 +121,7 @@ namespace Samco_HCM.Classes
         {
             if (string.IsNullOrEmpty(imageSrc))
                 return default;
-           
+
             var bim = new BitmapImage(new Uri($"pack://application:,,,/Images/{imageSrc}"));
             var result = new Image { Source = bim, Margin = new Thickness(15, 15, 15, 50) };
             RenderOptions.SetBitmapScalingMode(result, BitmapScalingMode.HighQuality);
@@ -128,10 +139,26 @@ namespace Samco_HCM.Classes
             memStr.Seek(0L, SeekOrigin.Begin);
             bim.StreamSource = memStr;
             bim.EndInit();
-            var result = new Image() { Source = bim, Margin = new Thickness(15, 15, 15, 50) };
+            var result = new Image { Source = bim, Margin = new Thickness(15, 15, 15, 50) };
             RenderOptions.SetBitmapScalingMode(result, BitmapScalingMode.HighQuality);
             RenderOptions.SetEdgeMode(result, EdgeMode.Aliased);
             return result;
+        }
+
+        internal static ImageSource GetImageSource(byte[] imageSrc)
+        {
+            if (imageSrc is null)
+                return default;
+            var memStr = new MemoryStream(imageSrc);
+            var bim = new BitmapImage();
+            bim.BeginInit();
+            memStr.Seek(0L, SeekOrigin.Begin);
+            bim.StreamSource = memStr;
+            bim.EndInit();
+            RenderOptions.SetBitmapScalingMode(bim, BitmapScalingMode.HighQuality);
+            RenderOptions.SetEdgeMode(bim, EdgeMode.Aliased);
+            var targetBitmap = new TransformedBitmap(bim, new ScaleTransform(0.3, 0.3));
+            return targetBitmap;
         }
 
         private static SolidColorBrush GetTileRandomColor()

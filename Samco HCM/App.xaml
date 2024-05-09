@@ -19,7 +19,7 @@
             <system:String x:Key="CurrentUserName">
                 Nothing
             </system:String>
-            <system:Boolean x:Key="ClosedDay">False</system:Boolean>
+            <!--<system:Boolean x:Key="ClosedDay">false</system:Boolean>-->
             <FontFamily x:Key="IranSansX">pack://application:,,,/Fonts/#IRANSansX</FontFamily>
             <FontFamily x:Key="Vazir">pack://application:,,,/Fonts/#Vazirmatn</FontFamily>
             <FontFamily x:Key="FontAwesomeSolid">pack://application:,,,/Fonts/#Font Awesome 6 Pro Solid</FontFamily>
@@ -57,25 +57,37 @@
             </Style>
             <Style TargetType="Button">
                 <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Height" Value="30"/>
                 <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+            <Style x:Key="ButtonMain" BasedOn="{StaticResource ButtonPrimary}" TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Height" Value="30"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
             </Style>
             <Style x:Key="ButtonOk" BasedOn="{StaticResource ButtonSuccess}" TargetType="Button">
                 <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="Height" Value="32"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Height" Value="30"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
             </Style>
             <Style x:Key="ButtonCancel" BasedOn="{StaticResource ButtonDanger}" TargetType="Button">
                 <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="Height" Value="32"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Height" Value="30"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
             </Style>
             <Style x:Key="ButtonEdit" BasedOn="{StaticResource ButtonInfo}" TargetType="Button">
                 <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
+                <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="Height" Value="32"/>
+                <Setter Property="Height" Value="30"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
             </Style>
             <Style TargetType="{x:Type dxlc:LayoutGroup}">
