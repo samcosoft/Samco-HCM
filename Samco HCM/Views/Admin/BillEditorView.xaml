@@ -100,7 +100,7 @@
                                             <Button Content="ثبت اطلاعات" Style="{StaticResource ButtonOk}" Click="SaveInfoButtonClick"/>
                                         </dxlc:LayoutItem>
                                         <dxlc:LayoutItem>
-                                            <Button Content="چاپ قبض" Style="{StaticResource ButtonEdit}" />
+                                            <Button Content="چاپ قبض" Style="{StaticResource ButtonEdit}" Click="PrintButtonClick"/>
                                         </dxlc:LayoutItem>
                                         <dxlc:LayoutItem>
                                             <Button Content="حذف قبض" Style="{StaticResource ButtonCancel}" Click="DeleteBtn_Click"/>

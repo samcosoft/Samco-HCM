@@ -6,10 +6,12 @@ using DevExpress.Data.Filtering;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.Printing;
 using DevExpress.Xpf.WindowsUI;
 using DevExpress.Xpo;
 using HCMData;
 using Samco_HCM.Classes;
+using Samco_HCM.Reports;
 using NavigationEventArgs = DevExpress.Xpf.WindowsUI.Navigation.NavigationEventArgs;
 
 namespace Samco_HCM.Views;
@@ -155,6 +157,12 @@ public partial class BillEditorView: IDisposable
 
     private void SaveInfoButtonClick(object sender, RoutedEventArgs e)
     {
+        if (VisitGrid.GetSelectedRowHandles().Length == 0)
+        {
+            MainNotify.ShowWarning("خطا در ویرایش","لطفاً یک قبض را انتخاب کنید.");
+            return;
+        }
+
         if (PriceBx.HasValidationError | PersonnelSelBx.HasValidationError)
         {
             MainNotify.ShowWarning("خطا در ثبت اطلاعات", "لطفاً اطلاعات خواسته شده را به صورت کامل وارد کنید.");
@@ -169,6 +177,35 @@ public partial class BillEditorView: IDisposable
         VisitGrid.RefreshData();
         MainNotify.ShowSuccess("ثبت اطلاعات", "اطلاعات با موفقیت ثبت شدند.");
     }
+    private void PrintButtonClick(object sender, RoutedEventArgs e)
+    {
+        if (VisitGrid.GetSelectedRowHandles().Length == 0)
+        {
+            MainNotify.ShowWarning("خطا در ویرایش","لطفاً یک قبض را انتخاب کنید.");
+            return;
+        }
+        SaveInfoButtonClick(sender,e);
+        // Create report for print
+        var serviceList = new List<AddonService> { new(_selVisit.service, 1) };
+        var report = new VisitReceipt(serviceList);
+        report.Parameters["Nobat"].Value = 0;
+        report.Parameters["Doctor"].Value = PersonnelSelBx.Text;
+        report.Parameters["SetPrice"].Value = PriceBx.Text;
+        report.Parameters["InsName"].Value = _selVisit.insType.name;
+        report.Parameters["PatName"].Value = _selVisit.patient.name;
+        report.Parameters["MelliCode"].Value = _selVisit.patient.melliCode;
+        try
+        {
+            PrintHelper.PrintDirect(report);
+            MainNotify.ShowInformation("صدور قبض","قبض صادر شد.");
+        }
+        catch (Exception ex)
+        {
+            MainNotify.ShowError("خطا در چاپ قبض", "چاپگر نصب و تنظیم نیست.");
+            MainNotify.ShowError("خطا در چاپ قبض", ex.ToString());
+        }
+    }
+
     private void DeleteBtn_Click(object sender, RoutedEventArgs e)
     {
         if (VisitGrid.GetSelectedRowHandles().Length == 0)
@@ -208,4 +245,5 @@ public partial class BillEditorView: IDisposable
         _insuranceDataSource?.Dispose();
         _servicesDataSource?.Dispose();
     }
+
 }

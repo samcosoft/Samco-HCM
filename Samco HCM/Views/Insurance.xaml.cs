@@ -14,6 +14,8 @@ using DevExpress.Xpf.Navigation;
 using Microsoft.VisualBasic;
 using Samco_HCM_Shared;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.Printing;
+using Samco_HCM.Reports;
 
 namespace Samco_HCM.Views;
 
@@ -439,6 +441,36 @@ public partial class Insurance : IDisposable
         }
         return true;
     }
+
+    private void PrintBtn_Click(object sender, RoutedEventArgs e)
+    {
+        if (SaveRecord() == false) return;
+
+        // Create report for print
+        var serviceList = new List<AddonService> { new(_selService, (int)NumberBx.Value) };
+        serviceList.AddRange(_addonServices);
+        var report = new VisitReceipt(serviceList);
+        report.Parameters["Nobat"].Value = SamcoAdd.GetNobat(_selService.Oid);
+        report.Parameters["Doctor"].Value = PersonnelSelBx.Text;
+        report.Parameters["SetPrice"].Value = PriceBx.Text;
+        report.Parameters["InsName"].Value = _selInsurance.name;
+        report.Parameters["PatName"].Value = NameBx.Text;
+        report.Parameters["MelliCode"].Value = MelliCodeBx.Text;
+        try
+        {
+           PrintHelper.PrintDirect(report);
+           MainNotify.ShowInformation("صدور قبض","قبض صادر شد.");
+
+        }
+        catch (Exception ex)
+        {
+            MainNotify.ShowError("خطا در چاپ قبض", "چاپگر نصب و تنظیم نیست.");
+            MainNotify.ShowError("خطا در چاپ قبض", ex.ToString());
+        }
+
+        ((MainWindow)Application.Current.MainWindow)!.NavFrame.Journal.GoHome();
+    }
+
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         _session1?.Dispose();

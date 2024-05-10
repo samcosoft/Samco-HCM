@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using DevExpress.Xpf.LayoutControl;
 using DevExpress.Xpf.Navigation;
 using DevExpress.Xpf.WindowsUI.Navigation;
+using DevExpress.Xpo;
 using HCMData;
 using Samco_HCM.Views;
 using Samco_HCM_Shared;
@@ -166,6 +167,32 @@ namespace Samco_HCM.Classes
             var rnd = new Random();
             return new SolidColorBrush(Color.FromRgb(Convert.ToByte(rnd.Next(0, 180)), Convert.ToByte(rnd.Next(0, 180)), Convert.ToByte(rnd.Next(0, 180))));
         }
+        #endregion
+
+        #region Queue Control
+
+        internal static int GetNobat(int selServiceId)
+        {
+            using var session1 = new Session();
+            var todayVisits = session1.Query<Visits>().Where(vis => vis.service.Oid == selServiceId && vis.visitDate.Date == DateTime.Today);
+            return todayVisits.Count();
+        }
+
+        internal static int GetNobat(HealthServices selService, DateTime selDate)
+        {
+            using var session1 = new Session();
+            var resDate = session1.Query<Reserves>().Where(res => res.Service.Oid == selService.Oid && res.AdmitDate == selDate);
+            return resDate.Count();
+        }
+
+        internal static int GetNobat(int selServiceId, DateTime selDate)
+        {
+            using var session1 = new Session();
+            var resDate = session1.Query<Reserves>().Where(res => res.Service.Oid == selServiceId && res.AdmitDate == selDate);
+            return resDate.Count();
+        }
+
+
         #endregion
     }
 }

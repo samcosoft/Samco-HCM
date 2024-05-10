@@ -4,8 +4,8 @@
     <RootNamespace>Samco_HCM_Shared</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <AssemblyVersion>3.0.57.24130</AssemblyVersion>
-    <FileVersion>3.0.57.24130</FileVersion>
+    <AssemblyVersion>3.0.58.24131</AssemblyVersion>
+    <FileVersion>3.0.58.24131</FileVersion>
     <AssemblyName>Samco_HCM_Shared</AssemblyName>
     <Version>3.0.13.23204</Version>
   </PropertyGroup>
