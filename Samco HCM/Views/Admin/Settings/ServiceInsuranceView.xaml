@@ -87,17 +87,15 @@
                             </dxlc:LayoutItem>
                             <dxlc:LayoutGroup>
                                 <dxlc:LayoutItem>
-                                    <dx:SimpleButton x:Name="NewPriceBtn" Content="افزودن تعرفه" Click="NewPriceBtn_Click"/>
-                                </dxlc:LayoutItem>
-                                <dxlc:LayoutItem>
-                                    <dx:SimpleButton x:Name="EditPriceBtn" Content="ویرایش تعرفه" />
-                                </dxlc:LayoutItem>
-                                <dxlc:LayoutItem>
-                                    <dx:SimpleButton x:Name="DeletePriceBtn" Content="حذف تعرفه" Click="DeletePriceBtn_Click"/>
+                                    <hc:ButtonGroup Name="EditPriceBtn" Margin="0,5,0,0" Style="{StaticResource ButtonGroupSolid}">
+                                        <Button Content="افزودن تعرفه" Click="NewPriceBtn_Click"/>
+                                        <Button Content="ویرایش تعرفه" Click="EditPriceBtn_Click"/>
+                                        <Button Content="حذف تعرفه" Click="DeletePriceBtn_Click"/>
+                                    </hc:ButtonGroup>
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                             <dxlc:LayoutGroup Name="NewPriceBox" Header="ثبت تعرفه جدید" Visibility="Collapsed" View="GroupBox" Orientation="Vertical" Margin="0,20,0,0">
-                                <dxlc:LayoutGroup>
+                                <dxlc:LayoutGroup Orientation="Vertical">
                                     <dxlc:LayoutItem Label="انتخاب بیمه:">
                                         <dxe:ComboBoxEdit Name="InsCbx" DisplayMember="name" ValueMember="Oid" InvalidValueBehavior="AllowLeaveEditor" Validate="InsCbx_Validate"/>
                                     </dxlc:LayoutItem>
@@ -115,10 +113,10 @@
                                 </dxlc:LayoutGroup>
                                 <dxlc:LayoutGroup>
                                     <dxlc:LayoutItem>
-                                        <dx:SimpleButton x:Name="SavePriceBtn" Content="ذخیره اطلاعات" Click="SavePriceBtn_Click"/>
+                                        <Button Content="ذخیره اطلاعات" Click="SavePriceBtn_Click" Style="{StaticResource ButtonOk}"/>
                                     </dxlc:LayoutItem>
                                     <dxlc:LayoutItem>
-                                        <dx:SimpleButton x:Name="CancelBtn" Content="انصراف" Click="CancelBtn_Click"/>
+                                        <Button Content="انصراف" Click="CancelBtn_Click" Style="{StaticResource ButtonCancel}"/>
                                     </dxlc:LayoutItem>
                                 </dxlc:LayoutGroup>
                             </dxlc:LayoutGroup>

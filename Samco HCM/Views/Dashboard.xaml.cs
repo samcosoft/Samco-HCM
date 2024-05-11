@@ -7,12 +7,12 @@ using HCMData;
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using NavigationEventArgs = DevExpress.Xpf.WindowsUI.Navigation.NavigationEventArgs;
 using Samco_HCM.Classes;
 using Samco_HCM.Views.Settings;
+using Samco_HCM_Shared;
 using Samco_HCM_Shared.Classes;
 
 namespace Samco_HCM.Views;
@@ -120,15 +120,15 @@ public partial class Dashboard
         //}
 
         //Create statistics Tiles
-        //var dailyStat = SamcoAdd.GetTile("آمار روزانه", TileSize.Small, Resources["DailyStatIcon"], true, "آمار");
-        //Navigation.SetNavigateTo(dailyStat, new Statistic());
-        //Navigation.SetNavigationParameter(dailyStat, "daily");
-        //MainTilLayout.Children.Add(dailyStat);
+        var dailyStat = SamcoAdd.GetTile("آمار روزانه", TileSize.Small, "DailyStatIcon.samco", true, "آمار");
+        Navigation.SetNavigateTo(dailyStat, new Statistics());
+        Navigation.SetNavigationParameter(dailyStat, "daily");
+        MainTilLayout.Children.Add(dailyStat);
 
-        //var allStat = SamcoAdd.GetTile("آمار کلی", TileSize.Small, Resources["AllStatIcon"]);
-        //Navigation.SetNavigateTo(allStat, new Statistic());
-        //Navigation.SetNavigationParameter(allStat, "all");
-        //MainTilLayout.Children.Add(allStat);
+        var allStat = SamcoAdd.GetTile("آمار کلی", TileSize.Small, "AllStatIcon.samco");
+        Navigation.SetNavigateTo(allStat, new Statistics());
+        Navigation.SetNavigationParameter(allStat, "all");
+        MainTilLayout.Children.Add(allStat);
 
         if (SamcoAdd.UserIsAdmin())
         {
@@ -136,18 +136,18 @@ public partial class Dashboard
             Navigation.SetNavigateTo(editBil, new BillEditorView());
             MainTilLayout.Children.Add(editBil);
 
-            //editBil = SamcoAdd.GetTile("ویرایش اطلاعات بیماران", TileSize.Large, Resources["BillEditIcon"]);
-            //Navigation.SetNavigateTo(editBil, new PatientEditor());
-            //MainTilLayout.Children.Add(editBil);
+            editBil = SamcoAdd.GetTile("ویرایش اطلاعات بیماران", TileSize.Large, "BillEditIcon.samco");
+            Navigation.SetNavigateTo(editBil, new PatientEditorView());
+            MainTilLayout.Children.Add(editBil);
 
             //Create settings tiles
             var insuranceService = SamcoAdd.GetTile("تنظیمات بیمه و خدمات", TileSize.Large, "ServiceInsuranceIcon.samco", true, "تنظیمات");
             Navigation.SetNavigateTo(insuranceService, new ServiceInsuranceView());
             MainTilLayout.Children.Add(insuranceService);
 
-            //var personnelEdit = SamcoAdd.GetTile("تنظیمات پرسنل", TileSize.Large, Resources["ServiceInsuranceIcon"]);
-            //Navigation.SetNavigateTo(personnelEdit, new PersonnelEditorView());
-            //MainTilLayout.Children.Add(personnelEdit);
+            var personnelEdit = SamcoAdd.GetTile("تنظیمات پرسنل", TileSize.Large, "ServiceInsuranceIcon.samco");
+            Navigation.SetNavigateTo(personnelEdit, new PersonnelEditorView());
+            MainTilLayout.Children.Add(personnelEdit);
 
             var databaseSetting = SamcoAdd.GetTile("تنظیمات پایگاه داده و سیستم", TileSize.Large, "DatabaseIcon.samco");
             Navigation.SetNavigateTo(databaseSetting, new SettingView());
@@ -157,22 +157,25 @@ public partial class Dashboard
         Navigation.SetNavigateTo(userSetting, new UserView());
         MainTilLayout.Children.Add(userSetting);
         ((MainWindow)Application.Current.MainWindow)!.WaitIndic.IsSplashScreenShown = false;
+
+        //Load personnel
+        if (SamcoSoftShared.LoadedSettings != null && SamcoSoftShared.LoadedSettings.PersonnelRole != null && SamcoAdd.ShiftList.Count == 0)
+        {
+            var personnelSelector = new WinUIDialogWindow("انتخاب پرسنل شیفت")
+            {
+                FlowDirection = FlowDirection.RightToLeft,
+                Content = new PersonnelSelectorView(),
+                FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Vazirmatn"),
+                FontSize = 16
+            };
+
+            personnelSelector.ShowDialog();
+        }
     }
 
     private void MaxiTiles_Click(object sender, EventArgs e)
     {
         var selTile = (Tile)sender;
         selTile.IsMaximized = !selTile.IsMaximized;
-    }
-
-    public static async Task PeriodicAsync(Func<Task> action, TimeSpan interval,
-        CancellationToken cancellationToken = default)
-    {
-        using var timer = new PeriodicTimer(interval);
-        while (true)
-        {
-            await action();
-            await timer.WaitForNextTickAsync(cancellationToken);
-        }
     }
 }

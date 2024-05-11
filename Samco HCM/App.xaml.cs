@@ -30,7 +30,7 @@ namespace Samco_HCM
                 IsIndeterminate = true,
                 Status = "در حال بارگذاری..."
             };
-            SplashScreenManager.Create(() => new HCMSplash(), splashScreenViewModel).ShowOnStartup();
+            SplashScreenManager.Create(() => new HCMSplash(), splashScreenViewModel).ShowOnStartup(false);
             ThemeManager.PreloadThemeResource(Theme.Win11SystemName);
             ApplicationThemeHelper.ApplicationThemeName = Theme.Win11SystemName;
             FontAwesome6.Fonts.FontAwesomeFonts.LoadStyles(new Uri("pack://application:,,,/Fonts/"),EFontAwesomeStyle.Brands,EFontAwesomeStyle.Solid);

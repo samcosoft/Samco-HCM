@@ -10,108 +10,104 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              mc:Ignorable="d" FlowDirection="RightToLeft"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid>
-            <dxwui:PageAdornerControl Header="ویرایش قبض">
-                <dx:BackgroundPanel>
-                    <dxlc:LayoutControl>
-                        <dxlc:LayoutGroup Orientation="Vertical">
+    <dxwui:PageAdornerControl Header="ویرایش قبض">
+        <dx:BackgroundPanel>
+            <dxlc:LayoutControl>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem>
+                        <dxg:GridControl x:Name="VisitGrid" MaxHeight="540" EnableSmartColumnsGeneration="True" SelectionMode="Row" SelectedItemChanged="VisitGrid_SelectedItemChanged">
+                            <dxg:GridControl.GroupSummary>
+                                <dxg:GridSummaryItem DisplayFormat="تعداد: {0} نفر" FieldName="visit.isFullPrice" SummaryType="Count" />
+                            </dxg:GridControl.GroupSummary>
+                            <dxg:GridControl.View>
+                                <dxg:TableView AllowEditing="False" AllowPerPixelScrolling="True" AutoWidth="True" NavigationStyle="Row"
+                                           SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowSearchPanelMode="Always" ShowTotalSummary="True"/>
+                            </dxg:GridControl.View>
+                            <dxg:GridColumn FieldName="visitDate" Header="تاریخ" IsSmart="True" SortOrder="Descending" FilterPopupMode="DateSmart">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings DisplayFormat="yyyy/MM/dd" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="patient.melliCode" Header="کد ملی" IsSmart="True" />
+                            <dxg:GridColumn FieldName="patient.name" Header="نام و نام خانوادگی" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="insType.name" FilterPopupMode="CheckedList" Header="نام بیمه" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="service.name" FilterPopupMode="CheckedList" Header="نام خدمت" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="Personnel.Name" FilterPopupMode="CheckedList" Header="خدمت دهنده" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="price" Header="مبلغ" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="isFullPrice" Header="بعد از ظهر / روز تعطیل" IsSmart="True"/>
+                            <dxg:GridColumn FieldName="user.realname" FilterPopupMode="CheckedList" Header="نام پذیرش" IsSmart="True"/>
+                        </dxg:GridControl>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Orientation="Vertical" Header="تجهیزات مصرفی">
                             <dxlc:LayoutItem>
-                                <dxg:GridControl x:Name="VisitGrid" MaxHeight="540" EnableSmartColumnsGeneration="True" SelectionMode="Row" SelectedItemChanged="VisitGrid_SelectedItemChanged">
-                                    <dxg:GridControl.GroupSummary>
-                                        <dxg:GridSummaryItem DisplayFormat="تعداد: {0} نفر" FieldName="visit.isFullPrice" SummaryType="Count" />
-                                    </dxg:GridControl.GroupSummary>
+                                <dxg:GridControl x:Name="EquipGrid" MaxHeight="200" EnableSmartColumnsGeneration="True" FontSize="16" SelectionMode="Row">
                                     <dxg:GridControl.View>
-                                        <dxg:TableView AllowEditing="False" AllowPerPixelScrolling="True" AutoWidth="True" NavigationStyle="Row"
-                                                       SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowSearchPanelMode="Always" ShowTotalSummary="True"/>
+                                        <dxg:TableView AllowEditing="True" AllowPerPixelScrolling="True" AutoWidth="True" NavigationStyle="Row" SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowTotalSummary="True"
+                                                   ShowFilterPanelMode="Never" ShowGroupPanel="False" EditFormShowMode="InlineHideRow"
+                                                   RowUpdated="EquipmentServiceGrid_OnRowUpdated"/>
                                     </dxg:GridControl.View>
-                                    <dxg:GridColumn FieldName="visitDate" Header="تاریخ" IsSmart="True" SortOrder="Descending" FilterPopupMode="DateSmart">
+                                    <dxg:GridColumn FieldName="EquipName.Name" ReadOnly="True" Header="نام تجهیز" IsSmart="True"/>
+                                    <dxg:GridColumn FieldName="Count" Header="تعداد" IsSmart="True">
                                         <dxg:GridColumn.EditSettings>
-                                            <dxe:TextEditSettings DisplayFormat="yyyy/MM/dd" />
+                                            <dxe:SpinEditSettings MinValue="1" IsFloatValue="False"/>
                                         </dxg:GridColumn.EditSettings>
                                     </dxg:GridColumn>
-                                    <dxg:GridColumn FieldName="patient.melliCode" Header="کد ملی" IsSmart="True" />
-                                    <dxg:GridColumn FieldName="patient.name" Header="نام و نام خانوادگی" IsSmart="True"/>
-                                    <dxg:GridColumn FieldName="insType.name" FilterPopupMode="CheckedList" Header="نام بیمه" IsSmart="True"/>
-                                    <dxg:GridColumn FieldName="service.name" FilterPopupMode="CheckedList" Header="نام خدمت" IsSmart="True"/>
-                                    <dxg:GridColumn FieldName="Personnel.Name" FilterPopupMode="CheckedList" Header="خدمت دهنده" IsSmart="True"/>
-                                    <dxg:GridColumn FieldName="price" Header="مبلغ" IsSmart="True"/>
-                                    <dxg:GridColumn FieldName="isFullPrice" Header="بعد از ظهر / روز تعطیل" IsSmart="True"/>
-                                    <dxg:GridColumn FieldName="user.realname" FilterPopupMode="CheckedList" Header="نام پذیرش" IsSmart="True"/>
                                 </dxg:GridControl>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutGroup>
-                                <dxlc:LayoutGroup View="GroupBox" Orientation="Vertical" Header="تجهیزات مصرفی">
-                                    <dxlc:LayoutItem>
-                                        <dxg:GridControl x:Name="EquipGrid" MaxHeight="200" EnableSmartColumnsGeneration="True" FontSize="16" SelectionMode="Row">
-                                            <dxg:GridControl.View>
-                                                <dxg:TableView AllowEditing="True" AllowPerPixelScrolling="True" AutoWidth="True" NavigationStyle="Row" SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowTotalSummary="True"
-                                                               ShowFilterPanelMode="Never" ShowGroupPanel="False" EditFormShowMode="InlineHideRow"
-                                                               RowUpdated="EquipmentServiceGrid_OnRowUpdated"/>
-                                            </dxg:GridControl.View>
-                                            <dxg:GridColumn FieldName="EquipName.Name" ReadOnly="True" Header="نام تجهیز" IsSmart="True"/>
-                                            <dxg:GridColumn FieldName="Count" Header="تعداد" IsSmart="True">
-                                                <dxg:GridColumn.EditSettings>
-                                                    <dxe:SpinEditSettings MinValue="1" IsFloatValue="False"/>
-                                                </dxg:GridColumn.EditSettings>
-                                            </dxg:GridColumn>
-                                        </dxg:GridControl>
-                                    </dxlc:LayoutItem>
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem Label="نام تجهیز:">
-                                            <dxe:ComboBoxEdit Name="EquipCombo" DisplayMember="Name" ValueMember="Oid" IsTextEditable="False" AutoComplete="True" IncrementalSearch="True"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="تعداد:">
-                                            <dxe:SpinEdit Name="EquipCount" MinValue="1" Value="1" IsFloatValue="False" HorizontalContentAlignment="Center"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem>
-                                            <Button x:Name="AddEquipBtn" Content="افزودن" IsDefault="True" Style="{StaticResource ButtonOk}" Click="AddEquipmentBtn_Click"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem>
-                                            <Button x:Name="DelEquipBtn" Content="حذف" Style="{StaticResource ButtonCancel}" Click="DelEquipmentBtn_Click"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>
-                                </dxlc:LayoutGroup>
-                                <dxlc:LayoutGroup Header="اطلاعات قبض" Orientation="Vertical" View="GroupBox">
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem Label="انتخاب بیمه:">
-                                            <dxe:ComboBoxEdit Name="InsSelCbx" DisplayMember="name" ValueMember="Oid" SelectedIndexChanged="ComboBx_SelectedIndexChanged"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="انتخاب خدمت:">
-                                            <dxe:ComboBoxEdit Name="ServiceSelCbx" DisplayMember="name" ValueMember="Oid" SelectedIndexChanged="ComboBx_SelectedIndexChanged"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem Label="قیمت:">
-                                            <dxe:TextEdit Mask="d" MaskType="Numeric" Name="PriceBx" Validate="PriceBx_Validate"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem Label="خدمت دهنده:" LabelPosition="Top" VerticalAlignment="Top">
-                                            <dxe:ComboBoxEdit Name="PersonnelSelBx" Height="30" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsTextEditable="False" DisplayMember="Name" ValueMember="Oid"
-                                                              Validate="PersonnelSelBx_Validate"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem>
-                                            <dxe:CheckEdit Content="روز تعطیل / شیفت عصر" Name="CloseDayCbx" EditValueChanged="CloseDayCbx_EditValueChanged"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>
-                                    <dxlc:LayoutGroup>
-                                        <dxlc:LayoutItem>
-                                            <Button Content="ثبت اطلاعات" Style="{StaticResource ButtonOk}" Click="SaveInfoButtonClick"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem>
-                                            <Button Content="چاپ قبض" Style="{StaticResource ButtonEdit}" Click="PrintButtonClick"/>
-                                        </dxlc:LayoutItem>
-                                        <dxlc:LayoutItem>
-                                            <Button Content="حذف قبض" Style="{StaticResource ButtonCancel}" Click="DeleteBtn_Click"/>
-                                        </dxlc:LayoutItem>
-                                    </dxlc:LayoutGroup>
-                                </dxlc:LayoutGroup>
+                                <dxlc:LayoutItem Label="نام تجهیز:">
+                                    <dxe:ComboBoxEdit Name="EquipCombo" DisplayMember="Name" ValueMember="Oid" IsTextEditable="False" AutoComplete="True" IncrementalSearch="True"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="تعداد:">
+                                    <dxe:SpinEdit Name="EquipCount" MinValue="1" Value="1" IsFloatValue="False" HorizontalContentAlignment="Center"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup>
+                                <dxlc:LayoutItem>
+                                    <Button x:Name="AddEquipBtn" Content="افزودن" IsDefault="True" Style="{StaticResource ButtonOk}" Click="AddEquipmentBtn_Click"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem>
+                                    <Button x:Name="DelEquipBtn" Content="حذف" Style="{StaticResource ButtonCancel}" Click="DelEquipmentBtn_Click"/>
+                                </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                         </dxlc:LayoutGroup>
-                    </dxlc:LayoutControl>
-                </dx:BackgroundPanel>
-            </dxwui:PageAdornerControl>
-        </Grid>
-    </Grid>
+                        <dxlc:LayoutGroup Header="اطلاعات قبض" Orientation="Vertical" View="GroupBox">
+                            <dxlc:LayoutGroup>
+                                <dxlc:LayoutItem Label="انتخاب بیمه:">
+                                    <dxe:ComboBoxEdit Name="InsuranceSelCbx" DisplayMember="name" ValueMember="Oid" SelectedIndexChanged="ComboBx_SelectedIndexChanged"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="انتخاب خدمت:">
+                                    <dxe:ComboBoxEdit Name="ServiceSelCbx" DisplayMember="name" ValueMember="Oid" SelectedIndexChanged="ComboBx_SelectedIndexChanged"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup>
+                                <dxlc:LayoutItem Label="قیمت:">
+                                    <dxe:TextEdit Mask="d" MaskType="Numeric" Name="PriceBx" Validate="PriceBx_Validate"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="خدمت دهنده:" LabelPosition="Top" VerticalAlignment="Top">
+                                    <dxe:ComboBoxEdit Name="PersonnelSelBx" Height="30" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsTextEditable="False" DisplayMember="Name" ValueMember="Oid"
+                                                  Validate="PersonnelSelBx_Validate"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem>
+                                    <dxe:CheckEdit Content="روز تعطیل / شیفت عصر" Name="CloseDayCbx" EditValueChanged="CloseDayCbx_EditValueChanged"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup>
+                                <dxlc:LayoutItem>
+                                    <Button Content="ثبت اطلاعات" Style="{StaticResource ButtonOk}" Click="SaveInfoButtonClick"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem>
+                                    <Button Content="چاپ قبض" Style="{StaticResource ButtonEdit}" Click="PrintButtonClick"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem>
+                                    <Button Content="حذف قبض" Style="{StaticResource ButtonCancel}" Click="DeleteBtn_Click"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutControl>
+        </dx:BackgroundPanel>
+    </dxwui:PageAdornerControl>
 </dxwui:NavigationPage>

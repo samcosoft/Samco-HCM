@@ -8,8 +8,8 @@
 		<Version>3.0.13.23204</Version>
 		<Configurations>Debug;Release</Configurations>
 		<Copyright>Copyright © Samco Software Group 2017 - 2023</Copyright>
-		<FileVersion>3.0.210.24131</FileVersion>
-		<AssemblyVersion>3.0.210.24131</AssemblyVersion>
+		<FileVersion>3.0.240.24132</FileVersion>
+		<AssemblyVersion>3.0.240.24132</AssemblyVersion>
 		<LangVersion>latest</LangVersion>
 		<PublishReadyToRun>true</PublishReadyToRun>
 	</PropertyGroup>

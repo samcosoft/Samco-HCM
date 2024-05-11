@@ -132,7 +132,7 @@
                                 </dxlc:LayoutGroup>
                                 <dxlc:LayoutItem Label="خدمت دهنده:" LabelPosition="Top" VerticalAlignment="Top">
                                     <dxe:ComboBoxEdit Name="PersonnelSelBx" Height="30" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsTextEditable="False" DisplayMember="Name" ValueMember="Oid"
-                                                      Validate="PersonnelSelBx_Validate"/>
+                                                      Validate="PersonnelSelBx_Validate" InvalidValueBehavior="AllowLeaveEditor"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="مبلغ (تومان):" LabelPosition="Top">
                                     <dxe:TextEdit x:Name="PriceBx" IsReadOnly="True" MaskType="Numeric" Mask="d" Validate="PriceBx_Validate"/>

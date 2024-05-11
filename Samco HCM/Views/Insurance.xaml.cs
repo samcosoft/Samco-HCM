@@ -76,13 +76,13 @@ public partial class Insurance : IDisposable
         if (_selService.ProviderRole is not null)
         {
             var personnelList = new List<Personnel>();
-            foreach (var shiftPersonnel in from person in _selService.ProviderRole.Split(';')
-                                           where SamcoAdd.ShiftList.ContainsKey(person)
-                                           let ShiftPersonnel1 = SamcoAdd.ShiftList[person]
-                                           where ShiftPersonnel1 != null
-                                           select person.ToList())
-                personnelList.AddRange(from itm in shiftPersonnel
-                                       select _session1.GetObjectByKey<Personnel>(itm));
+
+            foreach (var role in _selService.ProviderRole.Split(';'))
+            {
+                if(SamcoAdd.ShiftList.ContainsKey(role))
+                    personnelList.AddRange(SamcoAdd.ShiftList[role].Select(x=>_session1.GetObjectByKey<Personnel>(x)));
+            }
+
             PersonnelSelBx.ItemsSource = personnelList;
         }
         // Load Equipment List

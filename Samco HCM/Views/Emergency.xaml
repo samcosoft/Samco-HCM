@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Samco_HCM.Views.Emergency"
+﻿<dxwui:NavigationPage x:Class="Samco_HCM.Views.Emergency"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,4 +16,4 @@
             </dxlc:TileLayoutControl.Resources>
         </dxlc:TileLayoutControl>
     </dxwui:PageAdornerControl>
-</UserControl>
+</dxwui:NavigationPage>

@@ -33,7 +33,6 @@
             this.XrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
             this.XrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.XrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
             this.SubBand1 = new DevExpress.XtraReports.UI.SubBand();
             this.XrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.XrTableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -96,8 +95,7 @@
             // 
             this.XrTableRow1.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.XrTableCell1,
-            this.XrTableCell2,
-            this.xrTableCell4});
+            this.XrTableCell2});
             this.XrTableRow1.Dpi = 254F;
             this.XrTableRow1.Name = "XrTableRow1";
             this.XrTableRow1.Weight = 1D;
@@ -115,14 +113,6 @@
             this.XrTableCell2.Name = "XrTableCell2";
             this.XrTableCell2.Text = "تعداد";
             this.XrTableCell2.Weight = 1.5268857620098311D;
-            // 
-            // xrTableCell4
-            // 
-            this.xrTableCell4.Dpi = 254F;
-            this.xrTableCell4.Multiline = true;
-            this.xrTableCell4.Name = "xrTableCell4";
-            this.xrTableCell4.Text = "خدمت دهنده";
-            this.xrTableCell4.Weight = 1.5268857620098311D;
             // 
             // SubBand1
             // 
@@ -405,7 +395,6 @@
         private DevExpress.XtraReports.UI.XRTableRow XrTableRow1;
         private DevExpress.XtraReports.UI.XRTableCell XrTableCell1;
         private DevExpress.XtraReports.UI.XRTableCell XrTableCell2;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell4;
         private DevExpress.XtraReports.UI.SubBand SubBand1;
         private DevExpress.XtraReports.UI.XRTable XrTable1;
         private DevExpress.XtraReports.UI.XRTableRow XrTableRow2;

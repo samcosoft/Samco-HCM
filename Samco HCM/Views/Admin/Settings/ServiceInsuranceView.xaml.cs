@@ -313,7 +313,7 @@ public partial class ServiceInsuranceView : IDisposable
         NewPriceBox.Visibility = Visibility.Visible;
     }
 
-    private void EditPriceBtn_Click()
+    private void EditPriceBtn_Click(object sender, RoutedEventArgs e)
     {
         if (PriceListGrid.SelectedItems.Count == 0)
         {
@@ -335,7 +335,7 @@ public partial class ServiceInsuranceView : IDisposable
     {
         if (PriceListGrid.SelectedItems.Count > 0)
         {
-            EditPriceBtn_Click();
+            EditPriceBtn_Click(sender, e);
         }
     }
 
@@ -391,8 +391,13 @@ public partial class ServiceInsuranceView : IDisposable
         else
         {
             // New Price
-            var newPrice = new Prices(_session1) { insType = (insuranceType)InsCbx.SelectedItem, 
-                service = (HealthServices)SvcCbx.SelectedItem, price1 = int.Parse(Price1Bx.Text), price2 = int.Parse(Price2Bx.Text) };
+            var newPrice = new Prices(_session1)
+            {
+                insType = (insuranceType)InsCbx.SelectedItem,
+                service = (HealthServices)SvcCbx.SelectedItem,
+                price1 = int.Parse(Price1Bx.Text),
+                price2 = int.Parse(Price2Bx.Text)
+            };
             newPrice.Save();
         }
         LoadData();

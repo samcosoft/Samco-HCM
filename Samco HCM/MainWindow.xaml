@@ -30,18 +30,18 @@
                         <Label Content="{DynamicResource CurrentUserName}" FontFamily="{StaticResource Vazir}"
                                HorizontalContentAlignment="Center" Margin="0,5"/>
                         <hc:Divider Width="200" Margin="0,5"/>
-                        <dx:SimpleButton Click="SetShiftButton_Click" Background="{DynamicResource PrimaryBrush}">
+                        <Button Click="SetShiftButton_Click" Style="{StaticResource ButtonMain}">
                             <hc:UniformSpacingPanel HorizontalSpacing="3">
                                 <TextBlock>تنظیم پرسنل</TextBlock>
                                 <fa6:FontAwesome Icon="Solid_ListCheck" Margin="0 3 0 0"/>
                             </hc:UniformSpacingPanel>
-                        </dx:SimpleButton>
-                        <dx:SimpleButton Click="AboutBtn_Click" Background="{DynamicResource InfoBrush}">
+                        </Button>
+                        <Button Click="AboutBtn_Click" Style="{StaticResource ButtonEdit}">
                             <hc:UniformSpacingPanel HorizontalSpacing="3">
                                 <TextBlock>درباره برنامه</TextBlock>
                                 <fa6:FontAwesome Icon="Solid_CircleInfo" Margin="0 3 0 0"/>
                             </hc:UniformSpacingPanel>
-                        </dx:SimpleButton>
+                        </Button>
                         <dx:SimpleButton Click="LogOutButton_Click" Background="{DynamicResource DangerBrush}">
                             <hc:UniformSpacingPanel HorizontalSpacing="3">
                                 <TextBlock>خروج از سیستم</TextBlock>

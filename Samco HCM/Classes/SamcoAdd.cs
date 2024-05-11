@@ -122,12 +122,18 @@ namespace Samco_HCM.Classes
         {
             if (string.IsNullOrEmpty(imageSrc))
                 return default;
-
-            var bim = new BitmapImage(new Uri($"pack://application:,,,/Images/{imageSrc}"));
-            var result = new Image { Source = bim, Margin = new Thickness(15, 15, 15, 50) };
-            RenderOptions.SetBitmapScalingMode(result, BitmapScalingMode.HighQuality);
-            RenderOptions.SetEdgeMode(result, EdgeMode.Aliased);
-            return result;
+            try
+            {
+                var bim = new BitmapImage(new Uri($"pack://application:,,,/Images/{imageSrc}"));
+                var result = new Image { Source = bim, Margin = new Thickness(15, 15, 15, 50) };
+                RenderOptions.SetBitmapScalingMode(result, BitmapScalingMode.HighQuality);
+                RenderOptions.SetEdgeMode(result, EdgeMode.Aliased);
+                return result;
+            }
+            catch (Exception)
+            {
+                return default;
+            }
         }
 
         internal static Image GetTileIcon(byte[] imageSrc)

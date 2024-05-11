@@ -23,9 +23,9 @@ public partial class BillEditorView: IDisposable
 {
     private Session _session1;
     private Visits _selVisit;
-    private XPCollection<Visits> _visitCollection;
-    private XPCollection<insuranceType> _insuranceDataSource;
-    private XPCollection<HealthServices> _servicesDataSource;
+    public XPServerCollectionSource VisitCollection { get; set; }
+    public XPCollection<insuranceType> InsuranceDataSource { get; set; }
+    public XPCollection<HealthServices> ServicesDataSource { get; set; }
     public BillEditorView()
     {
         InitializeComponent();
@@ -34,10 +34,15 @@ public partial class BillEditorView: IDisposable
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         _session1 = new Session();
-        _insuranceDataSource = new XPCollection<insuranceType>(_session1);
-        _servicesDataSource = new XPCollection<HealthServices>(_session1,
+        InsuranceDataSource = new XPCollection<insuranceType>(_session1);
+        ServicesDataSource = new XPCollection<HealthServices>(_session1,
             CriteriaOperator.Parse("[HealthServicesCollection].Count = 0"));
-        _visitCollection = new XPCollection<Visits>(_session1);
+        VisitCollection = new XPServerCollectionSource(_session1, _session1.GetClassInfo<Visits>());
+
+        VisitGrid.ItemsSource = VisitCollection;
+        ServiceSelCbx.ItemsSource = ServicesDataSource;
+        InsuranceSelCbx.ItemsSource = InsuranceDataSource;
+
         base.OnNavigatedTo(e);
     }
 
@@ -46,25 +51,29 @@ public partial class BillEditorView: IDisposable
         if (VisitGrid.SelectedItem is null)
             return;
         _selVisit = (Visits)VisitGrid.SelectedItem;
-        InsSelCbx.SelectedItem = _selVisit.insType;
+        InsuranceSelCbx.SelectedItem = _selVisit.insType;
         ServiceSelCbx.SelectedItem = _selVisit.service;
         PriceBx.Text = _selVisit.price.ToString();
         CloseDayCbx.IsChecked = _selVisit.isFullPrice;
         EquipGrid.ItemsSource = _selVisit.EquipmentLists;
+        // Load Equipment List
+        EquipCombo.ItemsSource = new XPCollection<Equipments>(_session1);
 
         // Load role box
         if (_selVisit.service.ProviderRole is not null)
         {
             var personnelList = new List<Personnel>();
-            foreach (var shiftPersonnel in from person in _selVisit.service.ProviderRole.Split(';')
-                     where SamcoAdd.ShiftList.ContainsKey(person)
-                     let ShiftPersonnel1 = SamcoAdd.ShiftList[person]
-                     where ShiftPersonnel1 != null
-                     select person.ToList())
-                personnelList.AddRange(from itm in shiftPersonnel
-                    select _session1.GetObjectByKey<Personnel>(itm));
+
+            foreach (var role in _selVisit.service.ProviderRole.Split(';'))
+            {
+                if(SamcoAdd.ShiftList.ContainsKey(role))
+                    personnelList.AddRange(SamcoAdd.ShiftList[role].Select(x=>_session1.GetObjectByKey<Personnel>(x)));
+            }
+
             PersonnelSelBx.ItemsSource = personnelList;
         }
+
+        PersonnelSelBx.SelectedItem = _selVisit.Personnel;
     }
     private void ComboBx_SelectedIndexChanged(object sender, RoutedEventArgs e)
     {
@@ -80,30 +89,40 @@ public partial class BillEditorView: IDisposable
     {
         // Get price
         var servicePrice = 0;
-        var selPrice = _session1.Query<Prices>().SingleOrDefault(x => x.service.Oid == _selVisit.Oid && x.insType.Oid == ((insuranceType)InsSelCbx.EditValue).Oid);
-        // Check price defined before
-        if (selPrice is not null)
+        if(InsuranceSelCbx.EditValue == null) return;
+        try
         {
-            servicePrice = CloseDayCbx.IsChecked == false ? selPrice.price1 : selPrice.price2;
-        }
+            var selPrice = _session1.Query<Prices>().SingleOrDefault(x => x.service.Oid == _selVisit.service.Oid && x.insType.Oid == (int)InsuranceSelCbx.EditValue);
+            // Check price defined before
+            if (selPrice is not null)
+            {
+                servicePrice = CloseDayCbx.IsChecked == false ? selPrice.price1 : selPrice.price2;
+            }
 
-        // calculate Equipment price
-        if (_selVisit.EquipmentLists.Count != 0)
-        {
-            servicePrice += _selVisit.EquipmentLists.Sum(itm => itm.EquipName.Price * itm.Count);
-        }
+            // calculate Equipment price
+            if (_selVisit.EquipmentLists.Count != 0)
+            {
+                servicePrice += _selVisit.EquipmentLists.Sum(itm => itm.EquipName.Price * itm.Count);
+            }
 
-        if (servicePrice == 0)
-        {
-            // Check if service is available
-            MainNotify.ShowInformation("عدم تعریف تعرفه", "لطفاً مبلغ را به صورت دستی وارد کنید.");
-            PriceBx.IsReadOnly = false;
+            if (servicePrice == 0)
+            {
+                // Check if service is available
+                MainNotify.ShowInformation("عدم تعریف تعرفه", "لطفاً مبلغ را به صورت دستی وارد کنید.");
+                PriceBx.IsReadOnly = false;
+            }
+            else
+            {
+                PriceBx.IsReadOnly = true;
+                PriceBx.Text = servicePrice.ToString();
+            }
         }
-        else
+        catch (Exception)
         {
             PriceBx.IsReadOnly = true;
             PriceBx.Text = servicePrice.ToString();
         }
+        
     }
 
     #region Equipment
@@ -168,12 +187,13 @@ public partial class BillEditorView: IDisposable
             MainNotify.ShowWarning("خطا در ثبت اطلاعات", "لطفاً اطلاعات خواسته شده را به صورت کامل وارد کنید.");
             return;
         }
-        _selVisit.insType = (insuranceType)InsSelCbx.SelectedItem;
+        _selVisit.insType = (insuranceType)InsuranceSelCbx.SelectedItem;
         _selVisit.service = (HealthServices)ServiceSelCbx.SelectedItem;
         _selVisit.price = int.Parse(PriceBx.Text);
         _selVisit.isFullPrice = CloseDayCbx.IsChecked.GetValueOrDefault(false);
+        _selVisit.Personnel = (Personnel)PersonnelSelBx.SelectedItem;
         _selVisit.Save();
-        _visitCollection.Reload();
+        VisitCollection.Reload();
         VisitGrid.RefreshData();
         MainNotify.ShowSuccess("ثبت اطلاعات", "اطلاعات با موفقیت ثبت شدند.");
     }
@@ -224,7 +244,7 @@ public partial class BillEditorView: IDisposable
                 var delRow = deleteSession.GetObjectByKey<Visits>(getVisit.Oid);
                 delRow.Delete();
             } 
-            _visitCollection.Reload();
+            VisitCollection.Reload();
             VisitGrid.RefreshData();
         }
     }
@@ -232,18 +252,18 @@ public partial class BillEditorView: IDisposable
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         _session1?.Dispose();
-        _visitCollection?.Dispose();
-        _insuranceDataSource?.Dispose();
-        _servicesDataSource?.Dispose();
+        VisitCollection?.Dispose();
+        InsuranceDataSource?.Dispose();
+        ServicesDataSource?.Dispose();
         base.OnNavigatedFrom(e);
     }
 
     public void Dispose()
     {
         _session1?.Dispose();
-        _visitCollection?.Dispose();
-        _insuranceDataSource?.Dispose();
-        _servicesDataSource?.Dispose();
+        VisitCollection?.Dispose();
+        InsuranceDataSource?.Dispose();
+        ServicesDataSource?.Dispose();
     }
 
 }

@@ -16,17 +16,46 @@ using Samco_HCM.Classes;
 using Samco_HCM.Views.Settings;
 using Samco_HCM_Shared;
 using FontFamily = System.Windows.Media.FontFamily;
+using System.Timers;
 
 namespace Samco_HCM
 {
     public partial class MainWindow
     {
+        private readonly Timer _timer = new(1000);
+
         public MainWindow()
         {
             InitializeComponent();
             ConfigHelper.Instance?.SetLang("fa-IR");
             if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == ApplicationTheme.Dark)
                 ThemeButton.IsChecked = true;
+
+            _timer.Elapsed += ShiftTimer;
+            _timer.Enabled = true;
+        }
+
+        private void ShiftTimer(object sender, ElapsedEventArgs e)
+        {
+            if (SamcoSoftShared.LoadedSettings == null) return;
+            try
+            {
+                var startShift = SamcoSoftShared.LoadedSettings!.StartShiftTime ?? new DateTime(2001, 1, 1, 8, 0, 0);
+                var endShift = SamcoSoftShared.LoadedSettings!.EndShiftTime ?? new DateTime(2001, 1, 1, 20, 0, 0);
+
+                if (DateTime.Now.TimeOfDay >= startShift.TimeOfDay && DateTime.Now.TimeOfDay < endShift.TimeOfDay)
+                {
+                    SamcoAdd.OffShift = false;
+                }
+                else
+                {
+                    SamcoAdd.OffShift = true;
+                }
+            }
+            catch (Exception)
+            {
+                //Ignored
+            }
         }
 
         #region Change Theme
@@ -68,7 +97,7 @@ namespace Samco_HCM
             }
 
             WaitIndic.IsSplashScreenShown = false;
-
+            SplashScreenManager.CloseAll();
             if (LoginUser() == false)
             {
                 return;
@@ -218,7 +247,14 @@ namespace Samco_HCM
 
         private void SetShiftButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var personnelSelector = new WinUIDialogWindow("انتخاب پرسنل شیفت")
+            {
+                FlowDirection = FlowDirection.RightToLeft,
+                Content = new PersonnelSelectorView(),
+                FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Vazirmatn"),
+                FontSize = 16
+            };
+            personnelSelector.ShowDialog();
         }
 
         private void AboutBtn_Click(object sender, RoutedEventArgs e)
@@ -228,20 +264,6 @@ namespace Samco_HCM
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            //var dialRes = WinUIMessageBox.Show(this, "آیا مایل به چاپ گزارش روزانه هستید؟", "خروج کاربر",
-            //    MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Cancel,
-            //    MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign, FloatingMode.Adorner, true);
-
-            //if (dialRes == MessageBoxResult.Yes)
-            //{
-            //Get visits
-            //    var session1 = new Session();
-            //    var visitInfo = session1.Query<Visits>().Where(x => x.visitDate <= DateTime.Now &&
-            //                                                        x.visitDate >= SamcoSoftShared.CurrentUser
-            //                                                            .LastLoginTime).ToList();
-
-            //}
-
             SamcoSoftShared.CurrentUser = null;
             Application.Current.Resources["CurrentUserName"] = string.Empty;
             ProfilePic.Id = string.Empty;
