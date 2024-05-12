@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using DevExpress.Xpf.WindowsUI;
+using HandyControl.Controls;
+using HandyControl.Data;
 using HandyControl.Themes;
 using Samco_HCM.Classes;
 using Samco_HCM_Shared;

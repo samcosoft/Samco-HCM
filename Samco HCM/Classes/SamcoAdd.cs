@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,20 +14,122 @@ using DevExpress.Xpo;
 using HCMData;
 using Samco_HCM.Views;
 using Samco_HCM_Shared;
+using LogicNP.CryptoLicensing;
 
 namespace Samco_HCM.Classes
 {
     internal static class SamcoAdd
     {
-        internal static readonly LicenseHelper License = new();
-        internal static bool ServiceInsuranceChange;
         internal static bool OffShift;
         internal static Dictionary<string, List<int>> ShiftList = new();
+        internal static CryptoLicense License;
 
         internal static bool UserIsAdmin()
         {
             return SamcoSoftShared.CurrentUser?.Group is "A" or "O";
         }
+
+        #region Licensing
+
+        internal static bool ValidateLicense(out bool isTrial)
+        {
+            isTrial = true;
+            License = new CryptoLicense
+            {
+                LicenseServiceURL = "https://demo.samcosoft.ir/activation2/Service.asmx",
+                LicenseServiceSettingsFilePath = "%AppDomainAppPath%App_Data\\Samco HCM.xml",
+                ValidationKey = "AMAAMACFmfVL+4ktVtTILxQjYT+LChwE13ed4BnmXP8vg0xPGmjWd1tuu3qAmIwjH5sEK30DAAEAAQ==",
+                // Load license from the registry
+                StorageMode = LicenseStorageMode.ToFile
+            };
+
+            if (string.IsNullOrEmpty(SamcoSoftShared.LoadedSettings!.ApplicationLicense))
+            {
+                //Add Trial license
+                License.LicenseCode = "lgIAAPkTn7Dao9oBHgAYAENvbXBhbnk9I1Bob25lPSNBZGRyZXNzPVRsetzMZkJSMBWNKU6G0cT7tLpIMhHIkKXFOT/w/6ik6gRtLPMLQfIlQb/E+RtM7g==";
+                SamcoSoftShared.LoadedSettings!.ApplicationLicense = "lgIAAPkTn7Dao9oBHgAYAENvbXBhbnk9I1Bob25lPSNBZGRyZXNzPVRsetzMZkJSMBWNKU6G0cT7tLpIMhHIkKXFOT/w/6ik6gRtLPMLQfIlQb/E+RtM7g==";
+                License.Save();
+            }
+            else
+            {
+                License.LicenseCode = SamcoSoftShared.LoadedSettings!.ApplicationLicense;
+            }
+
+            // Validate the license using .Status property
+            if (License.Status == LicenseStatus.Valid)
+            {
+                isTrial = License.IsEvaluationLicense();
+                return true;
+            }
+
+            return false;
+        }
+        internal static bool ActivateBySerial(string serial, out string message, out bool isTrial)
+        {
+            isTrial = true;
+            message = string.Empty;
+            var result = License.GetLicenseFromSerial(serial);
+            if (result != SerialValidationResult.Success)
+            {
+                message = result switch
+
+                {
+                    SerialValidationResult.Failed => "خطا در فعالسازی مجوز.",
+                    SerialValidationResult.NotASerial => "سریال وارد شده نا معتبر است.",
+                    _ => string.Empty
+                };
+                message += License.GetAllStatusExceptionsAsString();
+                return false;
+            }
+
+            if (License.Status == LicenseStatus.Valid)
+            {
+                isTrial = License.IsEvaluationLicense();
+                SamcoSoftShared.LoadedSettings!.ApplicationLicense = License.LicenseCode;
+                License.Save();
+                return true;
+            }
+
+            return false;
+        }
+
+        internal static bool ActivateByLicenseCode(string licenseCode, out string message)
+        {
+            message = string.Empty;
+            License.LicenseCode = licenseCode;
+
+            if (License.Status == LicenseStatus.Valid)
+            {
+                SamcoSoftShared.LoadedSettings!.ApplicationLicense = License.LicenseCode;
+                License.Save();
+                return true;
+            }
+
+            message = License.GetAllStatusExceptionsAsString();
+            return false;
+        }
+
+        internal static bool DeactivateLicense()
+        {
+            License.Deactivate();
+            License.Save();
+            SamcoSoftShared.LoadedSettings!.ApplicationLicense = string.Empty;
+            SamcoSoftShared.LoadedSettings!.Save();
+            return true;
+        }
+
+        public static bool CheckForActiveConnection()
+        {
+            var myPing = new Ping();
+            var reply = myPing.Send("demo.samcosoft.ir", 1000);
+            if (reply is { Status: IPStatus.Success })
+            {
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
 
         #region Tile Control
 
@@ -70,7 +173,7 @@ namespace Samco_HCM.Classes
                 Content = insuranceInfo.name,
                 Size = DevExpress.Xpf.Navigation.Internal.TileSize.Auto,
                 Background = GetTileRandomColor(),
-                TileGlyph= GetImageSource(insuranceInfo.image),
+                TileGlyph = GetImageSource(insuranceInfo.image),
                 Width = 170,
                 Foreground = new SolidColorBrush(Colors.White),
                 HorizontalContentAlignment = HorizontalAlignment.Right,

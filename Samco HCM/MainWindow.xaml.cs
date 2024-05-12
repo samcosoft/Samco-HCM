@@ -17,6 +17,7 @@ using Samco_HCM.Views.Settings;
 using Samco_HCM_Shared;
 using FontFamily = System.Windows.Media.FontFamily;
 using System.Timers;
+using System.Windows.Media.Imaging;
 
 namespace Samco_HCM
 {
@@ -76,6 +77,31 @@ namespace Samco_HCM
             CreateLoadSetting(settingDir);
             //Set theme
             if (SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = SamcoSoftShared.LoadedSettings?.AppThemeName;
+            //Validate License
+            if (SamcoAdd.ValidateLicense(out var isTrial) == false || isTrial)
+            {
+                WaitIndic.IsSplashScreenShown = false;
+                SplashScreenManager.CloseAll();
+                var activationDialog = new DXDialogWindow("فعالسازی برنامه")
+                {
+                    FlowDirection = FlowDirection.RightToLeft,
+                    Content = new LicenseManagerView(),
+                    FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Fonts/#Vazirmatn"),
+                    FontSize = 16,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    MaxHeight = 500,
+                    MaxWidth = 820,
+                    ResizeMode = ResizeMode.NoResize,
+                    Icon = new BitmapImage(new Uri("pack://application:,,,//Images/Lock.png"))
+                };
+                if (activationDialog.ShowDialog() == false)
+                {
+                    Application.Current.Shutdown();
+                    return;
+                }
+                SamcoSoftShared.LoadedSettings!.Save();
+            }
+
             if (CheckDatabase() == false)
             {
                 //Setup new database
@@ -259,7 +285,7 @@ namespace Samco_HCM
 
         private void AboutBtn_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            NavFrame.Navigate(new AboutView());
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)

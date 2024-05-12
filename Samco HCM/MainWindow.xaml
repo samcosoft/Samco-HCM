@@ -28,7 +28,7 @@
                     <hc:UniformSpacingPanel VerticalSpacing="5" Orientation="Vertical" ItemHorizontalAlignment="Stretch" Spacing="10">
                         <hc:Gravatar Name="ProfilePic" Style="{StaticResource GravatarCircleImg}"/>
                         <Label Content="{DynamicResource CurrentUserName}" FontFamily="{StaticResource Vazir}"
-                               HorizontalContentAlignment="Center" Margin="0,5"/>
+                               HorizontalContentAlignment="Center" Margin="0,5" MinHeight="35"/>
                         <hc:Divider Width="200" Margin="0,5"/>
                         <Button Click="SetShiftButton_Click" Style="{StaticResource ButtonMain}">
                             <hc:UniformSpacingPanel HorizontalSpacing="3">
@@ -42,7 +42,7 @@
                                 <fa6:FontAwesome Icon="Solid_CircleInfo" Margin="0 3 0 0"/>
                             </hc:UniformSpacingPanel>
                         </Button>
-                        <dx:SimpleButton Click="LogOutButton_Click" Background="{DynamicResource DangerBrush}">
+                        <dx:SimpleButton Click="LogOutButton_Click" Style="{StaticResource ButtonCancel}">
                             <hc:UniformSpacingPanel HorizontalSpacing="3">
                                 <TextBlock>خروج از سیستم</TextBlock>
                                 <fa6:FontAwesome Icon="Solid_PersonToDoor" Margin="0 3 0 0"/>

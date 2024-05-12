@@ -142,7 +142,6 @@ namespace Samco_HCM_Shared.Classes
 
         #endregion
 
-
         #region General Information
 
         [DataMember] public string? UniversityName { get; set; }
@@ -161,9 +160,9 @@ namespace Samco_HCM_Shared.Classes
         [DataMember] public string? MarkazName { get; set; }
         [DataMember] public string? MarkazPhone { get; set; }
         [DataMember] public string? MarkazAddress { get; set; }
-
+        [DataMember] public string? ApplicationLicense { get; set; }
         [DataMember] public string? SettingVersionString { get; set; }
-
+        
         [DataMember]
         public Version? SettingVersion
         {
