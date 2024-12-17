@@ -51,7 +51,7 @@ public static class SamcoSoftShared
             return false;
         }
 
-        //Try Connect to database
+        //Try to Connect to database
         var dict = new ReflectionDictionary();
         dict.GetDataStoreSchema(System.Reflection.Assembly.GetExecutingAssembly());
         var store = XpoDefault.GetConnectionProvider(connectionString, AutoCreateOption.SchemaAlreadyExists);
@@ -69,7 +69,6 @@ public static class SamcoSoftShared
     }
 
     public static LoggedUser? CurrentUser;
-    public static bool ClosedDay { get; set; }
 
     #region Setting Manager Codes
 

@@ -17,20 +17,20 @@ namespace Samco_HCM
         static App()
         {
             CompatibilitySettings.AllowThemePreload = true;
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
             var splashScreenViewModel = new DXSplashScreenViewModel
             {
                 Title = "Samco® Healthcare Management System",
-                Subtitle = Assembly.GetExecutingAssembly().GetName().Version + " - آزمایشی",
+                Subtitle = Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
                 Logo = new Uri("pack://application:,,,/Images/HCM.png", UriKind.RelativeOrAbsolute),
                 Copyright = $"©Copyright Samco® Software Group 2017 - {DateTime.Today.Year} . All Rights Reserved.",
                 IsIndeterminate = true,
                 Status = "در حال بارگذاری..."
             };
             SplashScreenManager.Create(() => new HCMSplash(), splashScreenViewModel).ShowOnStartup(false);
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
             ThemeManager.PreloadThemeResource(Theme.Win11SystemName);
             ApplicationThemeHelper.ApplicationThemeName = Theme.Win11SystemName;
             FontAwesome6.Fonts.FontAwesomeFonts.LoadStyles(new Uri("pack://application:,,,/Fonts/"),EFontAwesomeStyle.Brands,EFontAwesomeStyle.Solid);

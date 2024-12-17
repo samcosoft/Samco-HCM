@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExpress.Data" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Images" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Wpf.Controls" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Wpf.Core" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Wpf.Dialogs" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Wpf.LayoutControl" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Xpo" Version="24.1.7" />
+    <PackageReference Include="FontAwesome6.Pro.Fonts" Version="2.5.1" />
+    <PackageReference Include="HandyControls" Version="3.5.3" />
+    <PackageReference Include="HandyControls.Lang.fa" Version="3.5.3" />
+    <PackageReference Include="Notifications.Wpf.Core" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Samco HCM Shared\Samco HCM Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\FontAwesome 6 Brands.otf" />
+    <Resource Include="Fonts\FontAwesome 6 Solid.otf" />
+    <Resource Include="Fonts\IRANSansX.ttf" />
+    <Resource Include="Fonts\Vazir-Bold.ttf" />
+    <Resource Include="Images\AllStatIcon.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\BillEditIcon.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DailyStatIcon.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DatabaseIcon.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Dentist.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DentistrySplash.png" />
+    <Resource Include="Images\Emergency.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\HCM.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\HCM.svg" />
+    <Resource Include="Images\Laboratory.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lock.png" />
+    <Resource Include="Images\SamcoActivation.png" />
+    <Resource Include="Images\ServiceInsuranceIcon.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\UserSettingIcon.samco">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

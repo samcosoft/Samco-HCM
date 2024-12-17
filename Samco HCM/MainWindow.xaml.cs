@@ -92,7 +92,7 @@ namespace Samco_HCM
                     MaxHeight = 500,
                     MaxWidth = 820,
                     ResizeMode = ResizeMode.NoResize,
-                    Icon = new BitmapImage(new Uri("pack://application:,,,//Images/Lock.png"))
+                    Icon = new BitmapImage(new Uri("pack://application:,,,/Images/Lock.png"))
                 };
                 if (activationDialog.ShowDialog() == false)
                 {

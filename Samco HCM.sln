@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
@@ -6,6 +5,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samco HCM", "Samco HCM\Samco HCM.csproj", "{84AE31CD-BAE3-42D8-A791-2254D729F6DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samco HCM Shared", "Samco HCM Shared\Samco HCM Shared.csproj", "{696ACF9E-307E-4D49-8284-04A62B77A631}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samco HCM Dentistry Client", "Samco HCM Dentistry Client\Samco HCM Dentistry Client.csproj", "{144670CB-6396-488C-A76D-2E03A3B69E78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +22,10 @@ Global
 		{696ACF9E-307E-4D49-8284-04A62B77A631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696ACF9E-307E-4D49-8284-04A62B77A631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696ACF9E-307E-4D49-8284-04A62B77A631}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144670CB-6396-488C-A76D-2E03A3B69E78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
