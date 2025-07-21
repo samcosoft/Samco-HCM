@@ -191,13 +191,13 @@ namespace Samco_HCM.Views.Settings
                         SamcoSoft.LoadedSettings.DatabaseType = HCMSettings.DatabaseTypes.Access;
                         break;
                     default:
-                    {
-                        //MSSQL
-                        SamcoSoft.LoadedSettings.DatabaseType = HCMSettings.DatabaseTypes.MicrosoftSQLLocal;
-                        SamcoSoft.LoadedSettings.ServerAddress = "(localdb)\\MSSQLLocalDB";
-                        SamcoSoft.LoadedSettings.DatabaseName = "SamcoHCM";
-                        break;
-                    }
+                        {
+                            //MSSQL
+                            SamcoSoft.LoadedSettings.DatabaseType = HCMSettings.DatabaseTypes.MicrosoftSQLLocal;
+                            SamcoSoft.LoadedSettings.ServerAddress = "(localdb)\\MSSQLLocalDB";
+                            SamcoSoft.LoadedSettings.DatabaseName = "SamcoHCM";
+                            break;
+                        }
                 }
             }
             else
@@ -217,7 +217,7 @@ namespace Samco_HCM.Views.Settings
             }
 
             string errorMessage = null;
-            if (SamcoSoft.LoadDatabase(SamcoSoft.LoadedSettings.ConnectionString!, ref errorMessage))
+            if (SamcoSoft.LoadDatabase(SamcoSoft.LoadedSettings.ConnectionString!, false, ref errorMessage))
             {
                 SamcoSoft.LoadedSettings.Save();
                 WinUIMessageBox.Show(this, "ارتباط با پایگاه داده برقرار شد. لطفاً نرم افزار را یک بار دیگر اجرا کنید.",
@@ -227,9 +227,9 @@ namespace Samco_HCM.Views.Settings
             }
             else
             {
-               MainNotify.ShowError("خطا در ارتباط با پایگاه داده", string.Format(
-                    "امکان برقراری ارتباط با پایگاه داده وجود ندارد. ممکن است درایورهای مورد نیاز نصب نباشند و یا کلمه عبور را اشتباه وارد نموده‌اید. اطلاعات بیشتر:{0}{0}{1}",
-                    '\n', errorMessage));
+                MainNotify.ShowError("خطا در ارتباط با پایگاه داده", string.Format(
+                     "امکان برقراری ارتباط با پایگاه داده وجود ندارد. ممکن است درایورهای مورد نیاز نصب نباشند و یا کلمه عبور را اشتباه وارد نموده‌اید. اطلاعات بیشتر:{0}{0}{1}",
+                     '\n', errorMessage));
             }
         }
 

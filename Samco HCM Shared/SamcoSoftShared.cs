@@ -3,6 +3,7 @@ using DevExpress.Xpo.Metadata;
 using DevExpress.Xpo;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
@@ -34,31 +35,78 @@ public static class SamcoSoftShared
         return image;
     }
 
-    public static bool LoadDatabase(string connectionString, ref string errorMessage)
+    public static bool LoadDatabase(string? connectionString, bool justConnect, ref string? errorMessage)
     {
-        //Check For database Update
-        var databaseAssemblies = System.Reflection.Assembly.GetExecutingAssembly();
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            errorMessage = "Connection string is null or empty.";
+            return false;
+        }
+        if (!justConnect)
+        {//Check For database Update
+            var databaseAssemblies = Assembly.GetExecutingAssembly();
+            try
+            {
+                var dbDataLayer = XpoDefault.GetDataLayer(connectionString, AutoCreateOption.DatabaseAndSchema);
+                using var session1 = new Session(dbDataLayer);
+                session1.UpdateSchema(databaseAssemblies);
+                session1.CreateObjectTypeRecords(databaseAssemblies);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
+
+        //Try to Connect to database
+        var dict = new ReflectionDictionary();
+        dict.GetDataStoreSchema(Assembly.GetExecutingAssembly());
+        var store = XpoDefault.GetConnectionProvider(connectionString, AutoCreateOption.SchemaAlreadyExists);
         try
         {
-            var dbDataLayer = XpoDefault.GetDataLayer(connectionString, AutoCreateOption.DatabaseAndSchema);
-            using var session1 = new Session(dbDataLayer);
-            session1.UpdateSchema(databaseAssemblies);
-            session1.CreateObjectTypeRecords(databaseAssemblies);
+            XpoDefault.DataLayer = new ThreadSafeDataLayer(dict, store);
+            XpoDefault.Session = null;
+            return true;
         }
         catch (Exception ex)
         {
             errorMessage = ex.Message;
             return false;
         }
+    }
+
+    public static bool LoadRemoteDatabase(string? connectionString, Assembly remoteAssembly, bool justConnect, ref string? errorMessage, out IDataLayer? dataLayer)
+    {
+        dataLayer = null;
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            errorMessage = "Connection string is null or empty.";
+            return false;
+        }
+        if (!justConnect)
+        {//Check For database Update
+            try
+            {
+                var dbDataLayer = XpoDefault.GetDataLayer(connectionString, AutoCreateOption.DatabaseAndSchema);
+                using var session1 = new Session(dbDataLayer);
+                session1.UpdateSchema(remoteAssembly);
+                session1.CreateObjectTypeRecords(remoteAssembly);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return false;
+            }
+        }
 
         //Try to Connect to database
         var dict = new ReflectionDictionary();
-        dict.GetDataStoreSchema(System.Reflection.Assembly.GetExecutingAssembly());
+        dict.GetDataStoreSchema(remoteAssembly);
         var store = XpoDefault.GetConnectionProvider(connectionString, AutoCreateOption.SchemaAlreadyExists);
         try
         {
-            XpoDefault.DataLayer = new ThreadSafeDataLayer(dict, store);
-            XpoDefault.Session = null;
+            dataLayer = new ThreadSafeDataLayer(dict, store);
             return true;
         }
         catch (Exception ex)
@@ -74,7 +122,7 @@ public static class SamcoSoftShared
 
     public static void WriteToJsonFile<T>(string filePath, T objectToWrite)
     {
-        var jsonString = JsonSerializer.Serialize(objectToWrite);
+        var jsonString = JsonSerializer.Serialize(objectToWrite, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(filePath, jsonString);
     }
 
@@ -106,13 +154,26 @@ public class BackColorMaker
     }
 }
 
-public class LoggedUser(Users selUser)
+public class LoggedUser
 {
-    public int Oid { get; set; } = selUser.Oid;
-    public string? Username { get; set; } = selUser.username;
-    public string? Group { get; set; } = selUser.group;
-    public string? RealName { get; set; } = selUser.realname;
-    public DateTime? LastLoginTime { get; set; } = selUser.lastLogin;
+    public int Oid { get; set; }
+    public string? Username { get; set; }
+    public string? Group { get; set; }
+    public string? RealName { get; set; }
+    public DateTime? LastLoginTime { get; set; }
+    public byte[]? Avatar { get; set; }
 
-    public byte[] Avatar { get; set; } = selUser.photo;
+    public LoggedUser()
+    {
+    }
+
+    public LoggedUser(Users selUser)
+    {
+        Oid = selUser.Oid;
+        Username = selUser.username;
+        Group = selUser.group;
+        RealName = selUser.realname;
+        LastLoginTime = selUser.lastLogin;
+        Avatar = selUser.photo;
+    }
 }

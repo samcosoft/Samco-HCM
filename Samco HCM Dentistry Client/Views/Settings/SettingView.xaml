@@ -1,0 +1,191 @@
+﻿<dxwui:NavigationPage x:Class="Samco_HCM_Dentistry_Client.Views.SettingView"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                      xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+                      xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+                      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                      xmlns:samco="clr-namespace:Samco_HCM_Shared.Classes;assembly=Samco_HCM_Shared"
+                      mc:Ignorable="d" FlowDirection="RightToLeft" Loaded="SettingView_OnLoaded"
+                      d:DesignHeight="780" d:DesignWidth="800" d:DataContext="{d:DesignInstance samco:HCMSettings}">
+
+    <Grid>
+        <dxwui:PageAdornerControl Header="تنظیمات پایگاه داده و شبکه">
+            <dx:BackgroundPanel>
+                <dxlc:LayoutControl Orientation="Vertical">
+                    <dxlc:LayoutGroup View="GroupBox" Orientation="Vertical" Header="راهنمای اتصال به پایگاه داده"  MaxHeight="280">
+                        <TextBlock TextWrapping="Wrap" FontFamily="{StaticResource IranSansX}" FontSize="14">
+                            <Run Text="برنامه برای کار خود نیاز به محلی برای ذخیره اطلاعات دارد که پایگاه داده نامیده می‌شود." /><LineBreak />
+                            <Run Text="این پایگاه داده می‌تواند مرکزی و بر روی یک سرور، و یا به صورت محلی باشد. توجه کنید در صورت استفاده همزمان چند نفر از این برنامه نیازمند استفاده از پایگاه داده مرکزی هستید." /><LineBreak />
+                            <Run Text="در صورتی که از پایگاه داده محلی استفاده می‌کنید به این نکات توجه کنید:" /><LineBreak />
+                            <Run Text="1- شما باید محلی را برای پایگاه داده برنامه انتخاب کنید این محل می‌تواند یک پوشه‌ی خاص و یا یک درایو دیسک سخت دارای فضای کافی باشد." /><LineBreak />
+                            <Run Text="2- اطلاعات ذخیره شده در محل پایگاه داده برای عملکرد صحیح برنامه ضروری می‌باشند. به هیچ عنوان محتویات پایگاه داده را دستکاری و یا حذف نکنید. در غیر این صورت عواقب از دست رفتن اطلاعات متوجه شما خواهد بود." /><LineBreak />
+                        </TextBlock>
+                        <dxlc:LayoutItem x:Name="DatabaseWarn" Visibility="Collapsed">
+                            <TextBlock TextWrapping="Wrap" FontFamily="{StaticResource Vazir}" FontSize="14" Foreground="Red" Text="اخطار! تغییر در پایگاه داده می‌تواند منجر به از دست دادن اطلاعات شود. فقط در صورتی که اطمینان کامل دارید این کار را انجام دهید." FontWeight="Bold"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Orientation="Vertical">
+                        <dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup.Resources>
+                                <Style TargetType="dxe:TextEdit">
+                                    <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </dxlc:LayoutGroup.Resources>
+                            <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="تنظیمات پایگاه داده">
+                                <dxlc:LayoutGroup View="Tabs">
+                                    <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="پایگاه داده محلی">
+                                        <dxlc:LayoutItem Margin="0,0,0,5">
+                                            <RadioButton x:Name="LocalRadioButton" Content="استفاده از پایگاه داده محلی" IsChecked="True" GroupName="1"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutGroup IsEnabled="{Binding IsChecked, ElementName=LocalRadioButton}" Orientation="Vertical">
+                                            <dxlc:LayoutItem Label="نوع پایگاه:" >
+                                                <dxe:ListBoxEdit>
+                                                    <dxe:ListBoxEditItem Content="Microsoft SQL Local DB" x:Name="MsSqlLocal" IsSelected="True" />
+                                                    <dxe:ListBoxEditItem Content="Microsoft Access" x:Name="AccessLocal" />
+                                                </dxe:ListBoxEdit>
+                                            </dxlc:LayoutItem>
+                                            <dxlc:LayoutItem Label="محل پایگاه داده:" >
+                                                <dxe:ButtonEdit x:Name="BrowseBtn" Text="{Binding DatabaseFilePath}" AllowDefaultButton="False" IsTextEditable="False" Validate="BrowseBtn_Validate">
+                                                    <dxe:ButtonInfo Content="..." Click="BrowseClickBtn_Click" />
+                                                </dxe:ButtonEdit>
+                                            </dxlc:LayoutItem>
+                                            <dxlc:LayoutItem Label="کلمه عبور:" Visibility="{Binding ElementName=AccessLocal, Path=IsSelected,Converter={dx:BooleanToVisibilityConverter}}">
+                                                <dxe:PasswordBoxEdit Name="AcsPassBx" Text="{Binding DatabasePassword}" Validate="PasswordBoxEdit_Validate"/>
+                                            </dxlc:LayoutItem>
+                                        </dxlc:LayoutGroup>
+                                    </dxlc:LayoutGroup>
+                                    <dxlc:LayoutGroup Orientation="Vertical" View="GroupBox" Header="پایگاه داده مرکزی">
+                                        <dxlc:LayoutItem>
+                                            <RadioButton x:Name="ServerButton" Content="استفاده از پایگاه داده مرکزی" GroupName="1"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutGroup IsEnabled="{Binding IsChecked, ElementName=ServerButton}" Orientation="Vertical">
+                                            <dxlc:LayoutItem Label="نوع پایگاه:" >
+                                                <dxe:ListBoxEdit>
+                                                    <dxe:ListBoxEditItem Content="Microsoft SQL" x:Name="MsSqlButton" IsSelected="True" />
+                                                    <dxe:ListBoxEditItem Content="MySQL" x:Name="MySQlButton" />
+                                                </dxe:ListBoxEdit>
+                                            </dxlc:LayoutItem>
+                                            <dxlc:LayoutGroup>
+                                                <dxlc:LayoutItem Label="آدرس سرور:" >
+                                                    <dxe:TextEdit x:Name="ServerName" Text="{Binding ServerAddress}" Validate="ServerName_Validate"/>
+                                                </dxlc:LayoutItem>
+                                                <dxlc:LayoutItem Label="نام پایگاه داده:">
+                                                    <dxe:TextEdit x:Name="ServerDbName" Text="{Binding DatabaseName}" Validate="ServerDBName_Validate"/>
+                                                </dxlc:LayoutItem>
+                                            </dxlc:LayoutGroup>
+                                            <dxlc:LayoutGroup>
+                                                <dxlc:LayoutItem Label="نام کاربری:" >
+                                                    <dxe:TextEdit x:Name="ServerUser" Text="{Binding DatabaseUserId}" Validate="ServerUser_Validate"/>
+                                                </dxlc:LayoutItem>
+                                                <dxlc:LayoutItem Label="کلمه عبور:" >
+                                                    <dxe:PasswordBoxEdit x:Name="ServerPass" Text="{Binding DatabasePassword}" HorizontalContentAlignment="Center" Validate="ServerPass_Validate"/>
+                                                </dxlc:LayoutItem>
+                                            </dxlc:LayoutGroup>
+                                        </dxlc:LayoutGroup>
+                                    </dxlc:LayoutGroup>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup View="GroupBox" Header="تنظیمات ارتباط با رایانه مرکزی" Height="{Binding ElementName=databaseSettingGrp,Path=ActualHeight}" Orientation="Vertical">
+                                <dxlc:LayoutItem Label="دریافت اطلاعات از سرور:">
+                                    <dxe:ToggleSwitch Name="ClientModeBtn" IsChecked="{Binding ActiveClient}" CheckedStateContent="دارد" UncheckedStateContent="ندارد"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutGroup IsEnabled="{Binding ElementName=ClientModeBtn,Path=IsChecked}" Orientation="Vertical">
+                                    <dxlc:LayoutGroup>
+                                        <dxlc:LayoutItem Label="نوع پایگاه:" >
+                                            <dxe:ListBoxEdit>
+                                                <dxe:ListBoxEdit.StyleSettings>
+                                                    <dxe:RadioListBoxEditStyleSettings HighlightedTextBackground="Yellow" HighlightedTextForeground="Black"/>
+                                                </dxe:ListBoxEdit.StyleSettings>
+                                                <dxe:ListBoxEditItem Content="Microsoft SQL" Name="RemoteMsSqlButton" IsSelected="True" />
+                                                <dxe:ListBoxEditItem Content="MySQL" Name="RemoteMySQlButton" />
+                                            </dxe:ListBoxEdit>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutGroup Orientation="Vertical">
+                                            <dxlc:LayoutItem Label="آدرس سرور:">
+                                                <dxe:TextEdit Name="RemoteDatabaseAddress" Text="{Binding RemoteServerAddress}" Validate="RemoteDatabaseAddress_OnValidate"/>
+                                            </dxlc:LayoutItem>
+                                            <dxlc:LayoutItem Label="نام پایگاه داده:">
+                                                <dxe:TextEdit x:Name="RemoteDatabaseName" Text="{Binding RemoteDatabaseName}" Validate="RemoteDatabaseName_OnValidate"/>
+                                            </dxlc:LayoutItem>
+                                        </dxlc:LayoutGroup>
+                                    </dxlc:LayoutGroup>
+                                    <dxlc:LayoutGroup>
+                                        <dxlc:LayoutItem Label="نام کاربری:" >
+                                            <dxe:TextEdit x:Name="RemoteUserName" Text="{Binding RemoteDatabaseUserId}" Validate="RemoteUserName_OnValidate"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem Label="کلمه عبور:" >
+                                            <dxe:PasswordBoxEdit x:Name="RemotePassword" InvalidValueBehavior="AllowLeaveEditor" Text="{Binding RemoteDatabasePassword}" Validate="RemotePassword_OnValidate"/>
+                                        </dxlc:LayoutItem>
+                                    </dxlc:LayoutGroup>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutGroup Header="اطلاعات مرکز" View="GroupBox" Visibility="Visible" MaxHeight="330">
+                                    <dxlc:LayoutGroup.Resources>
+                                        <Style TargetType="dxe:TextEdit">
+                                            <Setter Property="FlowDirection" Value="RightToLeft"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </dxlc:LayoutGroup.Resources>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <dxlc:LayoutGroup Name="HealthCenterInfoBox" View="Tabs" Margin="0 0 10 0">
+                                            <dxlc:LayoutGroup Header="مرکز بهداشت" Orientation="Vertical">
+                                                <dxlc:LayoutItem>
+                                                    <RadioButton Name="HealthCenterButton" GroupName="NameGroup" Content="ثبت مرکز بهداشت" IsChecked="True"/>
+                                                </dxlc:LayoutItem>
+                                                <dxlc:LayoutGroup Orientation="Vertical" IsEnabled="{Binding ElementName=HealthCenterButton, Path=IsChecked}">
+                                                    <dxlc:LayoutItem Label="نام دانشگاه:">
+                                                        <dxe:TextEdit Name="UniversityNameBx"/>
+                                                    </dxlc:LayoutItem>
+                                                    <dxlc:LayoutItem Label="نام شهرستان:">
+                                                        <dxe:TextEdit Name="ProvinceNameBx"/>
+                                                    </dxlc:LayoutItem>
+                                                    <dxlc:LayoutItem Label="نام مرکز بهداشت:">
+                                                        <dxe:TextEdit Name="CenterNameBx"/>
+                                                    </dxlc:LayoutItem>
+                                                </dxlc:LayoutGroup>
+                                            </dxlc:LayoutGroup>
+                                            <dxlc:LayoutGroup Header="کلینیک / درمانگاه" Orientation="Vertical">
+                                                <dxlc:LayoutItem>
+                                                    <RadioButton Name="ClinicButton" GroupName="NameGroup" Content="ثبت کلینیک"/>
+                                                </dxlc:LayoutItem>
+                                                <dxlc:LayoutGroup Orientation="Vertical" IsEnabled="{Binding ElementName=ClinicButton, Path=IsChecked}">
+                                                    <dxlc:LayoutItem Label="نام مرکز:">
+                                                        <dxe:TextEdit Name="ClinicBx"/>
+                                                    </dxlc:LayoutItem>
+                                                    <dxlc:LayoutItem Label="آدرس:">
+                                                        <dxe:TextEdit Name="AddressBx"/>
+                                                    </dxlc:LayoutItem>
+                                                    <dxlc:LayoutItem Label="تلفن:">
+                                                        <dxe:TextEdit Name="PhoneBx"/>
+                                                    </dxlc:LayoutItem>
+                                                </dxlc:LayoutGroup>
+                                            </dxlc:LayoutGroup>
+                                        </dxlc:LayoutGroup>
+                                        <dxe:ImageEdit Name="UniIconBx" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    </Grid>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Margin="0,20,0,0">
+                            <Button Content="ذخیره تنظیمات" Style="{StaticResource ButtonOk}" IsDefault="True" Margin="0,5,0,0" MaxWidth="200" Click="SetDataConBtn_Click"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Name="SetSettGrp" Visibility="Collapsed">
+                            <Button x:Name="SetSettBtn" Content="دریافت تنظیمات از فایل" Style="{StaticResource ButtonEdit}" MinWidth="140" Margin="0,5,0,0" MaxWidth="200"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutControl>
+            </dx:BackgroundPanel>
+        </dxwui:PageAdornerControl>
+    </Grid>
+</dxwui:NavigationPage>

@@ -140,7 +140,6 @@
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>
-
                 </dxlc:LayoutControl>
             </dx:BackgroundPanel>
         </dxwui:PageAdornerControl>

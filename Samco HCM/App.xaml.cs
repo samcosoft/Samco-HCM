@@ -44,13 +44,7 @@ namespace Samco_HCM
             HandyControl.Themes.ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             ApplicationThemeHelper.ApplicationThemeName = Theme.Win11DarkName;
         }
- //internal void SwitchToLightTheme()
- //       {
- //           if (HandyControl.Themes.ThemeManager.Current.AccentColor != accent)
- //           {
- //               HandyControl.Themes.ThemeManager.Current.AccentColor = accent;
- //           }
- //       }
+
         internal void SwitchToLightTheme()
         {
             if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == ApplicationTheme.Light) return;

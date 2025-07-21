@@ -131,13 +131,34 @@ public partial class NewServiceView : IDisposable
         //{
         //    _healthServices.image = null;
         //}
-
+        HealthServices parent = null;
         if (ParentBx.SelectedItem != null)
         {
-            //Add parent
-            _healthServices.parent = _session1.GetObjectByKey<HealthServices>(
+            parent = _session1.GetObjectByKey<HealthServices>(
                 ((ComboBoxEditItem)ParentBx.SelectedItem).Tag.ToString());
         }
+
+        //Validation
+        var oldItem  = _session1.Query<HealthServices>()
+            .FirstOrDefault(x => x.name == _healthServices.name && ReferenceEquals(x.parent, parent));
+        if (_healthServices.Oid < 0)
+        {
+            if (oldItem != null)
+            {
+                MainNotify.ShowError("خطا در ثبت خدمت", "این خدمت قبلاً در این بخش ثبت شده است.");
+                return;
+            }
+        }
+        else
+        {
+            if (oldItem != null && oldItem.Oid != _healthServices.Oid)
+            {
+                MainNotify.ShowError("خطا در ثبت خدمت", "این خدمت قبلاً در این بخش ثبت شده است.");
+                return;
+            }
+        }
+
+        _healthServices.parent = parent;
         _healthServices.ProviderRole = RoleSelBx.Text;
         _healthServices.Save();
         ((WinUIDialogWindow)Parent).DialogResult = true;

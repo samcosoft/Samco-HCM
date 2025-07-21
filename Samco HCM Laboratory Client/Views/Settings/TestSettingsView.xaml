@@ -1,0 +1,212 @@
+﻿<dxwui:NavigationPage x:Class="Samco_HCM_Laboratory_Client.Views.Settings.TestSettingsView"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+                      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                      xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+                      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                      xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                      xmlns:hc="https://handyorg.github.io/handycontrol"
+                      xmlns:labData="clr-namespace:LabData"
+                      xmlns:fa="http://schemas.fontawesome.com/icons/fonts"
+                      mc:Ignorable="d" FlowDirection="RightToLeft"
+                      d:DesignHeight="300" d:DesignWidth="300">
+    <dxwui:PageAdornerControl Header="تنظیمات آزمایش‌ها" Background="#FF00AD68">
+        <dx:BackgroundPanel>
+            <ScrollViewer>
+                <dxlc:LayoutControl>
+                    <dxlc:LayoutGroup Orientation="Vertical" dxlc:LayoutControl.AllowHorizontalSizing="True">
+                        <dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical" Header="لیست بیمه‌ها" View="GroupBox">
+                                <dxlc:LayoutItem Label="بیمه‌های ثبت شده" LabelPosition="Top" VerticalAlignment="Stretch">
+                                    <dxe:ListBoxEdit x:Name="InsList" MinHeight="150" DisplayMember="name" ValueMember="Oid"
+                                                     SelectedIndexChanged="InsList_OnSelectedIndexChanged" AllowLiveDataShaping="True"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="درصد فرانشیز:">
+                                    <dxe:ButtonEdit Name="InsEditBtn" AllowDefaultButton="False" EditValue="{Binding franchises}"
+                                                    d:DataContext="{d:DesignInstance labData:LabInsuranceType}" Mask="d" MaskType="Numeric">
+                                        <dxe:ButtonInfo GlyphKind="Custom" Click="InsSvBtn_OnClick" ToolTip="ذخیره فرانشیز">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_FloppyDisk"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                        <dxe:ButtonInfo GlyphKind="Custom" Click="InsDelBtn_OnClick" ToolTip="حذف فرانشیز">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_Trash"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                    </dxe:ButtonEdit>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="حق فنی (ریال):">
+                                    <dxe:ButtonEdit Name="InsFanniBtn" AllowDefaultButton="False" EditValue="{Binding fanniPrice}"
+                                                    d:DataContext="{d:DesignInstance labData:LabInsuranceType}" Mask="d" MaskType="Numeric">
+                                        <dxe:ButtonInfo GlyphKind="Custom" Click="FanniSvBtn_OnClick" ToolTip="ذخیره حق فنی">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_FloppyDisk"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                        <dxe:ButtonInfo GlyphKind="Custom" Click="FanniDelBtn_OnClick" ToolTip="حذف حق فنی">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_Trash"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                    </dxe:ButtonEdit>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup View="GroupBox" Header="گروه آزمایش‌ها" Orientation="Vertical">
+                                <dxlc:LayoutItem>
+                                    <dxe:ButtonEdit Name="TestGroupEditBtn" AllowDefaultButton="False" Text="{Binding name}"
+                                                    d:DataContext="{d:DesignInstance labData:TestGroup}">
+                                        <dxe:ButtonInfo GlyphKind="Plus" Click="NewGroupBtn" ToolTip="ایجاد گروه جدید"/>
+                                        <dxe:ButtonInfo GlyphKind="Custom" Click="SaveGroupBtn">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_FloppyDisk" ToolTip="ذخیره گروه"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                        <dxe:ButtonInfo GlyphKind="Custom" Click="DeleteGroupBtn" ToolTip="حذف گروه">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_Trash"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                    </dxe:ButtonEdit>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem VerticalAlignment="Stretch">
+                                    <dxe:ListBoxEdit x:Name="TestGroup" MinHeight="150" DisplayMember="name" ValueMember="Oid"
+                                                     SelectedIndexChanged="TestGroup_OnSelectedIndexChanged" AllowLiveDataShaping="True"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem>
+                                        <Button hc:IconElement.Geometry="{StaticResource UpGeometry}" ToolTip="اولویت چاپ بالاتر"
+                                                Style="{StaticResource ButtonMain}" Click="GroupUpBtn_OnClick"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem>
+                                        <Button hc:IconElement.Geometry="{StaticResource DownGeometry}" ToolTip="اولویت چاپ پایینتر"
+                                                Click="GroupDownBtn_OnClick" Style="{StaticResource ButtonWarn}"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup View="GroupBox" Header="اطلاعات آزمایش‌ها">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="آزمایش‌های ثبت شده" LabelPosition="Top" VerticalAlignment="Stretch">
+                                    <dxe:ListBoxEdit x:Name="TestList" MinHeight="150" DisplayMember="name" ValueMember="Oid" AllowLiveDataShaping="True" EditValueChanged="TestList_OnEditValueChanged"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem>
+                                        <Button hc:IconElement.Geometry="{StaticResource UpGeometry}" ToolTip="اولویت چاپ بالاتر"
+                                                Style="{StaticResource ButtonMain}" Click="TestUpBtn_OnClick"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem>
+                                        <Button hc:IconElement.Geometry="{StaticResource DownGeometry}" ToolTip="اولویت چاپ پایینتر"
+                                                Style="{StaticResource ButtonWarn}" Click="TestDownBtn_OnClick"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem>
+                                        <dx:SimpleButton x:Name="NewTestBtn" Content="افزودن" Style="{StaticResource ButtonOk}" Click="NewTestBtn_OnClick"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem>
+                                        <dx:SimpleButton x:Name="EditTestBtn" Content="ویرایش" Style="{StaticResource ButtonEdit}" Click="EditTestBtn_OnClick"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem>
+                                        <dx:SimpleButton x:Name="DelTestBtn" Content="حذف" Style="{StaticResource ButtonCancel}" Click="DelTestBtn_OnClick"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="زیرمجموعه‌ها" LabelPosition="Top" VerticalAlignment="Stretch">
+                                    <dxe:ListBoxEdit x:Name="TestSubList" AllowLiveDataShaping="True" MinHeight="150" DisplayMember="name" ValueMember="Oid" />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutGroup Orientation="Vertical">
+                                    <dxlc:LayoutGroup>
+                                        <dxlc:LayoutItem>
+                                            <Button hc:IconElement.Geometry="{StaticResource UpGeometry}" ToolTip="اولویت چاپ بالاتر"
+                                                    Style="{StaticResource ButtonMain}" Click="TestSubUpBtn_OnClick"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem>
+                                            <Button hc:IconElement.Geometry="{StaticResource DownGeometry}" ToolTip="اولویت چاپ پایینتر"
+                                                    Style="{StaticResource ButtonWarn}" Click="TestSubDownBtn_OnClick"/>
+                                        </dxlc:LayoutItem>
+                                    </dxlc:LayoutGroup>
+                                    <dxlc:LayoutGroup>
+                                        <dxlc:LayoutItem>
+                                            <dx:SimpleButton x:Name="NewSubBtn" Content="افزودن" Style="{StaticResource ButtonOk}" Click="NewSubBtn_OnClick"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem>
+                                            <dx:SimpleButton x:Name="EditSubBtn" Content="ویرایش" Style="{StaticResource ButtonEdit}" Click="EditSubBtn_OnClick"/>
+                                        </dxlc:LayoutItem>
+                                        <dxlc:LayoutItem>
+                                            <dx:SimpleButton x:Name="DelSubBtn" Content="حذف" Style="{StaticResource ButtonCancel}" Click="DelSubBtn_OnClick"/>
+                                        </dxlc:LayoutItem>
+                                    </dxlc:LayoutGroup>
+                                </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                    <dxlc:LayoutGroup Header="لیست تعرفه‌ها" View="GroupBox" Orientation="Vertical">
+                        <dxlc:LayoutItem VerticalAlignment="Stretch">
+                            <dxg:GridControl Name="PriceListGrid" FontFamily="{StaticResource IranSansX}" MinHeight="250" MaxHeight="600" SelectionMode="Row">
+                                <dxg:GridControl.View>
+                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" />
+                                </dxg:GridControl.View>
+                                <dxg:GridColumn FieldName="testName.name" Header="آزمایش" IsSmart="True" GroupIndex="0" />
+                                <dxg:GridColumn FieldName="insType.name" Header="نام بیمه" IsSmart="True" />
+                                <dxg:GridColumn FieldName="price" Header="تعرفه (تومان)" IsSmart="True" />
+                            </dxg:GridControl>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup Name="EditBtnBox">
+                            <dxlc:LayoutItem>
+                                <Button Content="ویرایش تعرفه" Click="EditPriceBtn_Click" Style="{StaticResource ButtonEdit}"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <Button Content="حذف تعرفه" Click="DeletePriceBtn_Click" Style="{StaticResource ButtonCancel}"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup Name="TempEditGroup" Header="نمونه آزمایش‌ها" View="GroupBox" d:DataContext="{d:DesignInstance labData:TestTemplate}">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem>
+                                    <dxe:ButtonEdit Name="TestTempBtn" AllowDefaultButton="False" HorizontalContentAlignment="Center"
+                                                    Text="{Binding Name}">
+                                        <dxe:ButtonInfo GlyphKind="Plus" ToolTip="افزودن" Click="NewTemplateBtn_Click"/>
+                                        <dxe:ButtonInfo GlyphKind="Custom" ToolTip="ذخیره" Click="SaveTemplateBtn_Click">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_FloppyDisk"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                        <dxe:ButtonInfo GlyphKind="Custom" ToolTip="حذف" Click="DeleteTemplateBtn_Click">
+                                            <dxe:ButtonInfo.Content>
+                                                <fa:FontAwesome Icon="Solid_Trash"/>
+                                            </dxe:ButtonInfo.Content>
+                                        </dxe:ButtonInfo>
+                                    </dxe:ButtonEdit>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem VerticalAlignment="Stretch">
+                                    <dxe:ListBoxEdit x:Name="TempGroup" MinHeight="150" DisplayMember="Name" ValueMember="Oid" EditValueChanged="TempGroup_OnEditValueChanged"/>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="کلید میانبر:">
+                                    <dxe:TextEdit Name="TempShortBx" IsReadOnly="True" HorizontalContentAlignment="Center" Tag="{Binding ShortKey}" KeyDown="ShortcutKey_KeyDown" CausesValidation="False"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="لیست آزمایش‌ها:" LabelPosition="Top">
+                                    <dxe:ComboBoxEdit x:Name="TestListToken" FlowDirection="LeftToRight" MaxHeight="90"
+                                                      ValidateOnTextInput="True" ValidateOnEnterKeyPressed="True"
+                                                      AutoComplete="True" VerticalScrollBarVisibility="Auto"
+                                                      IncrementalFiltering="True" NullText="" ImmediatePopup="True"
+                                                      DisplayMember="name" ValueMember="Oid"
+                                                      InvalidValueBehavior="AllowLeaveEditor" ItemsSource="{Binding ElementName=TestList, Path=ItemsSource}">
+                                        <dxe:ComboBoxEdit.StyleSettings>
+                                            <dxe:TokenComboBoxStyleSettings NewTokenPosition="Far" EnableTokenWrapping="True" />
+                                        </dxe:ComboBoxEdit.StyleSettings>
+                                    </dxe:ComboBoxEdit>
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutControl>
+            </ScrollViewer>
+        </dx:BackgroundPanel>
+    </dxwui:PageAdornerControl>
+</dxwui:NavigationPage>

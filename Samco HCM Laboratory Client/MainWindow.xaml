@@ -1,0 +1,61 @@
+﻿<dx:ThemedWindow
+    x:Class="Samco_HCM_Laboratory_Client.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
+    WindowState="Maximized"
+    Icon="Images/Lab.png"
+    Title="Samco® Health Care Management System"
+    WindowStartupLocation="CenterScreen"
+    ShowTitle="True"
+    Height="450" 
+    Width="800"
+    EnableAcrylic="True" ShowGlow="True"
+    ContentRendered="MainWindow_OnContentRendered">
+    <dx:ThemedWindow.HeaderItems>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button HorizontalAlignment="Right" Grid.Column="1" Click="ButtonConfig_OnClick" Name="ButtonConfig" Style="{StaticResource ButtonIcon}" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"/>
+            <Popup AllowsTransparency="True" Grid.Column="1" PlacementTarget="{Binding ElementName=ButtonConfig}" HorizontalOffset="-35" Name="PopupConfig" VerticalOffset="6" StaysOpen="False">
+                <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="4" Margin="16" Effect="{StaticResource EffectShadow2}" Padding="10">
+                    <hc:UniformSpacingPanel VerticalSpacing="5" Orientation="Vertical" ItemHorizontalAlignment="Stretch" Spacing="10">
+                        <hc:Gravatar Name="ProfilePic" Style="{StaticResource GravatarCircleImg}"/>
+                        <Label Content="{DynamicResource CurrentUserName}" FontFamily="{StaticResource Vazir}"
+                           HorizontalContentAlignment="Center" Margin="0,5" MinHeight="35"/>
+                        <hc:Divider Width="200" Margin="0,5"/>
+                        <Button Click="AboutBtn_Click" Style="{StaticResource ButtonEdit}">
+                            <hc:UniformSpacingPanel HorizontalSpacing="3">
+                                <TextBlock>درباره برنامه</TextBlock>
+                                <fa6:FontAwesome Icon="Solid_CircleInfo" Margin="0 3 0 0"/>
+                            </hc:UniformSpacingPanel>
+                        </Button>
+                        <dx:SimpleButton Click="LogOutButton_Click" Style="{StaticResource ButtonCancel}">
+                            <hc:UniformSpacingPanel HorizontalSpacing="3">
+                                <TextBlock>خروج از سیستم</TextBlock>
+                                <fa6:FontAwesome Icon="Solid_PersonToDoor" Margin="0 3 0 0"/>
+                            </hc:UniformSpacingPanel>
+                        </dx:SimpleButton>
+                        <hc:Divider Width="200" Margin="0,10" Content="تم برنامه" FontFamily="{StaticResource IranSansX}"/>
+                        <Grid HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <fa6:FontAwesome Icon="Solid_Sun" Margin="0 3 10 0" FontSize="20"/>
+                                <ToggleButton Name="ThemeButton" Style="{StaticResource ToggleButtonSwitch}" Checked="ThemeButton_OnChecked" Unchecked="ThemeButton_OnUnchecked"/>
+                                <fa6:FontAwesome Icon="Solid_Moon" Margin="10 3 0 0" FontSize="20"/>
+                            </StackPanel>
+                        </Grid>
+                    </hc:UniformSpacingPanel>
+                </Border>
+            </Popup>
+        </Grid>
+    </dx:ThemedWindow.HeaderItems>
+    <Grid>
+        <dxwui:NavigationFrame x:Name="NavFrame"/>
+        <dx:LoadingDecorator x:Name="WaitIndic" SplashScreenLocation="CenterContainer" />
+    </Grid>
+</dx:ThemedWindow>

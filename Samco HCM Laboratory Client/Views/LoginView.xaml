@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Samco_HCM_Laboratory_Client.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
+             mc:Ignorable="d" FlowDirection="RightToLeft"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <dx:DXBorder Grid.Column="0" CornerRadius="20 0 0 20" BorderBrush="White" BorderThickness="2 2 0 2">
+            <dxlc:LayoutControl Orientation="Vertical">
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem>
+                        <TextBlock FontSize="24" FontWeight="Bold">
+                            <Run Text="&#xf500;" FontFamily="{StaticResource FontAwesomeSolid}"/>
+                            <Run Text="ورود به Samco® HCM System"/>
+                        </TextBlock>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <Separator VerticalAlignment="Top"/>
+                <dxlc:LayoutGroup Orientation="Vertical" ItemSpace="10">
+                    <dxlc:LayoutItem Name="FirstUserNotification" Visibility="Collapsed">
+                        <TextBlock Foreground="DarkRed">نام کاربری و کلمه عبور پیش‌فرض admin است.</TextBlock>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="نام کاربری:">
+                        <dxe:ComboBoxEdit MinWidth="130" x:Name="UserBx" DisplayMember="RealName" ValueMember="Username" HorizontalContentAlignment="Center" InvalidValueBehavior="AllowLeaveEditor" IsTextEditable="False"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="کلمه عبور:">
+                        <dxe:PasswordBoxEdit MinWidth="130" x:Name="PassBx" HorizontalContentAlignment="Center" FlowDirection="LeftToRight" InvalidValueBehavior="AllowLeaveEditor" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup Margin="0 10 0 0">
+                        <dxlc:LayoutItem>
+                            <Button Content="ورود به سامانه" MinWidth="100" IsDefault="True" Click="LoginBtn_Click" Style="{StaticResource ButtonOk}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem>
+                            <Button Content="خروج" FontSize="14" MinWidth="100" Click="ExitBtn_Click" Style="{StaticResource ButtonCancel}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutItem VerticalAlignment="Bottom" HorizontalContentAlignment="Center" Margin="0 20 0 10">
+                    <StackPanel Orientation="Horizontal">
+                        <fa6:FontAwesome Icon="Solid_Sun" Margin="0 3 10 0" FontSize="20"/>
+                        <ToggleButton Name="ThemeButton" Style="{DynamicResource ToggleButtonSwitch}" Checked="ThemeButton_OnChecked" Unchecked="ThemeButton_OnUnchecked"/>
+                        <fa6:FontAwesome Icon="Solid_Moon" Margin="10 3 0 0" FontSize="20"/>
+                    </StackPanel>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutControl>
+        </dx:DXBorder>
+        <Grid Grid.Column="1" FlowDirection="LeftToRight">
+            <dx:DXBorder CornerRadius="20 0 0 20" Padding="20" BorderBrush="White" BorderThickness="2 2 0 2">
+                <dx:DXImage Name="LogoImage" Source="../Images/Lab.png" MaxWidth="200" HorizontalAlignment="Center"/>
+            </dx:DXBorder>
+        </Grid>
+    </Grid>
+</UserControl>

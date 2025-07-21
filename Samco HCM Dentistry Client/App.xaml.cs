@@ -2,11 +2,7 @@
 using DevExpress.Xpf.Core;
 using FontAwesome6;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -44,6 +40,20 @@ namespace Samco_HCM_Dentistry_Client
             FontAwesome6.Fonts.FontAwesomeFonts.LoadStyles(new Uri("pack://application:,,,/Fonts/"), EFontAwesomeStyle.Brands, EFontAwesomeStyle.Solid);
             ThemedWindow.RoundCorners = true;
             ApplicationThemeHelper.ApplicationThemeName = Theme.Win11SystemName;
+        }
+
+        internal void SwitchToDarkTheme()
+        {
+            if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == HandyControl.Themes.ApplicationTheme.Dark) return;
+            HandyControl.Themes.ThemeManager.Current.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Dark;
+            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11DarkName;
+        }
+       
+        internal void SwitchToLightTheme()
+        {
+            if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == HandyControl.Themes.ApplicationTheme.Light) return;
+            HandyControl.Themes.ThemeManager.Current.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Light;
+            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11LightName;
         }
 
         private void App_OnExit(object sender, ExitEventArgs e)

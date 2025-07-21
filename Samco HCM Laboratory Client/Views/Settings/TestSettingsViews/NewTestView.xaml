@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="Samco_HCM_Laboratory_Client.Views.Settings.TestSettingsViews.NewTestView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:data="clr-namespace:LabData"
+             xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
+             MinWidth="450"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance Type=data:TestName}">
+    <ScrollViewer>
+        <dxlc:LayoutControl Orientation="Vertical">
+            <dxlc:LayoutGroup Orientation="Horizontal">
+                <dxlc:LayoutItem Label="نام آزمایش:" LabelPosition="Top">
+                    <dxe:TextEdit x:Name="TestNameBx" Text="{Binding Name}" NullText="الزامی" FlowDirection="LeftToRight"
+                                  Validate="TestNameBx_OnValidate"/>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutItem Label="زیرمجموعه:" LabelPosition="Top">
+                    <dxe:ComboBoxEdit x:Name="ParentBx" DisplayMember="Name" ValueMember="Oid" NullText="اختیاری" ShowCustomItems="True" IsTextEditable="False" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="نوع پاسخ:" LabelPosition="Top">
+                    <dxe:ComboBoxEdit x:Name="DataTypeBx" IsTextEditable="False" SelectedIndex="{Binding dataType}"
+                                      EditValueChanged="DataTypeBx_OnEditValueChanged" NullText="الزامی" Validate="DataTypeBx_OnValidate">
+                        <dxe:ComboBoxEditItem Content="عددی"/>
+                        <dxe:ComboBoxEditItem Content="انتخابی" />
+                        <dxe:ComboBoxEditItem Content="نوشتاری" />
+                    </dxe:ComboBoxEdit>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Name="SelectionListBox" View="GroupBox" Orientation="Vertical" IsCollapsible="True" Visibility="Collapsed">
+                <dxlc:LayoutItem Label="لیست انتخاب" LabelPosition="Top" VerticalAlignment="Stretch">
+                    <dxe:ListBoxEdit x:Name="ValueList" MinHeight="150" EditValueChanged="ValueList_OnEditValueChanged"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem>
+                    <dxe:ButtonEdit Name="ValueEditBtn" AllowDefaultButton="False">
+                        <dxe:ButtonInfo GlyphKind="Plus" Click="NewValueBtn" ToolTip="ایجاد مقدار جدید"/>
+                        <dxe:ButtonInfo GlyphKind="Custom" Click="SaveValueBtn">
+                            <dxe:ButtonInfo.Content>
+                                <fa6:FontAwesome Icon="Solid_FloppyDisk" ToolTip="ذخیره مقدار"/>
+                            </dxe:ButtonInfo.Content>
+                        </dxe:ButtonInfo>
+                        <dxe:ButtonInfo GlyphKind="Custom" Click="DeleteValueBtn" ToolTip="حذف مقدار">
+                            <dxe:ButtonInfo.Content>
+                                <fa6:FontAwesome Icon="Solid_Trash"/>
+                            </dxe:ButtonInfo.Content>
+                        </dxe:ButtonInfo>
+                    </dxe:ButtonEdit>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutItem Label="گروه:" LabelPosition="Top">
+                    <dxe:ComboBoxEdit x:Name="TestGroupBx" DisplayMember="name" ValueMember="Oid" NullText="الزامی" Validate="TestGroupBx_OnValidate"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="واحد:" LabelPosition="Top">
+                    <dxe:TextEdit FlowDirection="LeftToRight" Text="{Binding unit}"/>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="محدوده طبیعی:" LabelPosition="Top" Name="NumericNlRange">
+                        <dxlc:LayoutGroup>
+                            <dxlc:LayoutItem>
+                                <dxe:TextEdit Name="MaxValueBx" Mask="f2" MaskType="Numeric"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <dxe:TextEdit Name="MinValueBx" Mask="f2" MaskType="Numeric"/>
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="محدوده طبیعی:" LabelPosition="Top" Name="SelectionNlRange" Visibility="Collapsed">
+                        <dxe:ComboBoxEdit Name="NlRangeCbx" IsTextEditable="False" Text="{Binding nlRange}"
+                                          ImmediatePopup="True" FlowDirection="LeftToRight" PopupMaxHeight="100" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="محدوده طبیعی:" LabelPosition="Top" Name="TextNlRange" Visibility="Collapsed">
+                        <dxe:TextEdit Name="NlRangeTextBx" Text="{Binding nlRange}" FlowDirection="LeftToRight"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutItem Label="مقدار پیشفرض:" LabelPosition="Top">
+                    <dxe:ComboBoxEdit Name="DefaultValueBx" FilterCondition="StartsWith" IncrementalFiltering="True" HorizontalContentAlignment="Center" ValidateOnTextInput="False"
+          ItemsSource="{Binding ElementName=ValueList, Path=ItemsSource}" Text="{Binding defValue}" IsTextEditable="True" AllowDefaultButton="False"
+          AutoComplete="False" CausesValidation="True" ImmediatePopup="True" FlowDirection="LeftToRight" PopupMaxHeight="100" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutItem Label="مبلغ آزمایش آزاد (ریال):" Name="RealPriceLab">
+                    <dxe:TextEdit Name="RealPriceBx" Text="{Binding realPrice}" NullText="الزامی" MaskType="Numeric"
+                                  Mask="d" MaxLength="6" Validate="RealPriceBx_OnValidate" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Margin="0,20,0,0">
+                <dxlc:LayoutItem>
+                    <Button Style="{StaticResource ButtonOk}" Content="ثبت اطلاعات" IsDefault="True" Click="SaveBtn_OnClick"/>
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem>
+                    <Button Style="{StaticResource ButtonCancel}" Content="انصراف" Click="CancelBtn_OnClick"/>
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </ScrollViewer>
+</UserControl>

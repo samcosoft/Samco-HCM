@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using BotCrypt;
+using DeviceId;
+
 // ReSharper disable InconsistentNaming
 
 namespace Samco_HCM_Shared.Classes
@@ -13,8 +15,26 @@ namespace Samco_HCM_Shared.Classes
     {
         [JsonIgnore]
         public string? SettingDirectory { get; set; }
-        private const string EncryptionKey = "SamcoHCM";
 
+        [JsonIgnore] private string EncryptionKey { get; set; }
+        public string? SettingFileName { get; set; }
+
+        public HCMSettings()
+        {
+            EncryptionKey = new DeviceIdBuilder()
+                .AddMachineName()
+                .AddMacAddress()
+                .ToString();
+        }
+
+        public HCMSettings(string settingFileName)
+        {
+            SettingFileName = settingFileName;
+            EncryptionKey = new DeviceIdBuilder()
+                .AddMachineName()
+                .AddMacAddress()
+                .ToString();
+        }
         #region Database Details
 
         public enum DatabaseTypes
@@ -23,7 +43,8 @@ namespace Samco_HCM_Shared.Classes
             MicrosoftSQLServer,
             MicrosoftSQLLocal,
             MySql,
-            Access
+            Access,
+            SQLite
         }
 
         [JsonIgnore]
@@ -49,6 +70,8 @@ namespace Samco_HCM_Shared.Classes
                         if (string.IsNullOrEmpty(DatabaseFilePath) || string.IsNullOrEmpty(DatabasePassword)) return null;
 
                         return AccessConnectionProvider.GetConnectionStringACE(DatabaseFilePath, DatabasePassword);
+                    case DatabaseTypes.SQLite:
+                        return string.IsNullOrEmpty(DatabaseFilePath) ? null : SQLiteConnectionProvider.GetConnectionString(DatabaseFilePath);
                     case DatabaseTypes.NotSet:
                         break;
                     default:
@@ -61,8 +84,7 @@ namespace Samco_HCM_Shared.Classes
 
         [DataMember] public DatabaseTypes DatabaseType { get; set; }
 
-        [DataMember] public string? serverAddress;
-
+        [DataMember] public string? serverAddress { get; set; }
         [JsonIgnore]
         public string? ServerAddress
         {
@@ -74,9 +96,7 @@ namespace Samco_HCM_Shared.Classes
             }
         }
 
-        [DataMember]
-        private string? databaseName { get; set; }
-
+        [DataMember] private string? databaseName { get; set; }
         [JsonIgnore]
         public string? DatabaseName
         {
@@ -84,13 +104,11 @@ namespace Samco_HCM_Shared.Classes
             set
             {
                 databaseName = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("DatabaseName"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(DatabaseName)));
             }
         }
 
-        [DataMember]
-        public string? databaseEncUserid { get; set; }
-
+        [DataMember] public string? databaseEncUserid { get; set; }
         [JsonIgnore]
         public string DatabaseUserId
         {
@@ -98,13 +116,11 @@ namespace Samco_HCM_Shared.Classes
             set
             {
                 databaseEncUserid = Crypter.EncryptString(EncryptionKey, value);
-                OnPropertyChanged(new PropertyChangedEventArgs("DatabaseUserId"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(DatabaseUserId)));
             }
         }
 
-        [DataMember]
-        public string? databaseEncPass { get; set; }
-
+        [DataMember] public string? databaseEncPass { get; set; }
         [JsonIgnore]
         public string DatabasePassword
         {
@@ -112,12 +128,11 @@ namespace Samco_HCM_Shared.Classes
             set
             {
                 databaseEncPass = Crypter.EncryptString(EncryptionKey, value);
-                OnPropertyChanged(new PropertyChangedEventArgs("DatabasePassword"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(DatabasePassword)));
             }
         }
 
-        [DataMember]
-        public string? databaseFilePath { get; set; }
+        [DataMember] public string? databaseFilePath { get; set; }
 
         [JsonIgnore]
         public string? DatabaseFilePath
@@ -126,7 +141,7 @@ namespace Samco_HCM_Shared.Classes
             set
             {
                 databaseFilePath = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("DatabaseFilePath"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(DatabaseFilePath)));
             }
         }
 
@@ -162,7 +177,7 @@ namespace Samco_HCM_Shared.Classes
         [DataMember] public string? MarkazAddress { get; set; }
         [DataMember] public string? ApplicationLicense { get; set; }
         [DataMember] public string? SettingVersionString { get; set; }
-        
+
         [DataMember]
         public Version? SettingVersion
         {
@@ -170,8 +185,7 @@ namespace Samco_HCM_Shared.Classes
             set => SettingVersionString = value == null ? string.Empty : value.ToString();
         }
 
-        [DataMember]
-        public string? AppThemeName { get; set; }
+        [DataMember] public string? AppThemeName { get; set; }
 
         [DataMember] public bool IsClinic { get; set; }
 
@@ -183,14 +197,100 @@ namespace Samco_HCM_Shared.Classes
 
         #endregion
 
+        #region Network Settings
+        [JsonIgnore]
+        public string? RemoteConnectionString
+        {
+            get
+            {
+                switch (DatabaseType)
+                {
+                    case DatabaseTypes.MicrosoftSQLServer:
+                        if (string.IsNullOrEmpty(RemoteServerAddress) || string.IsNullOrEmpty(RemoteDatabaseUserId) || string.IsNullOrEmpty(RemoteDatabasePassword) || string.IsNullOrEmpty(RemoteDatabaseName)) return null;
+
+                        return MSSqlConnectionProvider.GetConnectionString(RemoteServerAddress, RemoteDatabaseUserId, RemoteDatabasePassword, RemoteDatabaseName);
+                    case DatabaseTypes.MySql:
+                        if (string.IsNullOrEmpty(RemoteServerAddress) || string.IsNullOrEmpty(RemoteDatabaseUserId) || string.IsNullOrEmpty(RemoteDatabasePassword) || string.IsNullOrEmpty(RemoteDatabaseName)) return null;
+
+                        return MySqlConnectionProvider.GetConnectionString(RemoteServerAddress, RemoteDatabaseUserId, RemoteDatabasePassword, RemoteDatabaseName);
+                    case DatabaseTypes.NotSet:
+                        break;
+                }
+
+                return null;
+            }
+        }
+        [DataMember] public DatabaseTypes RemoteDatabaseType { get; set; }
+        [DataMember] public string? remoteServerAddress { get; set; }
+
+        [JsonIgnore]
+        public string? RemoteServerAddress
+        {
+            get => remoteServerAddress;
+            set
+            {
+                remoteServerAddress = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(RemoteServerAddress)));
+            }
+        }
+
+        [DataMember] public string? remoteDatabaseName { get; set; }
+        [JsonIgnore]
+        public string? RemoteDatabaseName
+        {
+            get => remoteDatabaseName;
+            set
+            {
+                remoteDatabaseName = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(RemoteDatabaseName)));
+            }
+        }
+
+        [DataMember] public string? remoteDatabaseEncUserId { get; set; }
+        [JsonIgnore]
+        public string RemoteDatabaseUserId
+        {
+            get => remoteDatabaseEncUserId != null ? Crypter.DecryptString(EncryptionKey, remoteDatabaseEncUserId) : string.Empty;
+            set
+            {
+                remoteDatabaseEncUserId = Crypter.EncryptString(EncryptionKey, value);
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(RemoteDatabaseUserId)));
+            }
+        }
+
+        [DataMember] public string? remoteDatabaseEncPassword { get; set; }
+        [JsonIgnore]
+        public string RemoteDatabasePassword
+        {
+            get => remoteDatabaseEncPassword != null ? Crypter.DecryptString(EncryptionKey, remoteDatabaseEncPassword) : string.Empty;
+            set
+            {
+                remoteDatabaseEncPassword = Crypter.EncryptString(EncryptionKey, value);
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(RemoteDatabasePassword)));
+            }
+        }
+
+        public void ResetNetworkSettings()
+        {
+            RemoteDatabaseType = DatabaseTypes.NotSet;
+            RemoteServerAddress = null;
+            RemoteDatabaseName = null;
+            remoteDatabaseEncUserId = null;
+            remoteDatabaseEncPassword = null;
+        }
+
+        [DataMember] public bool ActiveClient { get; set; }
+
+        #endregion
+
         public void Save()
         {
-            SamcoSoftShared.WriteToJsonFile(SettingDirectory + "\\Settings.json", this);
+            SamcoSoftShared.WriteToJsonFile(SettingDirectory + $"\\{SettingFileName}.json", this);
         }
 
         public void SaveBackup()
         {
-            SamcoSoftShared.WriteToJsonFile(SettingDirectory + "\\Settings.bck", this);
+            SamcoSoftShared.WriteToJsonFile(SettingDirectory + $"\\{SettingFileName}.bck", this);
         }
 
         #region INotifyPropertyChanged members

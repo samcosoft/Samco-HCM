@@ -44,6 +44,7 @@ public partial class ServiceInsuranceView : IDisposable
         ServiceList.ItemsSource = new XPCollection<HealthServices>(_session1);
         var serviceCollection = new XPCollection<HealthServices>(_session1).Where(x => x.HealthServicesCollection.Count == 0).ToList();
         SvcCbx.ItemsSource = serviceCollection;
+        ServiceSelCbx.ItemsSource = serviceCollection;
         RoleList.ItemsSource = SamcoSoftShared.LoadedSettings!.PersonnelRole;
         ShiftStartTime.DateTime = SamcoSoftShared.LoadedSettings.StartShiftTime ?? new DateTime(2001, 1, 1, 8, 0, 0);
         ShiftEndTime.DateTime = SamcoSoftShared.LoadedSettings.EndShiftTime ?? new DateTime(2001, 1, 1, 8, 0, 0);

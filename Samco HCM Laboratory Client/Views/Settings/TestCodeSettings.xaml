@@ -1,0 +1,73 @@
+﻿<dxwui:NavigationPage x:Class="Samco_HCM_Laboratory_Client.Views.Settings.TestCodeSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <dxwui:PageAdornerControl Header="تنظیمات کدهای دستگاه" Background="#FF108CA8">
+        <dx:BackgroundPanel>
+            <dxlc:LayoutControl Orientation="Vertical">
+                <dxlc:LayoutGroup Header="کدهای معادل خروجی دستگاه" View="GroupBox">
+                    <dxlc:LayoutItem>
+                        <dxg:GridControl x:Name="MachineCodeGrid" EnableSmartColumnsGeneration="True" MaxHeight="1000" SelectionMode="Row">
+                            <dxg:GridControl.View>
+                                <dxg:TableView AllowPerPixelScrolling="True" NewItemRowPosition="Bottom" NavigationStyle="Row" AllowEditing="False" AllowGrouping="False" BestFitMode="Smart" ShowSearchPanelMode="Always" SearchPanelCriteriaOperatorType="And" />
+                            </dxg:GridControl.View>
+                            <dxg:GridColumn FieldName="Code" Header="کد دستگاه" EditFormCaption="کد دستگاه" />
+                            <dxg:GridColumn FieldName="TestCode" Header="نام آزمایش" EditFormCaption="نام آزمایش" BestFitArea="All" UnboundType="String" />
+                        </dxg:GridControl>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutGroup Orientation="Vertical">
+                        <dxlc:LayoutItem Label="کد آزمایش:">
+                            <dxe:TextEdit FlowDirection="LeftToRight" Name="TestCodeBx" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="نام آزمایش:">
+                            <dxe:ComboBoxEdit Name="TestCbx" IncrementalSearch="True" IncrementalFiltering="True" ItemsSource="{Binding Data, Source={StaticResource TestNameDataCollection}}" DisplayMember="name" ValueMember="Oid" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup>
+                            <dxlc:LayoutItem>
+                                <dx:SimpleButton Name="SubBtn" Content="ثبت" IsDefault="True" />
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem>
+                                <dx:SimpleButton Name="DelBtn" Content="حذف" IsDefault="True" />
+                            </dxlc:LayoutItem>
+                        </dxlc:LayoutGroup>
+                        <dxlc:LayoutGroup Header="تنظیمات جدول" View="GroupBox">
+                            <dxlc:LayoutGroup Orientation="Vertical">
+                                <dxlc:LayoutItem Label="ستون کد دستگاه:">
+                                    <dxe:TextEdit Mask="Ll" MaskType="Simple" NullText="الزامی" x:Name="CodeColBx" />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="ستون کد پذیرش:">
+                                    <dxe:TextEdit Mask="Ll" MaskType="Simple" NullText="الزامی" x:Name="RecpColBx" />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="ستون نام بیمار:">
+                                    <dxe:TextEdit Mask="Ll" MaskType="Simple" NullText="الزامی" x:Name="NameColBx" />
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutItem Label="ستون پاسخ:">
+                                    <dxe:TextEdit Mask="Ll" MaskType="Simple" NullText="الزامی" x:Name="ResColBx" />
+                                </dxlc:LayoutItem>
+                            </dxlc:LayoutGroup>
+                            <!--<dxlc:LayoutGroup>
+                        <dxlc:LayoutItem Label="عبارت پَرِش:">
+                            <dxe:TextEdit Name="SkipWordBx"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="تعداد پَرِش:">
+                            <dxe:SpinEdit Name="SkipNumBx" IsFloatValue="False" MinValue="0" Text="0" HorizontalContentAlignment="Center" />
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>-->
+                        </dxlc:LayoutGroup>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutItem Margin="0 10 0 0">
+                    <dx:SimpleButton x:Name="SetDataConBtn" Content="ذخیره تنظیمات" IsDefault="True" HorizontalAlignment="Center" MinWidth="140" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutControl>
+        </dx:BackgroundPanel>
+    </dxwui:PageAdornerControl>
+</dxwui:NavigationPage>

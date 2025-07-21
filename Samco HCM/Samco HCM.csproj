@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<TargetFramework>net9.0-windows10.0.17763.0</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<AssemblyName>Samco_HCM</AssemblyName>
 		<RootNamespace>Samco_HCM</RootNamespace>
@@ -87,29 +87,29 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-		<PackageReference Include="DevExpress.Data" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Reporting.Core" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Win.Design" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.Controls" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.Core" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.Dialogs" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.LayoutControl" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.Reporting" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.Themes.Win11Dark" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Wpf.Themes.Win11Light" Version="24.1.7" />
-		<PackageReference Include="DevExpress.Xpo" Version="24.1.7" />
+		<PackageReference Include="DevExpress.Data" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Reporting.Core" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Win.Design" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Controls" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Core" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Dialogs" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Reporting" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Themes.Win11Dark" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Wpf.Themes.Win11Light" Version="25.1.3" />
+		<PackageReference Include="DevExpress.Xpo" Version="25.1.3" />
 		<PackageReference Include="FontAwesome6.Pro.Fonts" Version="2.5.1" />
-		<PackageReference Include="HandyControls" Version="3.5.3" />
-		<PackageReference Include="HandyControls.Lang.fa" Version="3.5.3" />
+		<PackageReference Include="HandyControls" Version="3.6.0" />
+		<PackageReference Include="HandyControls.Lang.fa" Version="3.6.0" />
 		<PackageReference Include="Notifications.Wpf.Core" Version="2.0.1" />
-		<PackageReference Include="System.Data.OleDb" Version="9.0.0" />
+		<PackageReference Include="System.Data.OleDb" Version="9.0.5" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Samco HCM Shared\Samco HCM Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="LogicNP.CryptoLicensing.NetCore">
-	    <HintPath>..\..\..\..\..\..\Program Files (x86)\LogicNP Software\CryptoLicensing For .Net 2020\LogicNP.CryptoLicensing.NetCore.dll</HintPath>
+	    <HintPath>..\..\..\..\..\..\..\Program Files (x86)\LogicNP Software\CryptoLicensing For .Net 2020\LogicNP.CryptoLicensing.NetCore.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 	<ItemGroup>

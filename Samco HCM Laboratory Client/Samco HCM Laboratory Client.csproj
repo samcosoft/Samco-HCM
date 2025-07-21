@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0-windows10.0.17763.0</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <ApplicationIcon>Lab Icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Images\About.png" />
+      <None Remove="Images\Lab.png" />
+      <None Remove="Images\Lab.svg" />
+      <None Remove="Images\LabResultIcon.Samco" />
+      <None Remove="Images\LabSplash.png" />
+      <None Remove="Images\Logo.png" />
+      <None Remove="Images\ReceptionIcon.Samco" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Lab Icon.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+        <PackageReference Include="DevExpress.Wpf" Version="25.1.*" />
+        <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="25.1.*" />
+        <PackageReference Include="DevExpress.Xpo" Version="25.1.3" />
+        <PackageReference Include="FontAwesome6.Pro.Fonts" Version="2.5.1" />
+        <PackageReference Include="HandyControls" Version="3.6.0" />
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.7" />
+        <PackageReference Include="Notifications.Wpf.Core" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Samco HCM Shared\Samco HCM Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Fonts\FontAwesome 6 Brands.otf" />
+      <Resource Include="Fonts\FontAwesome 6 Solid.otf" />
+      <Resource Include="Fonts\IRANSansX.ttf" />
+      <Resource Include="Fonts\Vazir-Bold.ttf" />
+      <Resource Include="Images\About.png" />
+      <Resource Include="Images\AllStatIcon.samco">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\BillEditIcon.samco">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\DailyStatIcon.samco">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\DatabaseIcon.samco">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\Lab.png" />
+      <Resource Include="Images\Lab.svg" />
+      <Resource Include="Images\LabResultIcon.samco" />
+      <Resource Include="Images\LabSplash.png" />
+      <Resource Include="Images\Logo.png" />
+      <Resource Include="Images\ReceptionIcon.samco" />
+      <Resource Include="Images\ServiceInsuranceIcon.samco">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Images\UserSettingIcon.samco">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\Settings\TestCodeSettings.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="LabData.xpo.diagram">
+        <AutoGen>True</AutoGen>
+      </None>
+    </ItemGroup>
+
+</Project>

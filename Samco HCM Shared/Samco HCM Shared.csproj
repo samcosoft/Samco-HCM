@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.17763.0</TargetFramework>
     <RootNamespace>Samco_HCM_Shared</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
@@ -10,15 +10,19 @@
     <Version>3.0.13.23204</Version>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Fonts\**" />
+    <EmbeddedResource Remove="Fonts\**" />
+    <None Remove="Fonts\**" />
+    <Page Remove="Fonts\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="BotCrypt" Version="1.5.0" />
-    <PackageReference Include="DevExpress.Xpo" Version="24.1.7" />
+    <PackageReference Include="DevExpress.Xpo" Version="25.1.3" />
+    <PackageReference Include="DeviceId" Version="6.9.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="HCMData.xpo.diagram">
       <AutoGen>True</AutoGen>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Fonts\" />
   </ItemGroup>
 </Project>

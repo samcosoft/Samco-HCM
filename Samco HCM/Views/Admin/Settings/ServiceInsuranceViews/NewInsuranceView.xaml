@@ -6,7 +6,8 @@
              xmlns:hcmdata="clr-namespace:HCMData;assembly=Samco_HCM_Shared"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" d:DataContext="{d:DesignInstance Type=hcmdata:insuranceType}"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             d:DataContext="{d:DesignInstance Type=hcmdata:insuranceType}"
              mc:Ignorable="d"
              d:DesignHeight="150" d:DesignWidth="450">
     <Grid>

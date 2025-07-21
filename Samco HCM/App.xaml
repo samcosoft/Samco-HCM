@@ -10,7 +10,6 @@
              xmlns:samcoHcmShared="clr-namespace:Samco_HCM_Shared;assembly=Samco_HCM_Shared"
              xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-             xmlns:dxco="http://schemas.devexpress.com/winfx/2008/xaml/controls"
              StartupUri="MainWindow.xaml" Startup="App_OnStartup" Exit="App_OnExit">
     <Application.Resources>
         <ResourceDictionary>
