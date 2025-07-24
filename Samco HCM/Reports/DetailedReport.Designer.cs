@@ -81,7 +81,7 @@
             this.Detail.Dpi = 254F;
             this.Detail.HeightF = 228F;
             this.Detail.Name = "Detail";
-            this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
+            this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0F, 0F, 0F, 0F, 254F);
             this.Detail.SubBands.AddRange(new DevExpress.XtraReports.UI.SubBand[] {
             this.SubBand1});
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
@@ -92,7 +92,7 @@
             this.XrLabel5.Font = new DevExpress.Drawing.DXFont("IRANSansX Bold", 14F);
             this.XrLabel5.LocationFloat = new DevExpress.Utils.PointFloat(994.0377F, 80.22166F);
             this.XrLabel5.Name = "XrLabel5";
-            this.XrLabel5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel5.SizeF = new System.Drawing.SizeF(470.1877F, 58.41999F);
             this.XrLabel5.StylePriority.UseFont = false;
             this.XrLabel5.StylePriority.UseTextAlignment = false;
@@ -131,8 +131,7 @@
             // XrTableCell3
             // 
             this.XrTableCell3.Dpi = 254F;
-            this.XrTableCell3.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell3.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell3.Name = "XrTableCell3";
             this.XrTableCell3.StylePriority.UseFont = false;
             this.XrTableCell3.Text = "نام تجهیز";
@@ -141,8 +140,7 @@
             // XrTableCell4
             // 
             this.XrTableCell4.Dpi = 254F;
-            this.XrTableCell4.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell4.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell4.Name = "XrTableCell4";
             this.XrTableCell4.StylePriority.UseFont = false;
             this.XrTableCell4.Text = "تعداد";
@@ -151,8 +149,7 @@
             // XrTableCell6
             // 
             this.XrTableCell6.Dpi = 254F;
-            this.XrTableCell6.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell6.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell6.Multiline = true;
             this.XrTableCell6.Name = "XrTableCell6";
             this.XrTableCell6.StylePriority.UseFont = false;
@@ -197,7 +194,7 @@
             // XrTableCell1
             // 
             this.XrTableCell1.Dpi = 254F;
-            this.XrTableCell1.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.XrTableCell1.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell1.Name = "XrTableCell1";
             this.XrTableCell1.StylePriority.UseFont = false;
             this.XrTableCell1.Text = "نام خدمت";
@@ -206,7 +203,7 @@
             // XrTableCell2
             // 
             this.XrTableCell2.Dpi = 254F;
-            this.XrTableCell2.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.XrTableCell2.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell2.Name = "XrTableCell2";
             this.XrTableCell2.StylePriority.UseFont = false;
             this.XrTableCell2.Text = "تعداد مراجعین";
@@ -218,7 +215,7 @@
             this.XrLabel4.Font = new DevExpress.Drawing.DXFont("IRANSansX Bold", 14F);
             this.XrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(15.33321F, 80.22169F);
             this.XrLabel4.Name = "XrLabel4";
-            this.XrLabel4.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel4.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel4.SizeF = new System.Drawing.SizeF(449.7916F, 58.41999F);
             this.XrLabel4.StylePriority.UseFont = false;
             this.XrLabel4.StylePriority.UseTextAlignment = false;
@@ -271,8 +268,7 @@
             // 
             this.XrTableCell5.CanShrink = true;
             this.XrTableCell5.Dpi = 254F;
-            this.XrTableCell5.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell5.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell5.Name = "XrTableCell5";
             this.XrTableCell5.StylePriority.UseFont = false;
             this.XrTableCell5.Text = "نام پرسنل";
@@ -281,8 +277,7 @@
             // XrTableCell7
             // 
             this.XrTableCell7.Dpi = 254F;
-            this.XrTableCell7.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell7.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell7.Multiline = true;
             this.XrTableCell7.Name = "XrTableCell7";
             this.XrTableCell7.StylePriority.UseFont = false;
@@ -292,8 +287,7 @@
             // XrTableCell9
             // 
             this.XrTableCell9.Dpi = 254F;
-            this.XrTableCell9.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell9.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell9.Multiline = true;
             this.XrTableCell9.Name = "XrTableCell9";
             this.XrTableCell9.StylePriority.UseFont = false;
@@ -303,8 +297,7 @@
             // XrTableCell8
             // 
             this.XrTableCell8.Dpi = 254F;
-            this.XrTableCell8.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
+            this.XrTableCell8.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTableCell8.Multiline = true;
             this.XrTableCell8.Name = "XrTableCell8";
             this.XrTableCell8.StylePriority.UseFont = false;
@@ -317,7 +310,7 @@
             this.XrLabel6.Font = new DevExpress.Drawing.DXFont("IRANSansX Bold", 14F);
             this.XrLabel6.LocationFloat = new DevExpress.Utils.PointFloat(15.33321F, 58.41996F);
             this.XrLabel6.Name = "XrLabel6";
-            this.XrLabel6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel6.SizeF = new System.Drawing.SizeF(449.7916F, 58.41999F);
             this.XrLabel6.StylePriority.UseFont = false;
             this.XrLabel6.StylePriority.UseTextAlignment = false;
@@ -339,7 +332,7 @@
             this.TopMargin.Dpi = 254F;
             this.TopMargin.HeightF = 90F;
             this.TopMargin.Name = "TopMargin";
-            this.TopMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
+            this.TopMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0F, 0F, 0F, 0F, 254F);
             this.TopMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // BottomMargin
@@ -347,7 +340,7 @@
             this.BottomMargin.Dpi = 254F;
             this.BottomMargin.HeightF = 5F;
             this.BottomMargin.Name = "BottomMargin";
-            this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
+            this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0F, 0F, 0F, 0F, 254F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // PageHeader
@@ -360,7 +353,7 @@
             this.XrLabel1,
             this.XrShape1});
             this.PageHeader.Dpi = 254F;
-            this.PageHeader.HeightF = 419.7501F;
+            this.PageHeader.HeightF = 420F;
             this.PageHeader.Name = "PageHeader";
             // 
             // UniIconBx
@@ -379,7 +372,7 @@
             new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
             this.repDateLabel.LocationFloat = new DevExpress.Utils.PointFloat(220.6466F, 244.7843F);
             this.repDateLabel.Name = "repDateLabel";
-            this.repDateLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.repDateLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.repDateLabel.SizeF = new System.Drawing.SizeF(1307.063F, 65.82835F);
             this.repDateLabel.StylePriority.UseFont = false;
             this.repDateLabel.StylePriority.UseTextAlignment = false;
@@ -392,7 +385,7 @@
             this.ShabakehLab.Font = new DevExpress.Drawing.DXFont("IRANSansX ExtraBold", 12F);
             this.ShabakehLab.LocationFloat = new DevExpress.Utils.PointFloat(275.9589F, 171.9709F);
             this.ShabakehLab.Name = "ShabakehLab";
-            this.ShabakehLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.ShabakehLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.ShabakehLab.SizeF = new System.Drawing.SizeF(1188F, 58.41998F);
             this.ShabakehLab.StylePriority.UseFont = false;
             this.ShabakehLab.StylePriority.UseTextAlignment = false;
@@ -405,7 +398,7 @@
             this.UniversityLab.Font = new DevExpress.Drawing.DXFont("IRANSansX ExtraBold", 12F);
             this.UniversityLab.LocationFloat = new DevExpress.Utils.PointFloat(275.9589F, 83.07083F);
             this.UniversityLab.Name = "UniversityLab";
-            this.UniversityLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.UniversityLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.UniversityLab.SizeF = new System.Drawing.SizeF(1188F, 58.42001F);
             this.UniversityLab.StylePriority.UseFont = false;
             this.UniversityLab.StylePriority.UseTextAlignment = false;
@@ -415,10 +408,10 @@
             // XrLabel1
             // 
             this.XrLabel1.Dpi = 254F;
-            this.XrLabel1.Font = new DevExpress.Drawing.DXFont("Vazir", 11F);
+            this.XrLabel1.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 11F);
             this.XrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(699.2919F, 6.870866F);
             this.XrLabel1.Name = "XrLabel1";
-            this.XrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel1.SizeF = new System.Drawing.SizeF(357.2086F, 58.42F);
             this.XrLabel1.StylePriority.UseFont = false;
             this.XrLabel1.StylePriority.UseTextAlignment = false;
@@ -430,7 +423,6 @@
             this.XrShape1.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.XrShape1.BorderWidth = 2F;
             this.XrShape1.Dpi = 254F;
-            this.XrShape1.LineWidth = 3;
             this.XrShape1.LocationFloat = new DevExpress.Utils.PointFloat(15.33337F, 6.870866F);
             this.XrShape1.Name = "XrShape1";
             shapeRectangle1.Fillet = 5;
@@ -455,7 +447,7 @@
             this.XrPageInfo2.Font = new DevExpress.Drawing.DXFont("IRANSansX", 12F);
             this.XrPageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(15.33313F, 35.58323F);
             this.XrPageInfo2.Name = "XrPageInfo2";
-            this.XrPageInfo2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrPageInfo2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrPageInfo2.PageInfo = DevExpress.XtraPrinting.PageInfo.DateTime;
             this.XrPageInfo2.SizeF = new System.Drawing.SizeF(624.4128F, 58.41994F);
             this.XrPageInfo2.StylePriority.UseFont = false;
@@ -463,10 +455,10 @@
             // XrLabel7
             // 
             this.XrLabel7.Dpi = 254F;
-            this.XrLabel7.Font = new DevExpress.Drawing.DXFont("Microsoft Sans Serif", 12F);
+            this.XrLabel7.Font = new DevExpress.Drawing.DXFont("Times New Roman", 12F);
             this.XrLabel7.LocationFloat = new DevExpress.Utils.PointFloat(1385.219F, 35.58323F);
             this.XrLabel7.Name = "XrLabel7";
-            this.XrLabel7.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel7.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel7.SizeF = new System.Drawing.SizeF(496.3452F, 58.42001F);
             this.XrLabel7.StylePriority.UseFont = false;
             this.XrLabel7.StylePriority.UseTextAlignment = false;
@@ -479,7 +471,7 @@
             this.XrPageInfo1.Font = new DevExpress.Drawing.DXFont("IRANSansX", 12F);
             this.XrPageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(833.6873F, 35.58323F);
             this.XrPageInfo1.Name = "XrPageInfo1";
-            this.XrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrPageInfo1.SizeF = new System.Drawing.SizeF(414.8668F, 58.42001F);
             this.XrPageInfo1.StylePriority.UseFont = false;
             this.XrPageInfo1.StylePriority.UseTextAlignment = false;
@@ -496,15 +488,15 @@
             this.PageFooter});
             this.Dpi = 254F;
             this.Margins = new DevExpress.Drawing.DXMargins(97F, 108F, 90F, 5F);
-            this.PageHeight = 2970;
-            this.PageWidth = 2100;
+            this.PageHeightF = 2970F;
+            this.PageWidthF = 2100F;
             this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.A4;
             this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
             this.RightToLeft = DevExpress.XtraReports.UI.RightToLeft.Yes;
             this.RightToLeftLayout = DevExpress.XtraReports.UI.RightToLeftLayout.Yes;
             this.ScriptLanguage = DevExpress.XtraReports.ScriptLanguage.VisualBasic;
             this.SnapGridSize = 25F;
-            this.Version = "23.2";
+            this.Version = "25.1";
             ((System.ComponentModel.ISupportInitialize)(this.EquipTab)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ServiceTab)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PersonnelTab)).EndInit();

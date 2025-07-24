@@ -82,14 +82,6 @@ public partial class MainWindow
         //Set theme
         if (SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = SamcoSoftShared.LoadedSettings.AppThemeName;
 
-        //Development Mode
-        //#if DEBUG
-        //        NavFrame.Navigate(new Dashboard());
-        //        WaitIndic.IsSplashScreenShown = false;
-        //        SplashScreenManager.CloseAll();
-        //        return;
-        //#endif
-
         if (CheckDatabase() == false)
         {
             //Setup new database
@@ -119,6 +111,7 @@ public partial class MainWindow
 
         //Save backup from setting file
         SamcoSoftShared.LoadedSettings!.SaveBackup();
+        SamcoAdd.CheckNetwork();
     }
     private void CreateLoadSetting(string settingDir)
     {

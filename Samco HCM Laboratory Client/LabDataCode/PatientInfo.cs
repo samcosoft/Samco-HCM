@@ -8,10 +8,10 @@ using System.Reflection;
 namespace LabData
 {
 
-    public partial class LabResults
+    public partial class PatientInfo
     {
-        public LabResults() : base(Session.DefaultSession) { }
-        public LabResults(Session session) : base(session) { }
+        public PatientInfo() : base(Session.DefaultSession) { }
+        public PatientInfo(Session session) : base(session) { }
         public override void AfterConstruction() { base.AfterConstruction(); }
     }
 

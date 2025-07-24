@@ -8,10 +8,10 @@ using System.Reflection;
 namespace LabData
 {
 
-    public partial class TestList
+    public partial class TestCard
     {
-        public TestList() : base(Session.DefaultSession) { }
-        public TestList(Session session) : base(session) { }
+        public TestCard() : base(Session.DefaultSession) { }
+        public TestCard(Session session) : base(session) { }
         public override void AfterConstruction() { base.AfterConstruction(); }
     }
 

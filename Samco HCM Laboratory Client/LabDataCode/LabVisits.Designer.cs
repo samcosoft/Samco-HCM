@@ -24,37 +24,6 @@ namespace LabData
             get { return fvisitDate; }
             set { SetPropertyValue<DateTime>("visitDate", ref fvisitDate, value); }
         }
-        string fmelliCode;
-        public string melliCode
-        {
-            get { return fmelliCode; }
-            set { SetPropertyValue<string>("melliCode", ref fmelliCode, value); }
-        }
-        string fname;
-        public string name
-        {
-            get { return fname; }
-            set { SetPropertyValue<string>("name", ref fname, value); }
-        }
-        DateTime fbirthday;
-        public DateTime birthday
-        {
-            get { return fbirthday; }
-            set { SetPropertyValue<DateTime>("birthday", ref fbirthday, value); }
-        }
-        string fphone;
-        public string phone
-        {
-            get { return fphone; }
-            set { SetPropertyValue<string>("phone", ref fphone, value); }
-        }
-        string faddress;
-        [Size(SizeAttribute.Unlimited)]
-        public string address
-        {
-            get { return faddress; }
-            set { SetPropertyValue<string>("address", ref faddress, value); }
-        }
         LabInsuranceType finsType;
         [Association(@"LabVisitsReferencesLabInsuranceType")]
         public LabInsuranceType insType
@@ -62,12 +31,12 @@ namespace LabData
             get { return finsType; }
             set { SetPropertyValue<LabInsuranceType>("insType", ref finsType, value); }
         }
-        LabUsers fuser;
-        [Association(@"LabVisitsReferencesLabUsers")]
-        public LabUsers user
+        PatientInfo fPatient;
+        [Association(@"LabVisitsReferencesPatientInfo")]
+        public PatientInfo Patient
         {
-            get { return fuser; }
-            set { SetPropertyValue<LabUsers>("user", ref fuser, value); }
+            get { return fPatient; }
+            set { SetPropertyValue<PatientInfo>("Patient", ref fPatient, value); }
         }
         bool fpaid;
         public bool paid
@@ -93,10 +62,21 @@ namespace LabData
             get { return fIsPrinted; }
             set { SetPropertyValue<bool>("IsPrinted", ref fIsPrinted, value); }
         }
-        [Association(@"TestListReferencesLabVisits"), Aggregated]
-        public XPCollection<TestList> TestLists { get { return GetCollection<TestList>("TestLists"); } }
-        [Association(@"LabResultsReferencesLabVisits"), Aggregated]
-        public XPCollection<LabResults> LabResultsCollection { get { return GetCollection<LabResults>("LabResultsCollection"); } }
+        int fPrice;
+        public int Price
+        {
+            get { return fPrice; }
+            set { SetPropertyValue<int>("Price", ref fPrice, value); }
+        }
+        LabUsers fuser;
+        [Association(@"LabVisitsReferencesLabUsers")]
+        public LabUsers user
+        {
+            get { return fuser; }
+            set { SetPropertyValue<LabUsers>("user", ref fuser, value); }
+        }
+        [Association(@"TestCardReferencesLabVisits"), Aggregated]
+        public XPCollection<TestCard> TestCards { get { return GetCollection<TestCard>("TestCards"); } }
     }
 
 }

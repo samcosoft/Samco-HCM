@@ -6,6 +6,8 @@
     xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     WindowState="Maximized"
     Icon="Images/Lab.png"
     Title="Samco® Health Care Management System"
@@ -54,8 +56,51 @@
             </Popup>
         </Grid>
     </dx:ThemedWindow.HeaderItems>
+    <dx:ThemedWindow.Resources>
+        <system:String x:Key="ConnectionState">
+            Nothing
+        </system:String>
+    </dx:ThemedWindow.Resources>
     <Grid>
-        <dxwui:NavigationFrame x:Name="NavFrame"/>
-        <dx:LoadingDecorator x:Name="WaitIndic" SplashScreenLocation="CenterContainer" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <dx:LoadingDecorator x:Name="WaitIndic" SplashScreenLocation="CenterContainer" OwnerLock="InputOnly">
+            <dxwui:NavigationFrame x:Name="NavFrame"/>
+        </dx:LoadingDecorator>
+        <dxb:BarContainerControl ContainerType="Bottom" Grid.Row="1">
+            <dxb:StatusBarControl VerticalAlignment="Bottom" FlowDirection="RightToLeft">
+                <!--<dxb:BarStaticItem Content="کاربر فعلی:"/>
+    <dxb:BarStaticItem Name="{StaticResource CurrentUserName}"/>-->
+                <dxb:BarStaticItem Alignment="Far">
+                    <dxb:BarStaticItem.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock FontFamily="{StaticResource Vazir}" FontSize="14">
+                                وضعیت اتصال به رایانه مرکزی:
+                            </TextBlock>
+                        </DataTemplate>
+                    </dxb:BarStaticItem.ContentTemplate>
+                </dxb:BarStaticItem>
+                <dxb:BarStaticItem Alignment="Far">
+                    <dxb:BarStaticItem.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{DynamicResource ConnectionState}" FontFamily="{StaticResource Vazir}" FontSize="14"/>
+                        </DataTemplate>
+                    </dxb:BarStaticItem.ContentTemplate>
+                </dxb:BarStaticItem>
+                <dxb:BarItemSeparator/>
+                <dxb:BarButtonItem Name="ServerConnectBtn" Alignment="Far" IsVisible="False" Background="Green">
+                    <dxb:BarButtonItem.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Vazir}" FontSize="14">
+                                <fa6:FontAwesome Icon="Solid_ArrowsRotate" Margin="0 3 10 0" FontSize="20"/>
+                                <Run>اتصال دوباره</Run>
+                            </TextBlock>
+                        </DataTemplate>
+                    </dxb:BarButtonItem.ContentTemplate>
+                </dxb:BarButtonItem>
+            </dxb:StatusBarControl>
+        </dxb:BarContainerControl>
     </Grid>
 </dx:ThemedWindow>

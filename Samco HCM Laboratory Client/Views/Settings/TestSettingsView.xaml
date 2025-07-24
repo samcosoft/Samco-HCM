@@ -16,7 +16,7 @@
     <dxwui:PageAdornerControl Header="تنظیمات آزمایش‌ها" Background="#FF00AD68">
         <dx:BackgroundPanel>
             <ScrollViewer>
-                <dxlc:LayoutControl>
+                <dxlc:LayoutControl MaxHeight="650">
                     <dxlc:LayoutGroup Orientation="Vertical" dxlc:LayoutControl.AllowHorizontalSizing="True">
                         <dxlc:LayoutGroup>
                             <dxlc:LayoutGroup Orientation="Vertical" Header="لیست بیمه‌ها" View="GroupBox">
@@ -39,7 +39,7 @@
                                         </dxe:ButtonInfo>
                                     </dxe:ButtonEdit>
                                 </dxlc:LayoutItem>
-                                <dxlc:LayoutItem Label="حق فنی (ریال):">
+                                <dxlc:LayoutItem Label="حق فنی (تومان):">
                                     <dxe:ButtonEdit Name="InsFanniBtn" AllowDefaultButton="False" EditValue="{Binding fanniPrice}"
                                                     d:DataContext="{d:DesignInstance labData:LabInsuranceType}" Mask="d" MaskType="Numeric">
                                         <dxe:ButtonInfo GlyphKind="Custom" Click="FanniSvBtn_OnClick" ToolTip="ذخیره حق فنی">
@@ -147,7 +147,7 @@
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup Header="لیست تعرفه‌ها" View="GroupBox" Orientation="Vertical">
                         <dxlc:LayoutItem VerticalAlignment="Stretch">
-                            <dxg:GridControl Name="PriceListGrid" FontFamily="{StaticResource IranSansX}" MinHeight="250" MaxHeight="600" SelectionMode="Row">
+                            <dxg:GridControl Name="PriceListGrid" FontFamily="{StaticResource IranSansX}" MinHeight="250" MaxHeight="300" SelectionMode="Row">
                                 <dxg:GridControl.View>
                                     <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" />
                                 </dxg:GridControl.View>

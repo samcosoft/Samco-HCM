@@ -87,16 +87,20 @@ namespace LabData
             get { return frealPrice; }
             set { SetPropertyValue<int>("realPrice", ref frealPrice, value); }
         }
+        string fMachineCode;
+        public string MachineCode
+        {
+            get { return fMachineCode; }
+            set { SetPropertyValue<string>("MachineCode", ref fMachineCode, value); }
+        }
         [Association(@"TestNameReferencesTestTemplate")]
         public XPCollection<TestTemplate> TestTemplates { get { return GetCollection<TestTemplate>("TestTemplates"); } }
         [Association(@"TestNameReferencesTestName"), Aggregated]
         public XPCollection<TestName> TestNameCollection { get { return GetCollection<TestName>("TestNameCollection"); } }
         [Association(@"TestPriceReferencesTestName"), Aggregated]
         public XPCollection<TestPrice> TestPrices { get { return GetCollection<TestPrice>("TestPrices"); } }
-        [Association(@"ResultsReferencesTestName"), Aggregated]
-        public XPCollection<LabResults> ResultsCollection { get { return GetCollection<LabResults>("ResultsCollection"); } }
-        [Association(@"TestListReferencesTestName"), Aggregated]
-        public XPCollection<TestList> TestLists { get { return GetCollection<TestList>("TestLists"); } }
+        [Association(@"TestCardReferencesTestName"), Aggregated]
+        public XPCollection<TestCard> TestCards { get { return GetCollection<TestCard>("TestCards"); } }
     }
 
 }

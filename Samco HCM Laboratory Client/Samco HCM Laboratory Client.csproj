@@ -7,6 +7,20 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
         <ApplicationIcon>Lab Icon.ico</ApplicationIcon>
+        <Version>3.0.295.24133</Version>
+        <AssemblyVersion>3.0.326.24133</AssemblyVersion>
+        <FileVersion>3.0.326.24133</FileVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <ShouldCreateLogs>True</ShouldCreateLogs>
+      <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
+      <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+      <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+      <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+      <UpdatePackageVersion>False</UpdatePackageVersion>
+      <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+      <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
     </PropertyGroup>
 
     <ItemGroup>

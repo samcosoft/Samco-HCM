@@ -80,6 +80,30 @@ namespace Samco_HCM_Laboratory_Client.Views.Settings
                     return;
                 }
             }
+
+            //Reorder all groups and tests
+            var testGroups = _session1.Query<TestGroup>().OrderBy(x=>x.printOrder).ToList();
+            for (var i = 0; i < testGroups.Count; i++)
+            {
+                testGroups[i].printOrder = i + 1;
+                _session1.Save(testGroups[i]);
+            }
+            var testNames = _session1.Query<TestName>().Where(x => x.parent == null).OrderBy(x => x.printOrder).ToList();
+            for (var i = 0; i < testNames.Count; i++)
+            {
+                testNames[i].printOrder = i + 1;
+                _session1.Save(testNames[i]);
+            }
+            var testChild = _session1.Query<TestName>().Where(x => x.parent != null).OrderBy(x => x.printOrder).ToList();
+            foreach (var testName in testChild)
+            {
+                for (var i = 0; i < testName.TestNameCollection.Count; i++)
+                {
+                    testName.TestNameCollection[i].printOrder = i + 1;
+                    _session1.Save(testName.TestNameCollection[i]);
+                }
+            }
+
             LoadData();
         }
 
@@ -140,7 +164,7 @@ namespace Samco_HCM_Laboratory_Client.Views.Settings
 
             if (string.IsNullOrWhiteSpace(InsFanniBtn.Text))
             {
-                MainNotify.ShowWarning("خطا در ثبت اطلاعات", "لطفاْ حق فنی را به ریال وارد کنید.");
+                MainNotify.ShowWarning("خطا در ثبت اطلاعات", "لطفاْ حق فنی را وارد کنید.");
                 return;
             }
             selectedInsurance.fanniPrice = Convert.ToInt32(InsFanniBtn.Text);
@@ -498,7 +522,7 @@ namespace Samco_HCM_Laboratory_Client.Views.Settings
             if (e.Key == Key.Escape)
             {
                 template.ShortKey = 0;
-                TempShortBx.Text =string.Empty;
+                TempShortBx.Text = string.Empty;
                 return;
             }
 

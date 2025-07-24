@@ -1,13 +1,17 @@
-﻿using DevExpress.Xpf.LayoutControl;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.Xpf.LayoutControl;
 using DevExpress.Xpf.Navigation;
 using DevExpress.Xpf.WindowsUI.Navigation;
 using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
 using DevExpress.Xpo.Metadata;
 using HCMData;
+using LabData;
 using Samco_HCM_Shared;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -158,18 +162,107 @@ internal static class SamcoAdd
 
     internal static bool CheckNetwork()
     {
-        if (RemoteDatalayer is null)
+        if (!SamcoSoftShared.LoadedSettings!.ActiveClient || RemoteDatalayer is null)
+        {
+            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "قطع اتصال";
             return false;
+        }
         try
         {
             var dataStore = XpoDefault.GetConnectionProvider(RemoteDatalayer.Connection.ConnectionString, AutoCreateOption.None);
+            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = dataStore != null ? "متصل" : "قطع اتصال";
+            ((MainWindow)Application.Current.MainWindow!).ServerConnectBtn.IsVisible = dataStore != null;
             return dataStore != null;
         }
         catch (Exception)
         {
+            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "قطع اتصال";
+            ((MainWindow)Application.Current.MainWindow!).ServerConnectBtn.IsVisible = true;
             return false;
         }
     }
+
+    internal static void UpdateBillsData()
+    {
+        if (CheckNetwork() == false) return;
+        try
+        {
+            using var session1 = new Session(XpoDefault.DataLayer);
+            using var remoteSession = new Session(RemoteDatalayer);
+            var unpaidVisit = session1.Query<LabVisits>().Where(x => !x.paid).ToList();
+            foreach (var bill in unpaidVisit)
+            {
+                var remoteBill = remoteSession.FindObject<RemoteBill>(new BinaryOperator("RemoteBillId", bill.Oid));
+                if (remoteBill != null)
+                {
+                    if (remoteBill.IsPaid == false)
+                    {
+                        bill.paid = true;
+                        bill.Save();
+                        remoteBill.Delete();
+                    }
+                    else
+                    {
+                        remoteBill.Price = bill.Price;
+                        remoteBill.Save();
+                    }
+                }
+                else
+                {
+                    //Create Bill
+                    var newRemoteBill = new RemoteBill(remoteSession)
+                    {
+                        RemoteBillId = bill.Oid,
+                        Price = bill.Price,
+                        ServiceType = "Lab",
+                        Name = bill.Patient.Name,
+                        MelliCode = bill.Patient.MelliCode,
+                        InsId = bill.insType.serverID
+                    };
+                    newRemoteBill.Save();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MainNotify.ShowError("خطأ", $"خطای پایگاه داده: {ex.Message}");
+        }
+    }
+
+    ////TODO: Only for Gahvareh
+    //internal static int GetTestPrice(LabVisits visit)
+    //{
+    //    var sumPrice = visit.Price;
+    //    if (!visit.isFree)
+    //    {
+    //        var fanniPrice = Math.Round((double)(visit.insType.fanniPrice * visit.insType.franchises / 10000));
+    //        sumPrice += (int)fanniPrice;
+    //        return sumPrice;
+    //    }
+
+    //    return 0;
+    //}
+    #endregion
+
+    #region General
+
+    internal static void PrintVisualTreeRecursive(ref List<DependencyObject> controlList, DependencyObject parentCtl, Type contType)
+    {
+        var count = VisualTreeHelper.GetChildrenCount(parentCtl);
+        if (count > 0)
+        {
+            for (var n = 0; n <= count - 1; n++)
+            {
+                var child = VisualTreeHelper.GetChild(parentCtl, n);
+                if (child.GetType() == contType)
+                    controlList.Add(child);
+                PrintVisualTreeRecursive(ref controlList, child, contType);
+            }
+        }
+        else if (parentCtl.GetType() == contType)
+            controlList.Add(parentCtl);
+    }
+
 
     #endregion
 }

@@ -1,7 +1,6 @@
 ﻿using DevExpress.Xpf.LayoutControl;
 using DevExpress.Xpf.WindowsUI.Navigation;
 using Samco_HCM_Laboratory_Client.Classes;
-using Samco_HCM_Shared;
 using System.Windows;
 using Samco_HCM_Laboratory_Client.Views.Settings;
 using NavigationEventArgs = DevExpress.Xpf.WindowsUI.Navigation.NavigationEventArgs;
@@ -29,16 +28,15 @@ public partial class Dashboard
         //Load tiles
 
         var admissionTile =SamcoAdd.GetTile("پذیرش", TileSize.Small, "ReceptionIcon.samco", true, "آزمایشگاه");
-        //Navigation.SetNavigateTo(admissionTile, new NewVisit());
-        admissionTile.IsEnabled = SamcoSoftShared.LoadedSettings!.ActiveClient;
+        Navigation.SetNavigateTo(admissionTile, new NewVisitView());
         MainTilLayout.Children.Add(admissionTile);
 
         var resultTile = SamcoAdd.GetTile("ثبت نتایج", TileSize.Small, "LabResultIcon.samco");
-        //Navigation.SetNavigateTo(resultTile, new NewLabData());
+        Navigation.SetNavigateTo(resultTile, new LabResultView());
         MainTilLayout.Children.Add(resultTile);
 
         //Create statistics Tiles
-        var allStat = SamcoAdd.GetTile("آمار کلی", TileSize.Small, "AllStatIcon.samco");
+        var allStat = SamcoAdd.GetTile("آمار", TileSize.Small, "AllStatIcon.samco");
         //Navigation.SetNavigateTo(allStat, new Statistics());
         MainTilLayout.Children.Add(allStat);
 

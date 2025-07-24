@@ -44,6 +44,8 @@ namespace LabData
         }
         [Association(@"LabVisitsReferencesLabInsuranceType")]
         public XPCollection<LabVisits> LabVisitsCollection { get { return GetCollection<LabVisits>("LabVisitsCollection"); } }
+        [Association(@"PatientInfoReferencesLabInsuranceType")]
+        public XPCollection<PatientInfo> PatientInfoes { get { return GetCollection<PatientInfo>("PatientInfoes"); } }
         [Association(@"TestPriceReferencesLabInsuranceType"), Aggregated]
         public XPCollection<TestPrice> TestPrices { get { return GetCollection<TestPrice>("TestPrices"); } }
     }

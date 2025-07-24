@@ -63,11 +63,11 @@
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="محدوده طبیعی:" LabelPosition="Top" Name="NumericNlRange">
                         <dxlc:LayoutGroup>
-                            <dxlc:LayoutItem>
-                                <dxe:TextEdit Name="MaxValueBx" Mask="f2" MaskType="Numeric"/>
-                            </dxlc:LayoutItem>
-                            <dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="از:">
                                 <dxe:TextEdit Name="MinValueBx" Mask="f2" MaskType="Numeric"/>
+                            </dxlc:LayoutItem>
+                            <dxlc:LayoutItem Label="تا:">
+                                <dxe:TextEdit Name="MaxValueBx" Mask="f2" MaskType="Numeric"/>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutItem>
@@ -86,7 +86,7 @@
                 </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
             <dxlc:LayoutGroup>
-                <dxlc:LayoutItem Label="مبلغ آزمایش آزاد (ریال):" Name="RealPriceLab">
+                <dxlc:LayoutItem Label="مبلغ آزمایش آزاد (تومان):" Name="RealPriceLab">
                     <dxe:TextEdit Name="RealPriceBx" Text="{Binding realPrice}" NullText="الزامی" MaskType="Numeric"
                                   Mask="d" MaxLength="6" Validate="RealPriceBx_OnValidate" />
                 </dxlc:LayoutItem>

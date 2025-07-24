@@ -66,7 +66,6 @@ public partial class NewTestView : IDisposable
 
         ParentBx.ItemsSource = new XPCollection<TestName>(_session).Where(x => x.parent == null).ToList();
 
-        NlRangeCbx.ItemsSource = _values;
         //Update old database
         if (!string.IsNullOrEmpty(_selTest.itmList))
         {
@@ -95,6 +94,8 @@ public partial class NewTestView : IDisposable
                         _values.Add(item);
                     }
                     ValueList.ItemsSource = _values;
+                    NlRangeCbx.ItemsSource = _values;
+                    //NlRangeCbx.Text = _selTest.nlRange;
                 }
                 break;
             case 2:
@@ -154,7 +155,7 @@ public partial class NewTestView : IDisposable
     }
     private void TestGroupBx_OnValidate(object sender, ValidationEventArgs e)
     {
-        e.SetError(e.Value == null ? "وارد نمودن گروه آزمایش الزامیست" : null, DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical);
+        e.SetError(e.Value == null && _selTest.parent == null ? "وارد نمودن گروه آزمایش الزامیست" : null, DevExpress.XtraEditors.DXErrorProvider.ErrorType.Critical);
     }
     private void RealPriceBx_OnValidate(object sender, ValidationEventArgs e)
     {
@@ -239,7 +240,6 @@ public partial class NewTestView : IDisposable
                 _selTest.itmList = string.Empty;
                 break;
             case 1: //Selection
-                _selTest.nlRange = string.Empty;
                 _selTest.itmList = string.Join("|", _values);
                 break;
             case 2: //Text
