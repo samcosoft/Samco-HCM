@@ -48,7 +48,7 @@ public partial class Dashboard
             MainTilLayout.Children.Add(insuranceService);
 
             var machineSetting = SamcoAdd.GetTile("تنظیمات کدهای دستگاه", TileSize.Large, "ServiceInsuranceIcon.samco");
-            Navigation.SetNavigateTo(machineSetting, new TestCodeSettings());
+            Navigation.SetNavigateTo(machineSetting, new CodeSettingsView());
             MainTilLayout.Children.Add(machineSetting);
 
             var databaseSetting = SamcoAdd.GetTile("تنظیمات پایگاه داده و سیستم", TileSize.Large, "DatabaseIcon.samco");
@@ -56,7 +56,7 @@ public partial class Dashboard
             MainTilLayout.Children.Add(databaseSetting);
         }
         var userSetting = SamcoAdd.GetTile("تنظیمات کاربری", TileSize.Small, "UserSettingIcon.samco", !SamcoAdd.UserIsAdmin(), "تنظیمات");
-        //Navigation.SetNavigateTo(userSetting, new UserView());
+        Navigation.SetNavigateTo(userSetting, new UserSettingView());
         MainTilLayout.Children.Add(userSetting);
         // ReSharper disable once AssignNullToNotNullAttribute
         ((MainWindow)Application.Current.MainWindow).WaitIndic.IsSplashScreenShown = false;

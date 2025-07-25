@@ -66,10 +66,10 @@
                         </dxlc:LayoutGroup>
                         <dxlc:LayoutGroup Orientation="Vertical">
                             <dxlc:LayoutItem>
-                                <dx:SimpleButton Name="SaveBillBtn" Content="ثبت قبض" IsDefault="True" Click="SaveBillBtn_OnClick"/>
+                                <dx:SimpleButton Name="SaveBillBtn" Content="ثبت قبض" IsDefault="True" Click="SaveBillBtn_OnClick" Style="{StaticResource ButtonOk}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem>
-                                <dx:SimpleButton Name="CancelBillBtn" Content="انصراف" Click="CancelBillBtn_OnClick"/>
+                                <dx:SimpleButton Name="CancelBillBtn" Content="انصراف" Click="CancelBillBtn_OnClick" Style="{StaticResource ButtonCancel}"/>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>
@@ -105,7 +105,6 @@
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>
-                    
                     <dxlc:LayoutGroup Header="فاکتورهای ثبت شده" View="GroupBox" Orientation="Vertical">
                         <dxg:GridControl Name="FactorGrid" FontFamily="{StaticResource IranSansX}" MinHeight="250" SelectionMode="Row" MaxHeight="500"
                                               SelectedItemChanged="FactorGrid_OnSelectedItemChanged">
@@ -129,13 +128,13 @@
                         </dxlc:LayoutItem>
                         <dxlc:LayoutGroup>
                             <dxlc:LayoutItem>
-                                <dx:SimpleButton Content="تازه سازی" Click="GridRefBtn_OnClick"/>
+                                <dx:SimpleButton Content="تازه سازی" Click="GridRefBtn_OnClick" Style="{StaticResource ButtonOk}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem>
-                                <dx:SimpleButton Content="ویرایش" Click="GridEditBtn_OnClick"/>
+                                <dx:SimpleButton Content="ویرایش" Click="GridEditBtn_OnClick" Style="{StaticResource ButtonMain}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem>
-                                <dx:SimpleButton Content="حذف قبض" Click="DelBillBtn_OnClick"/>
+                                <dx:SimpleButton Content="حذف قبض" Click="DelBillBtn_OnClick" Style="{StaticResource ButtonCancel}"/>
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                     </dxlc:LayoutGroup>

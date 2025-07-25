@@ -39,21 +39,21 @@ namespace Samco_HCM_Laboratory_Client
 
             FontAwesome6.Fonts.FontAwesomeFonts.LoadStyles(new Uri("pack://application:,,,/Fonts/"), EFontAwesomeStyle.Brands, EFontAwesomeStyle.Solid);
             ThemedWindow.RoundCorners = true;
-            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11SystemName;
+            ApplicationThemeHelper.ApplicationThemeName = LightweightTheme.Win11SystemColors.Name;
         }
 
         internal void SwitchToDarkTheme()
         {
             if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == HandyControl.Themes.ApplicationTheme.Dark) return;
             HandyControl.Themes.ThemeManager.Current.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Dark;
-            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11DarkName;
+            ApplicationThemeHelper.ApplicationThemeName = LightweightTheme.Win11Dark.Name;
         }
 
         internal void SwitchToLightTheme()
         {
             if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == HandyControl.Themes.ApplicationTheme.Light) return;
             HandyControl.Themes.ThemeManager.Current.ApplicationTheme = HandyControl.Themes.ApplicationTheme.Light;
-            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11LightName;
+            ApplicationThemeHelper.ApplicationThemeName = LightweightTheme.Win11Light.Name;
         }
 
         private void App_OnExit(object sender, ExitEventArgs e)

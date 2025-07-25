@@ -59,13 +59,7 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="VerticalAlignment" Value="Top" />
             </Style>
-            <Style TargetType="Button">
-                <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
-                <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Height" Value="35"/>
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-            </Style>
+            
             <Style x:Key="ButtonMain" BasedOn="{StaticResource ButtonPrimary}" TargetType="Button">
                 <Setter Property="FontFamily" Value="{StaticResource Vazir}" />
                 <Setter Property="FontSize" Value="16" />

@@ -1,4 +1,7 @@
-﻿using DevExpress.Xpf.Grid;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Editors;
+using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.LayoutControl;
 using DevExpress.Xpf.WindowsUI;
 using DevExpress.Xpf.WindowsUI.Navigation;
@@ -14,7 +17,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using DevExpress.Xpf.Core;
 
 namespace Samco_HCM_Laboratory_Client.Views;
 
@@ -25,6 +27,7 @@ public partial class LabResultView : IDisposable
 {
     private Session _session = new();
     private LabVisits? _selVisit;
+
     public LabResultView()
     {
         InitializeComponent();
@@ -34,6 +37,7 @@ public partial class LabResultView : IDisposable
     {
         base.OnNavigatedTo(e);
         FactorGrid.ItemsSource = new XPServerCollectionSource(_session, _session.GetClassInfo<LabVisits>());
+        TestFilterCbx.ItemsSource = new XPCollection<TestGroup>(_session);
     }
 
     public void Dispose()
@@ -205,9 +209,9 @@ public partial class LabResultView : IDisposable
 
         if (!CompletedCheck(_selVisit.Oid, out var list))
         {
-            var testParameter = list.Select(x => $"{x.name} ({x.parent?.name})");
+            var testParameter = list.Select(x => x.name + (x.parent != null ? $" ({x.parent?.name})" : string.Empty));
             if (WinUIMessageBox.Show(this,
-                    "آزمایشات زیر ثبت نشده‌اند. آیا از چاپ آزمایشات مطمئن هستید؟" + Environment.NewLine +
+                    "آزمایشات زیر ثبت نشده‌اند. آیا از چاپ آزمایشات مطمئن هستید؟" + Environment.NewLine + Environment.NewLine +
                     string.Join(" - ", testParameter), "آزمایشات ناقص", MessageBoxButton.OKCancel,
                     MessageBoxImage.Exclamation, MessageBoxResult.Cancel,
                     MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign, FloatingMode.Adorner) ==
@@ -216,5 +220,21 @@ public partial class LabResultView : IDisposable
 
         return !_selVisit.IsPrinted ||
                WinUIMessageBox.Show("نتایج فعلی یک بار قبلاً چاپ شده‌اند. آیا مایل به چاپ دوباره آزمایشات هستید؟", "چاپ دوباره", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign) != MessageBoxResult.No;
+    }
+
+    private void TestFilterCbx_OnEditValueChanged(object sender, EditValueChangedEventArgs e)
+    {
+        if (e.NewValue != null)
+        {
+            var visitDataSource = (XPServerCollectionSource)FactorGrid.ItemsSource;
+            visitDataSource.FixedFilterCriteria = new ContainsOperator(nameof(LabVisits.TestCards), new BinaryOperator("TestName.group.Oid", ((TestGroup)TestFilterCbx.SelectedItem).Oid));
+        }
+        else
+        {
+            var visitDataSource = (XPServerCollectionSource)FactorGrid.ItemsSource;
+            visitDataSource.FixedFilterCriteria = null;
+        }
+
+        FactorGrid.RefreshData();
     }
 }

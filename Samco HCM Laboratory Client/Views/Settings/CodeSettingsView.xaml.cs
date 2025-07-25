@@ -8,12 +8,12 @@ using LabData;
 namespace Samco_HCM_Laboratory_Client.Views.Settings;
 
 /// <summary>
-/// Interaction logic for TestCodeSettings.xaml
+/// Interaction logic for CodeSettingsView.xaml
 /// </summary>
-public partial class TestCodeSettings : IDisposable
+public partial class CodeSettingsView : IDisposable
 {
     private readonly Session _session = new();
-    public TestCodeSettings()
+    public CodeSettingsView()
     {
         InitializeComponent();
     }

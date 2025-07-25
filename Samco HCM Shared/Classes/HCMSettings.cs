@@ -283,6 +283,60 @@ namespace Samco_HCM_Shared.Classes
 
         #endregion
 
+        #region LaboratorySettings
+
+        [DataMember] public string? machineIdColumn { get; set; }
+        [JsonIgnore]
+        public string? MachineIdColumn
+        {
+            get => machineIdColumn;
+            set
+            {
+                machineIdColumn = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(MachineIdColumn)));
+            }
+        }
+        [DataMember] public string? machineNameColumn { get; set; }
+
+        [JsonIgnore]
+        public string? MachineNameColumn
+        {
+            get => machineNameColumn;
+            set
+            {
+                machineNameColumn = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(MachineNameColumn)));
+            }
+        }
+
+        [DataMember] public string? machineTestColumn { get; set; }
+
+        [JsonIgnore]
+        public string? MachineTestColumn
+        {
+            get => machineTestColumn;
+            set
+            {
+                machineTestColumn = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(MachineTestColumn)));
+            }
+        }
+
+        [DataMember] public string? machineResultColumn { get; set; }
+
+        [JsonIgnore]
+        public string? MachineResultColumn
+        {
+            get => machineResultColumn;
+            set
+            {
+                machineResultColumn = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(MachineResultColumn)));
+            }
+        }
+
+        #endregion
+
         public void Save()
         {
             SamcoSoftShared.WriteToJsonFile(SettingDirectory + $"\\{SettingFileName}.json", this);

@@ -164,19 +164,19 @@ internal static class SamcoAdd
     {
         if (!SamcoSoftShared.LoadedSettings!.ActiveClient || RemoteDatalayer is null)
         {
-            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "قطع اتصال";
+            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "کاربری محلی";
             return false;
         }
         try
         {
             var dataStore = XpoDefault.GetConnectionProvider(RemoteDatalayer.Connection.ConnectionString, AutoCreateOption.None);
-            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = dataStore != null ? "متصل" : "قطع اتصال";
+            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = dataStore != null ? "متصل" : "قطع ارتباط";
             ((MainWindow)Application.Current.MainWindow!).ServerConnectBtn.IsVisible = dataStore != null;
             return dataStore != null;
         }
         catch (Exception)
         {
-            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "قطع اتصال";
+            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "قطع ارتباط";
             ((MainWindow)Application.Current.MainWindow!).ServerConnectBtn.IsVisible = true;
             return false;
         }

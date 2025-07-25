@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="Samco_HCM_Laboratory_Client.Views.Settings.UserSettingsView.UserInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:labData="clr-namespace:LabData"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance labData:LabUsers}">
+    <dxlc:LayoutGroup Orientation="Vertical" MaxWidth="800">
+        <dxlc:LayoutGroup>
+            <dxlc:LayoutGroup Name="UserDetailBx" Orientation="Vertical" VerticalAlignment="Top">
+                <dxlc:LayoutGroup VerticalAlignment="Top">
+                    <dxlc:LayoutItem IsRequired="True" Label="نام کاربری:" LabelPosition="Top">
+                        <dxe:TextEdit Name="UserBx" HorizontalContentAlignment="Center" NullText="الزامی" FlowDirection="LeftToRight" 
+                                  Text="{Binding username}" Validate="UserBx_OnValidate"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Name="CurrentPassGrp" Visibility="Collapsed" LabelPosition="Top" Label="کلمه عبور فعلی:">
+                        <dxe:PasswordBoxEdit x:Name="CurrentPassBx" HorizontalContentAlignment="Center" FlowDirection="LeftToRight"/>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup>
+                    <dxlc:LayoutItem IsRequired="True" Label="کلمه عبور:" LabelPosition="Top">
+                        <dxe:PasswordBoxEdit x:Name="PassBx" HorizontalContentAlignment="Center" NullText="الزامی" FlowDirection="LeftToRight" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem IsRequired="True" Label="تکرار کلمه عبور:" LabelPosition="Top">
+                        <dxe:PasswordBoxEdit x:Name="ConfPassBx" HorizontalContentAlignment="Center" NullText="الزامی" FlowDirection="LeftToRight" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Margin="0,20,0,0">
+                    <dxlc:LayoutItem IsRequired="True" Label="نام و نام خانوادگی:" LabelPosition="Top">
+                        <dxe:TextEdit x:Name="FullnameBx" HorizontalContentAlignment="Center" Text="{Binding realname}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="تلفن همراه:" LabelPosition="Top">
+                        <dxe:TextEdit x:Name="MobileNumBx" HorizontalContentAlignment="Center" FlowDirection="LeftToRight"
+                              MaskType="Simple" Mask="\0\900-000-0000" Text="{Binding phone}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="سطح دسترسی:" LabelPosition="Top">
+                        <dxe:ComboBoxEdit x:Name="AccountType" SelectedIndex="1">
+                            <dxe:ComboBoxEditItem Content="مدیر" Tag="A" />
+                            <dxe:ComboBoxEditItem Content="کاربر پذیرش" Tag="U" />
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+            <dxlc:LayoutGroup MaxWidth="150" VerticalAlignment="Top">
+                <dxlc:LayoutItem Label="تصویر کاربر:" Height="{Binding ElementName=UserDetailBx, Path=ActualHeight}" LabelPosition="Top" FontWeight="Bold" VerticalContentAlignment="Stretch">
+                    <dxe:ImageEdit x:Name="UserImageBx" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutGroup>
+        <dxlc:LayoutGroup Margin="0,20,0,0">
+            <dxlc:LayoutItem HorizontalContentAlignment="Center">
+                <Button x:Name="SaveInfo" Content="ذخیره اطلاعات" IsDefault="True" Width="200"
+                            Style="{DynamicResource ButtonOk}" Click="SaveInfo_OnClick"/>
+            </dxlc:LayoutItem>
+            <dxlc:LayoutItem Name="CancelBtnGroup" HorizontalContentAlignment="Center">
+                <Button x:Name="CancelBtn" Content="انصراف" Width="200" Click="CancelBtn_OnClick"
+                    Style="{StaticResource ButtonCancel}"/>
+            </dxlc:LayoutItem>
+        </dxlc:LayoutGroup>
+
+        <dxlc:LayoutItem >
+
+        </dxlc:LayoutItem>
+    </dxlc:LayoutGroup>
+</UserControl>

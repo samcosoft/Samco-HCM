@@ -48,7 +48,7 @@
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="فیلتر آزمایش:">
                                     <dxe:ComboBoxEdit Name="TestFilterCbx" DisplayMember="name" ValueMember="Oid" InvalidValueBehavior="AllowLeaveEditor"
-                                                  NullValueButtonPlacement="Popup" IsTextEditable="False" />
+                                                  NullValueButtonPlacement="Popup" IsTextEditable="False" EditValueChanged="TestFilterCbx_OnEditValueChanged"/>
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                         </dxlc:LayoutGroup>
@@ -73,7 +73,7 @@
                                 <dxlc:LayoutGroup>
                                     <dxlc:LayoutItem Visibility="{Binding ElementName=MachineLoadBtn, Path=Visibility}">
                                         <dx:SimpleButton Name="MachineLoadBtn" Content="خواندن اطلاعات دستگاه" navigation:Navigation.NavigateTo="ImportResultView" 
-                                                     Style="{StaticResource ButtonWarn}"/>
+                                                     Style="{StaticResource ButtonEdit}"/>
                                     </dxlc:LayoutItem>
                                     <dxlc:LayoutItem>
                                         <dx:SimpleButton Content="انصراف" Style="{StaticResource ButtonCancel}" Click="CancelBillBtn_OnClick"/>

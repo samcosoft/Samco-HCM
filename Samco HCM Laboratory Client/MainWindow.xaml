@@ -77,7 +77,7 @@
                     <dxb:BarStaticItem.ContentTemplate>
                         <DataTemplate>
                             <TextBlock FontFamily="{StaticResource Vazir}" FontSize="14">
-                                وضعیت اتصال به رایانه مرکزی:
+                                وضعیت ارتباط با رایانه مرکزی:
                             </TextBlock>
                         </DataTemplate>
                     </dxb:BarStaticItem.ContentTemplate>

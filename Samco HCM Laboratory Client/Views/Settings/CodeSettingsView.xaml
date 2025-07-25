@@ -1,4 +1,4 @@
-﻿<dxwui:NavigationPage x:Class="Samco_HCM_Laboratory_Client.Views.Settings.TestCodeSettings"
+﻿<dxwui:NavigationPage x:Class="Samco_HCM_Laboratory_Client.Views.Settings.CodeSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
