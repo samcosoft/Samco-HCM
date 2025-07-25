@@ -14,6 +14,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DevExpress.Xpf.Core;
 using NavigationEventArgs = DevExpress.Xpf.WindowsUI.Navigation.NavigationEventArgs;
 using PatientInfo = LabData.PatientInfo;
 
@@ -25,6 +26,7 @@ namespace Samco_HCM_Laboratory_Client.Views;
 public partial class NewVisitView : IDisposable
 {
     private readonly Session _session1 = new();
+    private XPServerCollectionSource? _visitsCollection;
     private PatientInfo? _patientInfo;
     private LabVisits? _selVisit;
     public NewVisitView()
@@ -38,13 +40,17 @@ public partial class NewVisitView : IDisposable
         // Initialize or load data for the view here
         InsuranceList.ItemsSource = new XPCollection<LabInsuranceType>(_session1);
         TestListToken.ItemsSource = new XPCollection<TestName>(_session1, CriteriaOperator.Parse("parent Is Null"));
-        FactorGrid.ItemsSource = new XPServerCollectionSource(_session1, _session1.GetClassInfo(typeof(LabVisits)));
+
+        _visitsCollection = new XPServerCollectionSource(_session1, _session1.GetClassInfo(typeof(LabVisits)));
+       
+        FactorGrid.ItemsSource = _visitsCollection;
         TestTempGroup.Children.Clear();
-        foreach (var button in _session1.Query<TestTemplate>().ToList().Select(itm => new Button
+        foreach (var button in _session1.Query<TestTemplate>().ToList().Select(itm => new SimpleButton
         {
             Content = itm.Name,
             Tag = itm,
-            ToolTip = $"میانبر: {((Key)itm.ShortKey).ToString()}"
+            ToolTip = $"میانبر: {((Key)itm.ShortKey).ToString()}",
+            Style = (Style)FindResource("ButtonEdit")
         }))
         {
             button.Click += (s, _) =>
@@ -60,11 +66,7 @@ public partial class NewVisitView : IDisposable
         MelliCodeBx.Focus();
     }
 
-    public void Dispose()
-    {
-        _session1.Dispose();
-        GC.SuppressFinalize(this);
-    }
+
 
     private void MelliCodeBx_OnValidate(object sender, ValidationEventArgs e)
     {
@@ -122,7 +124,8 @@ public partial class NewVisitView : IDisposable
                 NameBx.Focus();
             }
         }
-
+        
+        _selVisit = null;
         PatientDataGroup.IsEnabled = true;
     }
     private void NameBx_OnValidate(object sender, ValidationEventArgs e)
@@ -221,10 +224,15 @@ public partial class NewVisitView : IDisposable
     private void FactorGrid_OnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
     {
         if (e.NewItem == null) return;
-
-        _selVisit = (LabVisits)e.NewItem;
-
-        TestListBx.Text = string.Join(" - ", _selVisit.TestCards.Select(x => x.TestName).Where(x => x.parent == null).Select(x => x.name).ToList());
+        try
+        {
+            _selVisit = (LabVisits)e.NewItem;
+            TestListBx.Text = string.Join(" - ", _selVisit.TestCards.Select(x => x.TestName).Where(x => x.parent == null).Select(x => x.name).ToList());
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
     }
 
     private void NameBxAddressBx_OnGotFocus(object sender, RoutedEventArgs e)
@@ -259,6 +267,7 @@ public partial class NewVisitView : IDisposable
             return;
         }
 
+        _patientInfo.Insurance = (LabInsuranceType)InsuranceList.SelectedItem;
         _session1.Save(_patientInfo);
 
         if (_selVisit == null)
@@ -351,7 +360,8 @@ public partial class NewVisitView : IDisposable
     private void GridRefBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SamcoAdd.UpdateBillsData();
-        FactorGrid.ItemsSource = new XPServerCollectionSource(_session1, _session1.GetClassInfo(typeof(LabVisits)));
+        _visitsCollection = new XPServerCollectionSource(_session1, _session1.GetClassInfo(typeof(LabVisits)));
+        //FactorGrid.ItemsSource = _visitsCollection;
         FactorGrid.RefreshData();
         MainNotify.ShowSuccess("تازه سازی", "لیست با موفقیت به روزرسانی شد");
     }
@@ -429,4 +439,9 @@ public partial class NewVisitView : IDisposable
         ResetFields();
     }
 
+    public void Dispose()
+    {
+        _session1.Dispose();
+        _visitsCollection?.Dispose();
+    }
 }

@@ -90,7 +90,7 @@
                     </dxb:BarStaticItem.ContentTemplate>
                 </dxb:BarStaticItem>
                 <dxb:BarItemSeparator/>
-                <dxb:BarButtonItem Name="ServerConnectBtn" Alignment="Far" IsVisible="False" Background="Green">
+                <dxb:BarButtonItem Name="ServerConnectBtn" Alignment="Far" IsVisible="False" Background="Green" ItemClick="ServerConnectBtn_OnItemClick">
                     <dxb:BarButtonItem.ContentTemplate>
                         <DataTemplate>
                             <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Vazir}" FontSize="14">

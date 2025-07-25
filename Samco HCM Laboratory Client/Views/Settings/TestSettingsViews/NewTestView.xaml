@@ -82,7 +82,7 @@
                 <dxlc:LayoutItem Label="مقدار پیشفرض:" LabelPosition="Top">
                     <dxe:ComboBoxEdit Name="DefaultValueBx" FilterCondition="StartsWith" IncrementalFiltering="True" HorizontalContentAlignment="Center" ValidateOnTextInput="False"
           ItemsSource="{Binding ElementName=ValueList, Path=ItemsSource}" Text="{Binding defValue}" IsTextEditable="True" AllowDefaultButton="False"
-          AutoComplete="False" CausesValidation="True" ImmediatePopup="True" FlowDirection="LeftToRight" PopupMaxHeight="100" />
+          AutoComplete="False" CausesValidation="True" ImmediatePopup="True" FlowDirection="LeftToRight" PopupMaxHeight="100" MaskUseAsDisplayFormat="False"/>
                 </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
             <dxlc:LayoutGroup>

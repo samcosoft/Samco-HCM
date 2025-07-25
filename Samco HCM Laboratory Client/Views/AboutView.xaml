@@ -20,19 +20,19 @@
                                     برنامه Health Care Management System نرم افزاری ساده جهت مدیریت مراکز درمانی است. این نرم‌افزار قابلیت تعریف خدمات، تعریف بیمه‌ها، صدور نوبت، ایجاد گزارش مالی و... را دارا است. در حال حاضر نسخه موجود به صورت آزمایشی ارائه گردیده است. برنامه فعلی زیرمجموعه نرم‌افزار مدیریت مراکز درمانی و جهت مدیریت اطلاعات آزمایشگاه است.
                                 </TextBlock>
                             </dxlc:LayoutGroup>
-                            <dxlc:LayoutGroup View="GroupBox" Orientation="Vertical" Header="اطلاعات مجوز">
+                            <!--<dxlc:LayoutGroup View="GroupBox" Orientation="Vertical" Header="اطلاعات مجوز">
                                 <dxlc:LayoutItem>
                                     <dxe:TextEdit Name="LicStatLab" Text="License status" FlowDirection="LeftToRight" VerticalScrollBarVisibility="Auto"/>
                                 </dxlc:LayoutItem>
-                            </dxlc:LayoutGroup>
+                            </dxlc:LayoutGroup>-->
                         </dxlc:LayoutGroup>
-                        <dxlc:LayoutGroup Orientation="Vertical" MaxWidth="220">
+                        <dxlc:LayoutGroup Orientation="Vertical" MaxWidth="250">
                             <dxlc:LayoutGroup View="Group" Orientation="Vertical" FlowDirection="LeftToRight">
                                 <dxlc:LayoutItem >
                                     <dxe:ImageEdit Height="100" IsReadOnly="True" ShowBorder="False" Source="/Images/Lab.png" />
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem>
-                                    <TextBlock>Samco® HCM®</TextBlock>
+                                    <TextBlock>Samco® HCM® Laboratory Client</TextBlock>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="Version:">
                                     <Label Name="ProdVer"/>
@@ -44,9 +44,6 @@
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutItem Label="رایانامه:">
                                     <TextBlock Text="support@samcosoft.ir" />
-                                </dxlc:LayoutItem>
-                                <dxlc:LayoutItem Label="تلفن:">
-                                    <TextBlock Text="09397532159" />
                                 </dxlc:LayoutItem>
                             </dxlc:LayoutGroup>
                         </dxlc:LayoutGroup>

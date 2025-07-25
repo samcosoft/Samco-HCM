@@ -37,7 +37,7 @@ public partial class Dashboard
 
         //Create statistics Tiles
         var allStat = SamcoAdd.GetTile("آمار", TileSize.Small, "AllStatIcon.samco");
-        //Navigation.SetNavigateTo(allStat, new Statistics());
+        Navigation.SetNavigateTo(allStat, new StatisticsView());
         MainTilLayout.Children.Add(allStat);
 
         if (SamcoAdd.UserIsAdmin())

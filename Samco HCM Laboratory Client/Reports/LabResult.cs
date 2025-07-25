@@ -1,9 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
 using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
 using DevExpress.XtraReports.UI;
 using LabData;
 using Samco_HCM_Shared;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace Samco_HCM_Laboratory_Client.Reports;
@@ -26,6 +28,15 @@ public partial class LabResult : XtraReport
         {
             UniversityLab.Text += SamcoSoftShared.LoadedSettings.UniversityName;
             ShabakehLab.Text = string.Format(ShabakehLab.Text, SamcoSoftShared.LoadedSettings.ShahrestanName, SamcoSoftShared.LoadedSettings.MarkazName);
+        }
+        // Load university Icon if available
+        try
+        {
+            UniIconBx.Image = Image.FromStream(new MemoryStream(SamcoSoftShared.LoadedSettings.UniversityIcon!));
+        }
+        catch (Exception)
+        {
+            // ignored
         }
 
         _visit = _session1.GetObjectByKey<LabVisits>(visitId);
@@ -79,7 +90,7 @@ public partial class LabResult : XtraReport
                     }
                 }
             }
-            //add empty row for seperation
+            //add empty row for separation
             ResultTable.Rows.Add(new XRTableRow());
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using DevExpress.Xpf.Editors;
 using LabData;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
 using DevExpress.Xpf.LayoutControl;
@@ -30,17 +30,33 @@ public partial class TestNameView
         switch (test.TestName.dataType)
         {
             case 0:
-                var newSpin = new SpinEdit { AllowNullInput = true, MaxHeight = 30, DataContext = test };
-                // Set Validation rules
-                if (!string.IsNullOrEmpty(test.TestName.nlRange)) newSpin.Tag = test.TestName.nlRange;
-                if (!string.IsNullOrEmpty(test.Result))
+                //var newSpin = new SpinEdit { AllowNullInput = true, MaxHeight = 30, DataContext = test };
+                //// Set Validation rules
+                //if (!string.IsNullOrEmpty(test.TestName.nlRange)) newSpin.Tag = test.TestName.nlRange;
+                //if (!string.IsNullOrEmpty(test.Result))
+                //{
+                //    newSpin.Value = decimal.TryParse(test.Result, out var result) ? result : 0;
+                //}
+                //else
+                //    newSpin.Value = decimal.TryParse(test.TestName.defValue, out var result) ? result : 0;
+
+                //newSpin.Mask = "f1";
+                //newSpin.MaskType = MaskType.Numeric;
+                //newSpin.MaskUseAsDisplayFormat = true;
+                //newSpin.Validate += NewSpin_Validate;
+                //newSpin.EditValueChanged += (_, e) => test.Result = e.NewValue.ToString();
+                //returnLayout.Content = newSpin;
+                var newSpin = new TextEdit
                 {
-                    newSpin.Value = decimal.TryParse(test.Result, out var result) ? result : 0;
-                }
-                else
-                    newSpin.Value = decimal.TryParse(test.TestName.defValue, out var result) ? result : 0;
+                    Tag = test.TestName.nlRange,
+                    DataContext = test,
+                    Text = !string.IsNullOrEmpty(test.Result) ? test.Result : test.TestName.defValue,
+                    Mask = "f2",
+                    MaskType = MaskType.Numeric
+                };
+
+                newSpin.EditValueChanged += (_, _) => test.Result = newSpin.Text;
                 newSpin.Validate += NewSpin_Validate;
-                newSpin.EditValueChanged += (_, _) => test.Result = newSpin.Value.ToString(CultureInfo.InvariantCulture);
                 returnLayout.Content = newSpin;
                 break;
             case 1:
@@ -90,14 +106,23 @@ public partial class TestNameView
 
     private void NewSpin_Validate(object sender, ValidationEventArgs e)
     {
-        if (sender is not SpinEdit { DataContext: TestCard test } spinBx || e.Value == null || string.IsNullOrEmpty(test.TestName.defValue)) return;
+        if (sender is not TextEdit { DataContext: TestCard test } spinBx || e.Value == null || string.IsNullOrEmpty(test.TestName.defValue)) return;
 
         var nlRange = test.TestName.nlRange?.Split('|');
         if (nlRange is { Length: < 2 }) return;
         var minVal = decimal.TryParse(nlRange?[0], out var min) ? min : decimal.MinValue;
         var maxVal = decimal.TryParse(nlRange?[1], out var max) ? max : decimal.MaxValue;
 
-        if ((decimal)e.Value < minVal || (decimal)e.Value > maxVal)
+        //if ((decimal)e.Value < minVal || (decimal)e.Value > maxVal)
+        //{
+        //    spinBx.Background = Brushes.DarkRed;
+        //}
+        //else
+        //{
+        //    spinBx.Background = null;
+        //}
+        decimal.TryParse(e.Value.ToString()!, CultureInfo.InvariantCulture, out var result);
+        if (result < minVal || result > maxVal)
         {
             spinBx.Background = Brushes.DarkRed;
         }

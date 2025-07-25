@@ -74,6 +74,8 @@ public partial class NewTestView : IDisposable
         }
 
         _values.Clear();
+        DefaultValueBx.Mask = null;
+        DefaultValueBx.MaskType = MaskType.None;
         switch (_selTest.dataType)
         {
             case 0: //Numeric
@@ -84,6 +86,8 @@ public partial class NewTestView : IDisposable
                     MaxValueBx.Text = nlRangeValues[1];
                     MinValueBx.Text = nlRangeValues[0];
                 }
+                DefaultValueBx.Mask= "f2";
+                DefaultValueBx.MaskType = MaskType.Numeric;
                 break;
             case 1:
                 DataTypeBx.EditValue = "انتخابی";

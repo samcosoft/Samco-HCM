@@ -21,7 +21,7 @@ namespace Samco_HCM_Laboratory_Client.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ProdVer.Content = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-            CopyRightLbl.Text = "Copyright 2018 - 2024 Samco Software Group - Ayandeh Kavan Vorna Corp";
+            CopyRightLbl.Text = $"Copyright 2018 - {DateTime.Now.Year} Samco Software Group - Ayandeh Kavan Vorna Corp";
             base.OnNavigatedTo(e);
         }
     }

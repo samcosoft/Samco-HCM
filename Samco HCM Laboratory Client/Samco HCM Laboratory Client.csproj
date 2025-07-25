@@ -8,8 +8,8 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <ApplicationIcon>Lab Icon.ico</ApplicationIcon>
         <Version>3.0.295.24133</Version>
-        <AssemblyVersion>3.0.339.24133</AssemblyVersion>
-        <FileVersion>3.0.339.24133</FileVersion>
+        <AssemblyVersion>3.0.359.24133</AssemblyVersion>
+        <FileVersion>3.0.359.24133</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -18,6 +18,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml;
+using DevExpress.Xpf.Bars;
 
 namespace Samco_HCM_Laboratory_Client;
 
@@ -27,7 +28,7 @@ namespace Samco_HCM_Laboratory_Client;
 public partial class MainWindow
 {
 
-    private readonly Timer _timer = new(1000);
+    private readonly Timer _billTimer = new(TimeSpan.FromSeconds(30));
     private const string SettingFileName = "LabClientSettings";
     public MainWindow()
     {
@@ -36,31 +37,13 @@ public partial class MainWindow
         if (HandyControl.Themes.ThemeManager.Current.ApplicationTheme == ApplicationTheme.Dark)
             ThemeButton.IsChecked = true;
 
-        _timer.Elapsed += ShiftTimer;
-        _timer.Enabled = true;
+        _billTimer.Elapsed += BillTimer;
+        
     }
 
-    private void ShiftTimer(object? sender, ElapsedEventArgs e)
+    private void BillTimer(object? sender, ElapsedEventArgs e)
     {
-        if (SamcoSoftShared.LoadedSettings == null) return;
-        try
-        {
-            var startShift = SamcoSoftShared.LoadedSettings.StartShiftTime ?? new DateTime(2001, 1, 1, 8, 0, 0);
-            var endShift = SamcoSoftShared.LoadedSettings.EndShiftTime ?? new DateTime(2001, 1, 1, 20, 0, 0);
-
-            if (DateTime.Now.TimeOfDay >= startShift.TimeOfDay && DateTime.Now.TimeOfDay < endShift.TimeOfDay)
-            {
-                SamcoAdd.OffShift = false;
-            }
-            else
-            {
-                SamcoAdd.OffShift = true;
-            }
-        }
-        catch (Exception)
-        {
-            //Ignored
-        }
+        SamcoAdd.UpdateBillsData();
     }
 
     #region Change Theme
@@ -104,14 +87,12 @@ public partial class MainWindow
 
         WaitIndic.IsSplashScreenShown = false;
         SplashScreenManager.CloseAll();
-        if (LoginUser() == false)
-        {
-            return;
-        }
+        if (LoginUser() == false) return;
 
         //Save backup from setting file
         SamcoSoftShared.LoadedSettings!.SaveBackup();
         SamcoAdd.CheckNetwork();
+        if (SamcoSoftShared.LoadedSettings.ActiveClient) _billTimer.Enabled = true;
     }
     private void CreateLoadSetting(string settingDir)
     {
@@ -283,5 +264,11 @@ public partial class MainWindow
         ProfilePic.Id = string.Empty;
         ProfilePic.Source = null;
         LoginUser();
+    }
+
+    private void ServerConnectBtn_OnItemClick(object sender, ItemClickEventArgs e)
+    {
+        SamcoAdd.UpdateBillsData();
+        ServerConnectBtn.IsVisible = false;
     }
 }

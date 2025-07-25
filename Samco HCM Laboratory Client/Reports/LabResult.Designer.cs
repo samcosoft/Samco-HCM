@@ -162,8 +162,8 @@
             // UniIconBx
             // 
             this.UniIconBx.Dpi = 254F;
-            this.UniIconBx.ImageSource = new DevExpress.XtraPrinting.Drawing.ImageSource("svg", resources.GetString("UniIconBx.ImageSource"));
-            this.UniIconBx.LocationFloat = new DevExpress.Utils.PointFloat(25.00001F, 34F);
+            this.UniIconBx.ImageSource = new DevExpress.XtraPrinting.Drawing.ImageSource("img", resources.GetString("UniIconBx.ImageSource"));
+            this.UniIconBx.LocationFloat = new DevExpress.Utils.PointFloat(25.00001F, 35F);
             this.UniIconBx.Name = "UniIconBx";
             this.UniIconBx.SizeF = new System.Drawing.SizeF(220F, 220F);
             this.UniIconBx.Sizing = DevExpress.XtraPrinting.ImageSizeMode.Squeeze;
