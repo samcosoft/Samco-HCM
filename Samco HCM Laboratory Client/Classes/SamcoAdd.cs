@@ -21,8 +21,6 @@ namespace Samco_HCM_Laboratory_Client.Classes;
 
 internal static class SamcoAdd
 {
-    internal static bool OffShift;
-    internal static bool OnlineClient;
     internal static IDataLayer? RemoteDatalayer;
     internal static bool UserIsAdmin()
     {
@@ -164,38 +162,46 @@ internal static class SamcoAdd
     {
         if (!SamcoSoftShared.LoadedSettings!.ActiveClient || RemoteDatalayer is null)
         {
-            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "کاربری محلی";
+            Application.Current.Resources["ConnectionState"] = "کاربری محلی";
+            Application.Current.Resources["NotConnected"] = false;
             return false;
         }
         try
         {
-            var dataStore = XpoDefault.GetConnectionProvider(RemoteDatalayer.Connection.ConnectionString, AutoCreateOption.None);
-            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = dataStore != null ? "متصل" : "قطع ارتباط";
-            ((MainWindow)Application.Current.MainWindow!).ServerConnectBtn.IsVisible = dataStore != null;
+            var dataStore = XpoDefault.GetConnectionProvider(SamcoSoftShared.LoadedSettings.RemoteConnectionString, AutoCreateOption.None);
+            Application.Current.Resources["ConnectionState"] = dataStore != null ? "متصل" : "قطع ارتباط";
+            Application.Current.Resources["NotConnected"] = dataStore == null;
+            //MainNotify.ShowInformation("Connect to server...", "");
+
             return dataStore != null;
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            ((MainWindow)Application.Current.MainWindow!).Resources["ConnectionState"] = "قطع ارتباط";
-            ((MainWindow)Application.Current.MainWindow!).ServerConnectBtn.IsVisible = true;
+            MainNotify.ShowWarning("Server Connection Warning:", e.Message);
+            Application.Current.Resources["ConnectionState"] = "قطع ارتباط";
+            Application.Current.Resources["NotConnected"] = true;
             return false;
         }
     }
 
+    private static byte serverClean;
     internal static void UpdateBillsData()
     {
-        if (CheckNetwork() == false) return;
+        if (!CheckNetwork()) return;
+        //MainNotify.ShowInformation("Sending Data...", "");
         try
         {
             using var session1 = new Session(XpoDefault.DataLayer);
             using var remoteSession = new Session(RemoteDatalayer);
             var unpaidVisit = session1.Query<LabVisits>().Where(x => !x.paid).ToList();
+
             foreach (var bill in unpaidVisit)
             {
                 var remoteBill = remoteSession.FindObject<RemoteBill>(new BinaryOperator("RemoteBillId", bill.Oid));
                 if (remoteBill != null)
                 {
-                    if (remoteBill.IsPaid == false)
+                    //MainNotify.ShowInformation("Old Visit", remoteBill.Name);
+                    if (remoteBill.IsPaid)
                     {
                         bill.paid = true;
                         bill.Save();
@@ -219,9 +225,31 @@ internal static class SamcoAdd
                         MelliCode = bill.Patient.MelliCode,
                         InsId = bill.insType.serverID
                     };
+                    //MainNotify.ShowInformation("New Visit", newRemoteBill.Name);
                     newRemoteBill.Save();
                 }
             }
+
+            if (serverClean == 6)
+            {
+                //Clean Server Bills
+                var remoteBills = remoteSession.Query<RemoteBill>().Where(x => x.ServiceType == "Lab").ToList();
+                foreach (var remoteBill in remoteBills)
+                {
+                    var localBill = session1.FindObject<LabVisits>(new BinaryOperator("Oid", remoteBill.RemoteBillId));
+                    if (localBill is null || localBill.paid)
+                    {
+                        remoteBill.Delete();
+                    }
+                }
+                serverClean = 0;
+                //MainNotify.ShowInformation("Data Cleanup", "اطلاعات با موفقیت به روز شد.");
+            }
+            else
+            {
+                serverClean += 1;
+            }
+
         }
         catch (Exception ex)
         {

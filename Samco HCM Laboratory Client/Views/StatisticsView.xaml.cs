@@ -7,7 +7,6 @@ using HandyControl.Data;
 using LabData;
 using Samco_HCM_Laboratory_Client.Classes;
 using Samco_HCM_Laboratory_Client.Reports;
-using Samco_HCM_Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,8 +52,7 @@ public partial class StatisticsView : IDisposable
         else
         {
             UserSelLab.Visibility = Visibility.Collapsed;
-            UserSelCbx.SelectedItem =
-                UserSelCbx.Items.Cast<LabUsers>().Where(x => x.Oid == SamcoSoftShared.CurrentUser!.Oid);
+            UserSelCbx.SelectAllItems();
             VisitGrid.View.ShowFilterPanelMode = DevExpress.Xpf.Grid.ShowFilterPanelMode.Never;
         }
         LoadGridData();

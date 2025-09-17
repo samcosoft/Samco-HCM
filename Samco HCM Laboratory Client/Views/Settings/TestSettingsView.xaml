@@ -24,7 +24,7 @@
                                     <dxe:ListBoxEdit x:Name="InsList" MinHeight="150" DisplayMember="name" ValueMember="Oid"
                                                      SelectedIndexChanged="InsList_OnSelectedIndexChanged" AllowLiveDataShaping="True"/>
                                 </dxlc:LayoutItem>
-                                <dxlc:LayoutItem Label="درصد فرانشیز:">
+                                <dxlc:LayoutItem Label="درصد فرانشیز (سهم بیمار):">
                                     <dxe:ButtonEdit Name="InsEditBtn" AllowDefaultButton="False" EditValue="{Binding franchises}"
                                                     d:DataContext="{d:DesignInstance labData:LabInsuranceType}" Mask="d" MaskType="Numeric">
                                         <dxe:ButtonInfo GlyphKind="Custom" Click="InsSvBtn_OnClick" ToolTip="ذخیره فرانشیز">

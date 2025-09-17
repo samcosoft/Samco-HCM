@@ -200,7 +200,7 @@ public partial class MainWindow : ThemedWindow
         {
             if (SamcoSoftShared.LoadedSettings!.ConnectionString == null) return false;
             string errorMessage = null;
-            if (SamcoSoftShared.LoadDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, true, ref errorMessage)) return true;
+            if (SamcoSoftShared.LoadHcmDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, true, ref errorMessage)) return true;
 
             WaitIndic.IsSplashScreenShown = false;
             WinUIMessageBox.Show(GetWindow(this),

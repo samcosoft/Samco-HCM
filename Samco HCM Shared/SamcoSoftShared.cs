@@ -35,7 +35,7 @@ public static class SamcoSoftShared
         return image;
     }
 
-    public static bool LoadDatabase(string? connectionString, bool justConnect, ref string? errorMessage)
+    public static bool LoadHcmDatabase(string? connectionString, bool justConnect, ref string? errorMessage)
     {
         if (string.IsNullOrEmpty(connectionString))
         {
@@ -51,6 +51,7 @@ public static class SamcoSoftShared
                 using var session1 = new Session(dbDataLayer);
                 session1.UpdateSchema(databaseAssemblies);
                 session1.CreateObjectTypeRecords(databaseAssemblies);
+                session1.PurgeDeletedObjects();
             }
             catch (Exception ex)
             {
@@ -67,6 +68,8 @@ public static class SamcoSoftShared
         {
             XpoDefault.DataLayer = new ThreadSafeDataLayer(dict, store);
             XpoDefault.Session = null;
+            using var session1 = new Session();
+            session1.PurgeDeletedObjects();
             return true;
         }
         catch (Exception ex)
@@ -76,7 +79,7 @@ public static class SamcoSoftShared
         }
     }
 
-    public static bool LoadRemoteDatabase(string? connectionString, Assembly remoteAssembly, bool justConnect, ref string? errorMessage, out IDataLayer? dataLayer)
+    public static bool LoadRemoteHcmDatabase(string? connectionString, bool justConnect, ref string? errorMessage, out IDataLayer? dataLayer)
     {
         dataLayer = null;
         if (string.IsNullOrEmpty(connectionString))
@@ -84,6 +87,9 @@ public static class SamcoSoftShared
             errorMessage = "Connection string is null or empty.";
             return false;
         }
+
+        var remoteAssembly = Assembly.GetExecutingAssembly();
+
         if (!justConnect)
         {//Check For database Update
             try
@@ -100,12 +106,12 @@ public static class SamcoSoftShared
             }
         }
 
-        //Try to Connect to database
-        var dict = new ReflectionDictionary();
-        dict.GetDataStoreSchema(remoteAssembly);
-        var store = XpoDefault.GetConnectionProvider(connectionString, AutoCreateOption.SchemaAlreadyExists);
         try
         {
+            //Try to Connect to database
+            var dict = new ReflectionDictionary();
+            dict.GetDataStoreSchema(remoteAssembly);
+            var store = XpoDefault.GetConnectionProvider(connectionString, AutoCreateOption.SchemaAlreadyExists);
             dataLayer = new ThreadSafeDataLayer(dict, store);
             return true;
         }

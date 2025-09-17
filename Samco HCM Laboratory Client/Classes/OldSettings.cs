@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Samco_HCM_Laboratory_Client.Classes;
 
-[DataContract(Name = "MySettings", Namespace = "http://schemas.datacontract.org/2004/07/Health_Care_Management")]
+[DataContract(Name = "MySettings", Namespace = "http://schemas.datacontract.org/2004/07/LaboratoryClient")]
 
 internal class OldSettings
 {

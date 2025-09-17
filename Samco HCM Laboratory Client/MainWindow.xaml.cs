@@ -12,7 +12,6 @@ using Samco_HCM_Shared.Classes;
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Timers;
 using System.Windows;
@@ -28,7 +27,7 @@ namespace Samco_HCM_Laboratory_Client;
 public partial class MainWindow
 {
 
-    private readonly Timer _billTimer = new(TimeSpan.FromSeconds(30));
+    private readonly Timer _billTimer = new(TimeSpan.FromSeconds(10));
     private const string SettingFileName = "LabClientSettings";
     public MainWindow()
     {
@@ -38,7 +37,7 @@ public partial class MainWindow
             ThemeButton.IsChecked = true;
 
         _billTimer.Elapsed += BillTimer;
-        
+
     }
 
     private void BillTimer(object? sender, ElapsedEventArgs e)
@@ -64,6 +63,9 @@ public partial class MainWindow
         CreateLoadSetting(settingDir);
         //Set theme
         if (SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = SamcoSoftShared.LoadedSettings.AppThemeName;
+        WaitIndic.IsSplashScreenShown = false;
+        //MessageBox.Show($"Connection string: {SamcoSoftShared.LoadedSettings!.ConnectionString}");
+        //MessageBox.Show($"Remote Connection string: {SamcoSoftShared.LoadedSettings.RemoteConnectionString}");
 
         if (CheckDatabase() == false)
         {
@@ -90,7 +92,8 @@ public partial class MainWindow
         if (LoginUser() == false) return;
 
         //Save backup from setting file
-        SamcoSoftShared.LoadedSettings!.SaveBackup();
+        SamcoSoftShared.LoadedSettings!.Save();
+        SamcoSoftShared.LoadedSettings.SaveBackup();
         SamcoAdd.CheckNetwork();
         if (SamcoSoftShared.LoadedSettings.ActiveClient) _billTimer.Enabled = true;
     }
@@ -169,11 +172,11 @@ public partial class MainWindow
     }
     private bool CheckDatabase()
     {
-        if (SamcoSoftShared.LoadedSettings!.ConnectionString != null)
-        {
-            string? errorMessage = null;
-            if (SamcoAdd.LoadDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, ref errorMessage)) return true;
+        if (SamcoSoftShared.LoadedSettings!.ConnectionString == null) return false;
 
+        string? errorMessage = null;
+        if (!SamcoAdd.LoadDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, ref errorMessage))
+        {
             WaitIndic.IsSplashScreenShown = false;
             WinUIMessageBox.Show(GetWindow(this),
                 "در ارتباط با پایگاه داده مشکل زیر رخ داده است. لطفاً تنظیمات پایگاه داده را دوباره بررسی کنید." +
@@ -186,8 +189,7 @@ public partial class MainWindow
         if (SamcoSoftShared.LoadedSettings.ActiveClient)
         {
             if (SamcoSoftShared.LoadedSettings.RemoteConnectionString == null) return false;
-            string? errorMessage = null;
-            if (SamcoSoftShared.LoadRemoteDatabase(SamcoSoftShared.LoadedSettings.RemoteConnectionString, Assembly.GetExecutingAssembly(), true, ref errorMessage,out SamcoAdd.RemoteDatalayer)) return true;
+            if (SamcoSoftShared.LoadRemoteHcmDatabase(SamcoSoftShared.LoadedSettings.RemoteConnectionString, true, ref errorMessage, out SamcoAdd.RemoteDatalayer)) return true;
 
             WaitIndic.IsSplashScreenShown = false;
             WinUIMessageBox.Show(GetWindow(this),
@@ -195,9 +197,10 @@ public partial class MainWindow
                 "\n" + ('\n' + errorMessage), "خطا در برقراری ارتباط", MessageBoxButton.OK, MessageBoxImage.Exclamation,
                 MessageBoxResult.None, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign,
                 FloatingMode.Adorner, true);
+            return false;
         }
 
-        return false;
+        return true;
     }
     private bool LoginUser()
     {
@@ -269,6 +272,5 @@ public partial class MainWindow
     private void ServerConnectBtn_OnItemClick(object sender, ItemClickEventArgs e)
     {
         SamcoAdd.UpdateBillsData();
-        ServerConnectBtn.IsVisible = false;
     }
 }

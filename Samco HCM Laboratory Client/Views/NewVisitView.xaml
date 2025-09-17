@@ -95,9 +95,9 @@
                                 <dxg:GridColumn FieldName="RealPrice" Header="مبلغ (تومان)" />
                             </dxg:GridControl>
                             <dxlc:LayoutItem Label="هزینه آزمایش ها (تومان):">
-                                <dxe:TextEdit Name="SumPriceBx" IsReadOnly="True" NullText="" HorizontalContentAlignment="Center" />
+                                <dxe:TextEdit Name="SumRealPriceBx" IsReadOnly="True" NullText="" HorizontalContentAlignment="Center" />
                             </dxlc:LayoutItem>
-                            <dxlc:LayoutItem Label="فرانشیز:">
+                            <dxlc:LayoutItem Label="سهم بیمار:">
                                 <dxe:TextEdit Name="FranchiesLab" IsReadOnly="True" />
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="جمع کل (تومان):">

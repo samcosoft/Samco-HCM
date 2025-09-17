@@ -66,13 +66,6 @@ public partial class NewTestView : IDisposable
 
         ParentBx.ItemsSource = new XPCollection<TestName>(_session).Where(x => x.parent == null).ToList();
 
-        //Update old database
-        if (!string.IsNullOrEmpty(_selTest.itmList))
-        {
-            _selTest.itmList = _selTest.itmList.Replace("-", "|");
-            _selTest.Save();
-        }
-
         _values.Clear();
         DefaultValueBx.Mask = null;
         DefaultValueBx.MaskType = MaskType.None;

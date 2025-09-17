@@ -42,7 +42,7 @@ public partial class NewVisitView : IDisposable
         TestListToken.ItemsSource = new XPCollection<TestName>(_session1, CriteriaOperator.Parse("parent Is Null"));
 
         _visitsCollection = new XPServerCollectionSource(_session1, _session1.GetClassInfo(typeof(LabVisits)));
-       
+
         FactorGrid.ItemsSource = _visitsCollection;
         TestTempGroup.Children.Clear();
         foreach (var button in _session1.Query<TestTemplate>().ToList().Select(itm => new SimpleButton
@@ -98,20 +98,35 @@ public partial class NewVisitView : IDisposable
         {
             if (SamcoSoftShared.LoadedSettings!.ActiveClient && SamcoAdd.CheckNetwork())
             {
-                using var remoteSession = new Session(SamcoAdd.RemoteDatalayer);
-                var remotePatient = remoteSession.FindObject<HCMData.PatientInfo>(new BinaryOperator(nameof(HCMData.PatientInfo.melliCode), MelliCodeBx.Text));
-                if (remotePatient != null)
+                try
+                {
+                    using var remoteSession = new Session(SamcoAdd.RemoteDatalayer);
+                    var remotePatient =
+                        remoteSession.FindObject<HCMData.PatientInfo>(
+                            new BinaryOperator(nameof(HCMData.PatientInfo.melliCode), MelliCodeBx.Text));
+                    if (remotePatient != null)
+                    {
+                        _patientInfo = new PatientInfo(_session1)
+                        {
+                            MelliCode = remotePatient.melliCode,
+                            Name = remotePatient.name,
+                            Phone = remotePatient.mobile,
+                            Insurance = _session1.FindObject<LabInsuranceType>(new BinaryOperator("serverID",
+                                remotePatient.Oid))
+                        };
+                        VisitInfoGrp.DataContext = _patientInfo;
+                        InsuranceList.SelectedItem = _patientInfo.Insurance;
+                        BirthDateBx.Focus();
+                    }
+                }
+                catch (Exception)
                 {
                     _patientInfo = new PatientInfo(_session1)
                     {
-                        MelliCode = remotePatient.melliCode,
-                        Name = remotePatient.name,
-                        Phone = remotePatient.mobile,
-                        Insurance = _session1.FindObject<LabInsuranceType>(new BinaryOperator("serverID", remotePatient.Oid))
+                        MelliCode = MelliCodeBx.Text
                     };
                     VisitInfoGrp.DataContext = _patientInfo;
-                    InsuranceList.SelectedItem = _patientInfo.Insurance;
-                    BirthDateBx.Focus();
+                    NameBx.Focus();
                 }
             }
             else
@@ -124,7 +139,7 @@ public partial class NewVisitView : IDisposable
                 NameBx.Focus();
             }
         }
-        
+
         _selVisit = null;
         PatientDataGroup.IsEnabled = true;
     }
@@ -194,6 +209,8 @@ public partial class NewVisitView : IDisposable
 
         if (testList.Count == 0 || insurance == null) return;
 
+        var franchise = insurance.franchises / 100;
+
         var testPriceTable = new DataTable
         {
             Columns = { "TestName", "RealPrice" }
@@ -201,22 +218,27 @@ public partial class NewVisitView : IDisposable
 
         foreach (var test in testList)
         {
-            testPriceTable.Rows.Add(test.name, test.realPrice);
+            //Get test price from insurance list
+            var testPrice = _session1.Query<TestPrice>().Where(x => x.insType.Oid == insurance.Oid &&
+                                                                x.testName.Oid == test.Oid);
+            testPriceTable.Rows.Add(test.name, testPrice.Any() ? testPrice.FirstOrDefault()!.price : Math.Round((decimal)(test.realPrice * franchise)));
         }
 
-        var franchise = insurance.franchises / 100;
+        testPriceTable.Rows.Add("حق فنی", insurance.fanniPrice.ToString());
 
-        SumPriceBx.Text = testList.Sum(test => test.realPrice).ToString();
+        var sumRealPrice = testList.Sum(test => test.realPrice);
 
-        var sumPrice = testPriceTable
+        SumRealPriceBx.Text = sumRealPrice.ToString();
+
+        var sumInsuredPrice = testPriceTable
             .AsEnumerable()
             .Sum(row => Convert.ToInt32(row["RealPrice"]));
 
-        testPriceTable.Rows.Add("حق فنی", insurance.fanniPrice.ToString());
-        sumPrice += insurance.fanniPrice;
+        FranchiesLab.Text = (sumRealPrice - sumInsuredPrice).ToString();
 
-        FranchiesLab.Text = Math.Round((decimal)(sumPrice * franchise)).ToString(CultureInfo.InvariantCulture);
-        SumPriceLab.Text = IsFreeVisit.IsChecked.GetValueOrDefault(false) ? "0" : (sumPrice - Convert.ToInt32(FranchiesLab.Text)).ToString();
+        sumInsuredPrice += insurance.fanniPrice;
+
+        SumPriceLab.Text = IsFreeVisit.IsChecked.GetValueOrDefault(false) ? "0" : sumInsuredPrice.ToString();
         RealPriceGrid.ItemsSource = testPriceTable;
         RealPriceGrid.RefreshData();
     }
@@ -350,7 +372,7 @@ public partial class NewVisitView : IDisposable
         PatientDataGroup.IsEnabled = false;
         FactorGrid.FilterCriteria = null;
         InsuranceList.SelectedItem = null;
-        SumPriceBx.Text = string.Empty;
+        SumRealPriceBx.Text = string.Empty;
         SumPriceLab.Text = string.Empty;
         FranchiesLab.Text = string.Empty;
         MelliCodeBx.Text = string.Empty;
@@ -429,14 +451,17 @@ public partial class NewVisitView : IDisposable
         if (WinUIMessageBox.Show("آیا از حذف قبض انتخاب شده مطمئن هستید؟", "تأیید حذف قبض", MessageBoxButton.YesNo, MessageBoxImage.Exclamation, MessageBoxResult.No, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign) == MessageBoxResult.No) return;
         if (!selectedVisit.isFree)
         {
+            var remoteSession = new Session(SamcoAdd.RemoteDatalayer);
             //Delete remoteBill if exists
-            var remoteBill = _session1.FindObject<RemoteBill>(new BinaryOperator("RemoteBillId", selectedVisit.Oid));
+            var remoteBill = remoteSession.FindObject<RemoteBill>(new BinaryOperator("RemoteBillId", selectedVisit.Oid));
             remoteBill?.Delete();
         }
 
         selectedVisit.Delete();
         MainNotify.ShowSuccess("حذف قبض", "قبض با موفقیت حذف شد");
         ResetFields();
+        _visitsCollection!.Reload();
+        FactorGrid.RefreshData();
     }
 
     public void Dispose()

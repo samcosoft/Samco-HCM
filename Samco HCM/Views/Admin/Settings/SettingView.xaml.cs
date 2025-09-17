@@ -217,7 +217,7 @@ namespace Samco_HCM.Views.Settings
             }
 
             string errorMessage = null;
-            if (SamcoSoft.LoadDatabase(SamcoSoft.LoadedSettings.ConnectionString!, false, ref errorMessage))
+            if (SamcoSoft.LoadHcmDatabase(SamcoSoft.LoadedSettings.ConnectionString!, false, ref errorMessage))
             {
                 SamcoSoft.LoadedSettings.Save();
                 WinUIMessageBox.Show(this, "ارتباط با پایگاه داده برقرار شد. لطفاً نرم افزار را یک بار دیگر اجرا کنید.",

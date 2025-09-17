@@ -30,22 +30,6 @@ public partial class TestNameView
         switch (test.TestName.dataType)
         {
             case 0:
-                //var newSpin = new SpinEdit { AllowNullInput = true, MaxHeight = 30, DataContext = test };
-                //// Set Validation rules
-                //if (!string.IsNullOrEmpty(test.TestName.nlRange)) newSpin.Tag = test.TestName.nlRange;
-                //if (!string.IsNullOrEmpty(test.Result))
-                //{
-                //    newSpin.Value = decimal.TryParse(test.Result, out var result) ? result : 0;
-                //}
-                //else
-                //    newSpin.Value = decimal.TryParse(test.TestName.defValue, out var result) ? result : 0;
-
-                //newSpin.Mask = "f1";
-                //newSpin.MaskType = MaskType.Numeric;
-                //newSpin.MaskUseAsDisplayFormat = true;
-                //newSpin.Validate += NewSpin_Validate;
-                //newSpin.EditValueChanged += (_, e) => test.Result = e.NewValue.ToString();
-                //returnLayout.Content = newSpin;
                 var newSpin = new TextEdit
                 {
                     Tag = test.TestName.nlRange,
@@ -64,6 +48,7 @@ public partial class TestNameView
                 {
                     IsTextEditable = false,
                     DataContext = test,
+                    Text = !string.IsNullOrEmpty(test.Result) ? test.Result : test.TestName.defValue,
                     Tag = test.TestName.nlRange
                 };
                 newCombo.Items.AddRange(test.TestName.itmList.Split("|").Select(x => new ComboBoxEditItem { Content = x }).ToArray<object>());
@@ -94,14 +79,16 @@ public partial class TestNameView
     {
         if (sender is not TextEdit { DataContext: TestCard test } textBx || e.Value == null || string.IsNullOrEmpty(test.TestName.defValue)) return;
 
-        textBx.Background = e.Value.ToString() != test.TestName.defValue ? Brushes.DarkRed : null;
+        var res = e.Value.ToString();
+        textBx.Background = res != test.TestName.nlRange && res != test.TestName.defValue ? Brushes.DarkRed : null;
     }
 
     private void NewCombo_Validate(object sender, ValidationEventArgs e)
     {
         if (sender is not ComboBoxEdit { DataContext: TestCard test } comboBx || e.Value == null || string.IsNullOrEmpty(test.TestName.defValue)) return;
 
-        comboBx.Background = comboBx.Text != test.TestName.defValue ? Brushes.DarkRed : null;
+        var res = e.Value.ToString();
+        comboBx.Background = res != test.TestName.nlRange && res != test.TestName.defValue ? Brushes.DarkRed : null;
     }
 
     private void NewSpin_Validate(object sender, ValidationEventArgs e)

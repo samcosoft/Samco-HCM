@@ -57,11 +57,11 @@ namespace Samco_HCM_Shared.Classes
                     case DatabaseTypes.MicrosoftSQLServer:
                         if (string.IsNullOrEmpty(ServerAddress) || string.IsNullOrEmpty(DatabaseUserId) || string.IsNullOrEmpty(DatabasePassword) || string.IsNullOrEmpty(DatabaseName)) return null;
 
-                        return MSSqlConnectionProvider.GetConnectionString(ServerAddress, DatabaseUserId, DatabasePassword, DatabaseName);
+                        return MSSqlConnectionProvider.GetConnectionString(ServerAddress, DatabaseUserId, DatabasePassword, DatabaseName) + ";TrustServerCertificate=true";
                     case DatabaseTypes.MicrosoftSQLLocal:
                         if (string.IsNullOrEmpty(ServerAddress) || string.IsNullOrEmpty(DatabaseName) || string.IsNullOrEmpty(DatabaseFilePath)) return null;
 
-                        return MSSqlConnectionProvider.GetConnectionStringWithAttachForLocalDB(ServerAddress, DatabaseName, DatabaseFilePath);
+                        return MSSqlConnectionProvider.GetConnectionStringWithAttachForLocalDB(ServerAddress, DatabaseName, DatabaseFilePath) + ";TrustServerCertificate=true";
                     case DatabaseTypes.MySql:
                         if (string.IsNullOrEmpty(ServerAddress) || string.IsNullOrEmpty(DatabaseUserId) || string.IsNullOrEmpty(DatabasePassword) || string.IsNullOrEmpty(DatabaseName)) return null;
 
@@ -96,7 +96,7 @@ namespace Samco_HCM_Shared.Classes
             }
         }
 
-        [DataMember] private string? databaseName { get; set; }
+        [DataMember] public string? databaseName { get; set; }
         [JsonIgnore]
         public string? DatabaseName
         {
@@ -208,7 +208,7 @@ namespace Samco_HCM_Shared.Classes
                     case DatabaseTypes.MicrosoftSQLServer:
                         if (string.IsNullOrEmpty(RemoteServerAddress) || string.IsNullOrEmpty(RemoteDatabaseUserId) || string.IsNullOrEmpty(RemoteDatabasePassword) || string.IsNullOrEmpty(RemoteDatabaseName)) return null;
 
-                        return MSSqlConnectionProvider.GetConnectionString(RemoteServerAddress, RemoteDatabaseUserId, RemoteDatabasePassword, RemoteDatabaseName);
+                        return MSSqlConnectionProvider.GetConnectionString(RemoteServerAddress, RemoteDatabaseUserId, RemoteDatabasePassword, RemoteDatabaseName) + ";TrustServerCertificate=true";
                     case DatabaseTypes.MySql:
                         if (string.IsNullOrEmpty(RemoteServerAddress) || string.IsNullOrEmpty(RemoteDatabaseUserId) || string.IsNullOrEmpty(RemoteDatabasePassword) || string.IsNullOrEmpty(RemoteDatabaseName)) return null;
 

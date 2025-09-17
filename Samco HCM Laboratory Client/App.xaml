@@ -20,7 +20,10 @@
             <system:String x:Key="CurrentUserName">
                 Nothing
             </system:String>
-            <system:Boolean x:Key="IsConnected">
+            <system:String x:Key="ConnectionState">
+                Nothing
+            </system:String>
+            <system:Boolean x:Key="NotConnected">
                 False
             </system:Boolean>
             <!--<system:Boolean x:Key="ClosedDay">false</system:Boolean>-->

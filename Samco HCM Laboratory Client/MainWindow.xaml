@@ -8,6 +8,7 @@
     xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     WindowState="Maximized"
     Icon="Images/Lab.png"
     Title="Samco® Health Care Management System"
@@ -56,11 +57,6 @@
             </Popup>
         </Grid>
     </dx:ThemedWindow.HeaderItems>
-    <dx:ThemedWindow.Resources>
-        <system:String x:Key="ConnectionState">
-            Nothing
-        </system:String>
-    </dx:ThemedWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -90,7 +86,7 @@
                     </dxb:BarStaticItem.ContentTemplate>
                 </dxb:BarStaticItem>
                 <dxb:BarItemSeparator/>
-                <dxb:BarButtonItem Name="ServerConnectBtn" Alignment="Far" IsVisible="False" Background="Green" ItemClick="ServerConnectBtn_OnItemClick">
+                <dxb:BarButtonItem Alignment="Far" IsVisible="{DynamicResource NotConnected}" Background="Green" ItemClick="ServerConnectBtn_OnItemClick">
                     <dxb:BarButtonItem.ContentTemplate>
                         <DataTemplate>
                             <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Vazir}" FontSize="14">

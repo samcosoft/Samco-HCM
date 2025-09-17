@@ -84,7 +84,7 @@ public partial class LabResultView : IDisposable
         var testGroups = _session.Query<TestGroup>().OrderBy(x => x.printOrder).ToList();
         foreach (var group in testGroups)
         {
-            var groupTests = _selVisit.TestCards.Where(x => ReferenceEquals(x.TestName.group, group))
+            var groupTests = _selVisit.TestCards.Where(x => ReferenceEquals(x.TestName.group, group) && x.TestName.parent == null)
                 .OrderBy(x => x.TestName.printOrder).ToList();
 
             if (groupTests.Count == 0) continue;
@@ -118,17 +118,25 @@ public partial class LabResultView : IDisposable
     {
         var allTests = new List<DependencyObject>();
         SamcoAdd.PrintVisualTreeRecursive(ref allTests, LabTestList, typeof(LayoutItem));
-
-        foreach (var test in allTests.Cast<LayoutItem>())
+        try
         {
-            if (test.DataContext is not TestCard testCard) continue;
-            testCard.Save();
+            foreach (var test in allTests.Cast<LayoutItem>())
+            {
+                if (test.DataContext is not TestCard testCard) continue;
+                testCard.Save();
+            }
         }
+        catch (Exception)
+        {
+            MainNotify.ShowError("خطا در ذخیره اطلاعات","لطفاً دوباره اطلاعات را ذخیره کنید.");
+        }
+       
     }
 
     private void SaveBillBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SaveResults();
+        MainNotify.ShowSuccess("ذخیره اطلاعات", "اطلاعات ذخیره شد.");
     }
 
     private void CancelBillBtn_OnClick(object sender, RoutedEventArgs e)

@@ -1,10 +1,11 @@
-﻿using System;
-using DevExpress.Xpo;
+﻿using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
 using DevExpress.XtraReports.UI;
 using LabData;
 using Samco_HCM_Shared;
+using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -48,7 +49,7 @@ public partial class LabResult : XtraReport
         var testGroup = new XPCollection<TestGroup>(_session1, null, new SortProperty("printOrder", SortingDirection.Ascending));
         foreach (var group in testGroup)
         {
-            var selTest = _visit.TestCards.Where(x => ReferenceEquals(x.TestName.group, group))
+            var selTest = _visit.TestCards.Where(x => ReferenceEquals(x.TestName.group, group) && x.TestName.parent == null)
                 .OrderBy(x => x.TestName.printOrder).ToList();
 
             if (selTest.Count == 0) continue;
@@ -65,7 +66,7 @@ public partial class LabResult : XtraReport
                 if (test.TestName.TestNameCollection.Count == 0)
                 {
                     var indicator = GetIndicator(test.TestName, test.Result, out var normalRange);
-                    ResultTable.Rows.Add(GetTestRow(test.TestName.name, test.Result, indicator, test.TestName.unit,
+                    ResultTable.Rows.Add(GetTestRow(test.TestName.name, test.Result ?? test.TestName.defValue, indicator, test.TestName.unit,
                         normalRange));
                 }
                 else
@@ -73,19 +74,20 @@ public partial class LabResult : XtraReport
                     var titleRow = new XRTableRow();
                     titleRow.Cells.Add(new XRTableCell
                     {
-                        Text = test.TestName.name, Font = new Font("Vazirmatn", 10, FontStyle.Bold)
+                        Text = test.TestName.name,
+                        Font = new Font("Vazirmatn", 10, FontStyle.Bold)
                     });
                     ResultTable.Rows.Add(titleRow);
 
                     //Get sublist of tests
                     var testList = _visit.TestCards
                         .Where(x => x.TestName.parent != null && x.TestName.parent.Oid == test.TestName.Oid)
-                        .OrderBy(x=>x.TestName.printOrder).ToList();
+                        .OrderBy(x => x.TestName.printOrder).ToList();
 
                     foreach (var subTest in testList)
                     {
-                        var indicator = GetIndicator(subTest.TestName, test.Result, out var normalRange);
-                        ResultTable.Rows.Add(GetTestRow(subTest.TestName.name, test.Result, indicator, subTest.TestName.unit,
+                        var indicator = GetIndicator(subTest.TestName, subTest.Result, out var normalRange);
+                        ResultTable.Rows.Add(GetTestRow(subTest.TestName.name, subTest.Result ?? subTest.TestName.defValue, indicator, subTest.TestName.unit,
                             normalRange));
                     }
                 }
@@ -107,8 +109,9 @@ public partial class LabResult : XtraReport
             case 0:
                 if (GetMaxMin(test.nlRange, out var max, out var min))
                 {
-                    if (decimal.Parse(result) > max) return "H";
-                    if (decimal.Parse(result) < min) return "L";
+                    decimal.TryParse(result, CultureInfo.InvariantCulture, out var decimalResult);
+                    if (decimalResult > max) return "H";
+                    if (decimalResult < min) return "L";
                 }
                 return string.Empty;
             case 1:

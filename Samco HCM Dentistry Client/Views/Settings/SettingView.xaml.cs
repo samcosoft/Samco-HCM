@@ -278,7 +278,7 @@ namespace Samco_HCM_Dentistry_Client.Views
                     ? HCMSettings.DatabaseTypes.MicrosoftSQLServer
                     : HCMSettings.DatabaseTypes.MySql;
 
-                if (SamcoSoft.LoadDatabase(SamcoSoft.LoadedSettings.RemoteConnectionString!,true, ref errorMessage))
+                if (SamcoSoft.LoadHcmDatabase(SamcoSoft.LoadedSettings.RemoteConnectionString!,true, ref errorMessage))
                 {
                     SamcoSoft.LoadedSettings.Save();
                 }

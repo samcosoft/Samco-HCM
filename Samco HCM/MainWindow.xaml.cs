@@ -210,7 +210,7 @@ public partial class MainWindow
         if (SamcoSoftShared.LoadedSettings!.ConnectionString != null)
         {
             string errorMessage = null;
-            if (SamcoSoftShared.LoadDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, false, ref errorMessage)) return true;
+            if (SamcoSoftShared.LoadHcmDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, false, ref errorMessage)) return true;
 
             WaitIndic.IsSplashScreenShown = false;
             WinUIMessageBox.Show(GetWindow(this), "در ارتباط با پایگاه داده مشکل زیر رخ داده است. لطفاً تنظیمات پایگاه داده را دوباره بررسی کنید." + "\n" + ('\n' + errorMessage), "خطا در برقراری ارتباط", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign, FloatingMode.Adorner, true);

@@ -295,7 +295,7 @@ namespace Samco_HCM_Laboratory_Client.Views.Settings
                     ? HCMSettings.DatabaseTypes.MicrosoftSQLServer
                     : HCMSettings.DatabaseTypes.MySql;
 
-                if (SamcoSoft.LoadDatabase(SamcoSoft.LoadedSettings.RemoteConnectionString!, true, ref errorMessage))
+                if (SamcoSoft.LoadHcmDatabase(SamcoSoft.LoadedSettings.RemoteConnectionString!, true, ref errorMessage))
                 {
                     SamcoSoft.LoadedSettings.Save();
                 }

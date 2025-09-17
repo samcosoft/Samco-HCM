@@ -39,9 +39,9 @@
                                 <dxg:GridColumn Header="تکمیل شده" FieldName="IsCompleted" UnboundType="Boolean" IsSmart="True" />
                                 <dxg:GridColumn Header="چاپ شده" FieldName="IsPrinted" IsSmart="True"/>
                             </dxg:GridControl>
-                            <dxlc:LayoutItem>
+                            <!--<dxlc:LayoutItem>
                                 <TextBlock FontSize="12">برای دیدن تمام آزمایش‌های یک فرد، بر روی نام او دو بار کلیک نمایید.</TextBlock>
-                            </dxlc:LayoutItem>
+                            </dxlc:LayoutItem>-->
                             <dxlc:LayoutGroup>
                                 <dxlc:LayoutItem>
                                     <dx:SimpleButton Content="تازه سازی" IsDefault="True" Style="{StaticResource ButtonMain}" Click="RefreshVisitGridBtn"/>
