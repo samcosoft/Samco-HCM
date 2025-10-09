@@ -38,6 +38,12 @@ namespace LabData
             get { return fResult; }
             set { SetPropertyValue<string>("Result", ref fResult, value); }
         }
+        bool fIsCompleted;
+        public bool IsCompleted
+        {
+            get { return fIsCompleted; }
+            set { SetPropertyValue<bool>("IsCompleted", ref fIsCompleted, value); }
+        }
     }
 
 }

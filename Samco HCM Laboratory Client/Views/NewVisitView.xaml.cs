@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.WindowsUI;
@@ -14,7 +15,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using DevExpress.Xpf.Core;
 using NavigationEventArgs = DevExpress.Xpf.WindowsUI.Navigation.NavigationEventArgs;
 using PatientInfo = LabData.PatientInfo;
 
@@ -25,7 +25,7 @@ namespace Samco_HCM_Laboratory_Client.Views;
 /// </summary>
 public partial class NewVisitView : IDisposable
 {
-    private readonly Session _session1 = new();
+    private Session _session1 = new();
     private XPServerCollectionSource? _visitsCollection;
     private PatientInfo? _patientInfo;
     private LabVisits? _selVisit;
@@ -37,6 +37,7 @@ public partial class NewVisitView : IDisposable
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
+        _session1 = new Session();
         // Initialize or load data for the view here
         InsuranceList.ItemsSource = new XPCollection<LabInsuranceType>(_session1);
         TestListToken.ItemsSource = new XPCollection<TestName>(_session1, CriteriaOperator.Parse("parent Is Null"));
@@ -66,7 +67,11 @@ public partial class NewVisitView : IDisposable
         MelliCodeBx.Focus();
     }
 
-
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+        base.OnNavigatedFrom(e);
+        _session1.Dispose();
+    }
 
     private void MelliCodeBx_OnValidate(object sender, ValidationEventArgs e)
     {
@@ -211,20 +216,18 @@ public partial class NewVisitView : IDisposable
 
         var franchise = insurance.franchises / 100;
 
-        var testPriceTable = new DataTable
-        {
-            Columns = { "TestName", "RealPrice" }
-        };
+        var testPriceTable = new DataTable();
+        testPriceTable.Columns.Add("TestName",typeof(string));
+        testPriceTable.Columns.Add("RealPrice", typeof(int));
+        testPriceTable.Columns.Add("InsuredPrice", typeof(int));
 
         foreach (var test in testList)
         {
             //Get test price from insurance list
             var testPrice = _session1.Query<TestPrice>().Where(x => x.insType.Oid == insurance.Oid &&
                                                                 x.testName.Oid == test.Oid);
-            testPriceTable.Rows.Add(test.name, testPrice.Any() ? testPrice.FirstOrDefault()!.price : Math.Round((decimal)(test.realPrice * franchise)));
+            testPriceTable.Rows.Add(test.name, test.realPrice, testPrice.Any() ? testPrice.FirstOrDefault()!.price : Math.Round((decimal)(test.realPrice * franchise)));
         }
-
-        testPriceTable.Rows.Add("حق فنی", insurance.fanniPrice.ToString());
 
         var sumRealPrice = testList.Sum(test => test.realPrice);
 
@@ -232,13 +235,16 @@ public partial class NewVisitView : IDisposable
 
         var sumInsuredPrice = testPriceTable
             .AsEnumerable()
-            .Sum(row => Convert.ToInt32(row["RealPrice"]));
+            .Sum(row => Convert.ToInt32(row["InsuredPrice"]));
 
-        FranchiesLab.Text = (sumRealPrice - sumInsuredPrice).ToString();
+        FranchiesLab.Text = sumInsuredPrice.ToString();
+        
+        testPriceTable.Rows.Add("حق فنی", insurance.fanniPrice.ToString());
 
         sumInsuredPrice += insurance.fanniPrice;
 
         SumPriceLab.Text = IsFreeVisit.IsChecked.GetValueOrDefault(false) ? "0" : sumInsuredPrice.ToString();
+
         RealPriceGrid.ItemsSource = testPriceTable;
         RealPriceGrid.RefreshData();
     }

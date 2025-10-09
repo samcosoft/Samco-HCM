@@ -35,13 +35,13 @@
                                 <dxg:GridColumn Header="کد ملی" FieldName="Patient.MelliCode" IsSmart="True" />
                                 <dxg:GridColumn Header="نام و نام خانوادگی" FieldName="Patient.Name" IsSmart="True" />
                                 <dxg:GridColumn Header="تلفن" FieldName="phone" IsSmart="True" Visible="False" />
-                                <dxg:GridColumn Header="پرداخت شده" FieldName="paid" IsSmart="True" Visible="False" />
+                                <dxg:GridColumn Header="پرداخت شده" FieldName="paid" IsSmart="True" />
                                 <dxg:GridColumn Header="تکمیل شده" FieldName="IsCompleted" UnboundType="Boolean" IsSmart="True" />
                                 <dxg:GridColumn Header="چاپ شده" FieldName="IsPrinted" IsSmart="True"/>
                             </dxg:GridControl>
                             <!--<dxlc:LayoutItem>
                                 <TextBlock FontSize="12">برای دیدن تمام آزمایش‌های یک فرد، بر روی نام او دو بار کلیک نمایید.</TextBlock>
-                            </dxlc:LayoutItem>-->
+ </dxlc:LayoutItem>-->
                             <dxlc:LayoutGroup>
                                 <dxlc:LayoutItem>
                                     <dx:SimpleButton Content="تازه سازی" IsDefault="True" Style="{StaticResource ButtonMain}" Click="RefreshVisitGridBtn"/>

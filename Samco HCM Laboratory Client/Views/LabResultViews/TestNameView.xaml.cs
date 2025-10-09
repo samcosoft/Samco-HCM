@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using DevExpress.Xpf.Editors;
 using LabData;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using DevExpress.Xpf.LayoutControl;
+using DevExpress.Xpo;
 
 namespace Samco_HCM_Laboratory_Client.Views.LabResultViews;
 
@@ -13,20 +16,26 @@ namespace Samco_HCM_Laboratory_Client.Views.LabResultViews;
 /// </summary>
 public partial class TestNameView
 {
+    //private readonly Session _session1 = new();
     public TestNameView(TestGroupData data)
     {
         InitializeComponent();
         DataContext = data;
 
-        foreach (var testName in data.TestCards)
+        foreach (var test in data.TestCards)
         {
-            LabTestList.Children.Add(LoadResultPanel(testName));
+            LabTestList.Children.Add(LoadResultPanel(test));
         }
     }
 
     private LayoutItem LoadResultPanel(TestCard test)
     {
         var returnLayout = new LayoutItem { Label = $"{test.TestName.name}:", DataContext = test };
+        if (test.TestName.TestNameCollection.Count > 0)
+        {
+            returnLayout.Visibility = Visibility.Collapsed;
+            return returnLayout;
+        }
         switch (test.TestName.dataType)
         {
             case 0:
@@ -73,6 +82,7 @@ public partial class TestNameView
         }
 
         //Redundant case, should not happen
+        returnLayout.IsEnabled = test.IsCompleted;
         return returnLayout;
     }
     private void NewText_Validate(object sender, ValidationEventArgs e)
@@ -90,6 +100,8 @@ public partial class TestNameView
         var res = e.Value.ToString();
         comboBx.Background = res != test.TestName.nlRange && res != test.TestName.defValue ? Brushes.DarkRed : null;
     }
+
+
 
     private void NewSpin_Validate(object sender, ValidationEventArgs e)
     {
@@ -118,10 +130,26 @@ public partial class TestNameView
             spinBx.Background = null;
         }
     }
+
+    private void IsSaved_ValueChanged(object sender, EditValueChangedEventArgs e)
+    {
+        foreach (var childItem in LabTestList.Children)
+        {
+            if (childItem is LayoutItem { DataContext: TestCard testData } item)
+            {
+                item.IsEnabled = (bool)e.NewValue;
+                testData.IsCompleted = (bool)e.NewValue;
+            }
+        }
+
+    }
 }
 
-public class TestGroupData(string groupName, List<TestCard> testCards)
+public class TestGroupData(string groupName, List<TestCard> testCards, bool isSaved)
 {
     public string GroupName { get; set; } = groupName;
+
+    public bool IsCompleted { get; set; } = isSaved;
+
     public List<TestCard> TestCards { get; set; } = testCards;
 }

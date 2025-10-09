@@ -5,10 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:labResultViews="clr-namespace:Samco_HCM_Laboratory_Client.Views.LabResultViews"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance labResultViews:TestGroupData}">
+<UserControl.Resources>
+    <Style TargetType="dxlc:LayoutGroup">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                            <dxe:CheckEdit Margin="0,0,10,0" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=dxlc:LayoutGroup}, Path=DataContext.IsCompleted}" EditValueChanged="IsSaved_ValueChanged"/>
+                        <TextBlock FontFamily="{StaticResource Vazir}" FontSize="14"
+                                   Text="{Binding }" VerticalAlignment="Bottom"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    </UserControl.Resources>
+    <dxlc:LayoutGroup Name="LabTestList" Header="{Binding GroupName}" View="GroupBox" Orientation="Vertical" MinWidth="200" ItemSpace="10" IsCollapsible="True">
 
-    <dxlc:LayoutGroup Name="LabTestList" Header="{Binding GroupName}" View="GroupBox" Orientation="Vertical" MinWidth="200" ItemSpace="10">
-       
     </dxlc:LayoutGroup>
 </UserControl>

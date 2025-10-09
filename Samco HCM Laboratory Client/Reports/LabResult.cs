@@ -49,7 +49,7 @@ public partial class LabResult : XtraReport
         var testGroup = new XPCollection<TestGroup>(_session1, null, new SortProperty("printOrder", SortingDirection.Ascending));
         foreach (var group in testGroup)
         {
-            var selTest = _visit.TestCards.Where(x => ReferenceEquals(x.TestName.group, group) && x.TestName.parent == null)
+            var selTest = _visit.TestCards.Where(x => ReferenceEquals(x.TestName.group, group) && x.TestName.parent == null && x.IsCompleted)
                 .OrderBy(x => x.TestName.printOrder).ToList();
 
             if (selTest.Count == 0) continue;

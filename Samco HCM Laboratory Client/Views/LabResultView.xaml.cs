@@ -25,7 +25,7 @@ namespace Samco_HCM_Laboratory_Client.Views;
 /// </summary>
 public partial class LabResultView : IDisposable
 {
-    private Session _session = new();
+    private UnitOfWork _session = new();
     private LabVisits? _selVisit;
 
     public LabResultView()
@@ -36,8 +36,15 @@ public partial class LabResultView : IDisposable
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
+        _session = new UnitOfWork();
         FactorGrid.ItemsSource = new XPServerCollectionSource(_session, _session.GetClassInfo<LabVisits>());
         TestFilterCbx.ItemsSource = new XPCollection<TestGroup>(_session);
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+        base.OnNavigatedFrom(e);
+        _session.Dispose();
     }
 
     public void Dispose()
@@ -62,7 +69,7 @@ public partial class LabResultView : IDisposable
     private bool CompletedCheck(int visitOid, out List<TestName> inCompleted)
     {
         var selVisit = _session.GetObjectByKey<LabVisits>(visitOid);
-        var incompleteTests = selVisit.TestCards.Where(x => x.TestName.TestNameCollection.Count == 0 && string.IsNullOrEmpty(x.Result)).ToList();
+        var incompleteTests = selVisit.TestCards.Where(x => x.TestName.parent == null && !x.IsCompleted).ToList();
         inCompleted = [];
         inCompleted.AddRange(incompleteTests.Select(x => x.TestName));
         return incompleteTests.Count == 0;
@@ -89,48 +96,49 @@ public partial class LabResultView : IDisposable
 
             if (groupTests.Count == 0) continue;
 
-            var testStack = new LayoutGroup { Orientation = Orientation.Vertical, ItemSpace = 10 };
+            var testGroup = new LayoutGroup
+            { Header = group.name, View = LayoutGroupView.GroupBox, Orientation = Orientation.Vertical, ItemSpace = 10 };
+
 
             foreach (var test in groupTests)
             {
+                _session.Reload(test);
                 if (test.TestName.TestNameCollection.Count == 0)
                 {
-                    var newTest = new TestNameView(new TestGroupData(test.TestName.name, [test]));
-                    testStack.Children.Add(newTest);
+                    var newTest = new TestNameView(new TestGroupData(test.TestName.name, [test], test.IsCompleted));
+                    testGroup.Children.Add(newTest);
                 }
                 else
                 {
                     var testList = _selVisit.TestCards
                         .Where(x => x.TestName.parent != null && x.TestName.parent.Oid == test.TestName.Oid).ToList();
-                    var newTest = new TestNameView(new TestGroupData(test.TestName.name, testList));
-                    testStack.Children.Add(newTest);
+                    //Add parent test to the list
+                    testList.Add(test);
+                    var newTest = new TestNameView(new TestGroupData(test.TestName.name, testList, test.IsCompleted));
+                    testGroup.Children.Add(newTest);
                 }
             }
-
-            var testGroup = new LayoutGroup
-            { Header = group.name, View = LayoutGroupView.GroupBox, Orientation = Orientation.Vertical };
-            testGroup.Children.Add(testStack);
             LabTestList.Children.Add(testGroup);
         }
     }
 
     private void SaveResults()
     {
-        var allTests = new List<DependencyObject>();
-        SamcoAdd.PrintVisualTreeRecursive(ref allTests, LabTestList, typeof(LayoutItem));
         try
         {
-            foreach (var test in allTests.Cast<LayoutItem>())
-            {
-                if (test.DataContext is not TestCard testCard) continue;
-                testCard.Save();
-            }
+            //foreach (var test in allTests.Cast<LayoutItem>())
+            //{
+            //    if (test.DataContext is not TestCard testCard) continue;
+            //    testCard.Save();
+            //    _session.ReloadChangedObjects();
+            //}
+            _session.CommitChanges();
         }
         catch (Exception)
         {
-            MainNotify.ShowError("خطا در ذخیره اطلاعات","لطفاً دوباره اطلاعات را ذخیره کنید.");
+            MainNotify.ShowError("خطا در ذخیره اطلاعات", "لطفاً دوباره اطلاعات را ذخیره کنید.");
         }
-       
+
     }
 
     private void SaveBillBtn_OnClick(object sender, RoutedEventArgs e)
@@ -141,7 +149,6 @@ public partial class LabResultView : IDisposable
 
     private void CancelBillBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        _session = new Session();
         var oldOid = _selVisit?.Oid;
         FactorGrid.ItemsSource = new XPServerCollectionSource(_session, _session.GetClassInfo<LabVisits>());
         if (oldOid != null)
@@ -207,13 +214,11 @@ public partial class LabResultView : IDisposable
         if (_selVisit == null) return false;
         SaveResults();
 
-#if !DEBUG
-       if (!_selVisit.paid)
+        if (!_selVisit.paid)
         {
             MainNotify.ShowWarning("خطا در چاپ", "هزینه آزمایشات پرداخت نشده است. شما مجاز به چاپ نتایج نیستید");
             return false;
-        } 
-#endif
+        }
 
         if (!CompletedCheck(_selVisit.Oid, out var list))
         {

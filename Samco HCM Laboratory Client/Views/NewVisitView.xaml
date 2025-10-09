@@ -93,6 +93,7 @@
                                 </dxg:GridControl.View>
                                 <dxg:GridColumn FieldName="TestName" Header="نام آزمایش" />
                                 <dxg:GridColumn FieldName="RealPrice" Header="مبلغ (تومان)" />
+                                <dxg:GridColumn FieldName="InsuredPrice" Header="پرداختی بیمار (تومان)" />
                             </dxg:GridControl>
                             <dxlc:LayoutItem Label="هزینه آزمایش ها (تومان):">
                                 <dxe:TextEdit Name="SumRealPriceBx" IsReadOnly="True" NullText="" HorizontalContentAlignment="Center" />

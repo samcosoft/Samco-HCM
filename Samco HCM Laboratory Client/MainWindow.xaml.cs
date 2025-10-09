@@ -63,16 +63,15 @@ public partial class MainWindow
         CreateLoadSetting(settingDir);
         //Set theme
         if (SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = SamcoSoftShared.LoadedSettings.AppThemeName;
-        WaitIndic.IsSplashScreenShown = false;
-        //MessageBox.Show($"Connection string: {SamcoSoftShared.LoadedSettings!.ConnectionString}");
-        //MessageBox.Show($"Remote Connection string: {SamcoSoftShared.LoadedSettings.RemoteConnectionString}");
 
-        if (CheckDatabase() == false)
+        if (!CheckDatabase())
         {
+            SplashScreenManager.CloseAll();
+            WaitIndic.IsSplashScreenShown = false;
+
             //Setup new database
             var dataSett = new SettingView();
             NavFrame.Navigate(dataSett);
-            WaitIndic.IsSplashScreenShown = false;
             return;
         }
 
@@ -89,7 +88,7 @@ public partial class MainWindow
 
         WaitIndic.IsSplashScreenShown = false;
         SplashScreenManager.CloseAll();
-        if (LoginUser() == false) return;
+        if (!LoginUser()) return;
 
         //Save backup from setting file
         SamcoSoftShared.LoadedSettings!.Save();
@@ -127,7 +126,7 @@ public partial class MainWindow
         }
         else
         {
-            if (Directory.Exists(settingDir) == false) Directory.CreateDirectory(settingDir);
+            if (!Directory.Exists(settingDir)) Directory.CreateDirectory(settingDir);
 
             //Check for old setting file
             var oldSettingPath = settingDir + "\\LabClient.xml";
@@ -178,6 +177,7 @@ public partial class MainWindow
         if (!SamcoAdd.LoadDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, ref errorMessage))
         {
             WaitIndic.IsSplashScreenShown = false;
+            SplashScreenManager.CloseAll();
             WinUIMessageBox.Show(GetWindow(this),
                 "در ارتباط با پایگاه داده مشکل زیر رخ داده است. لطفاً تنظیمات پایگاه داده را دوباره بررسی کنید." +
                 "\n" + ('\n' + errorMessage), "خطا در برقراری ارتباط", MessageBoxButton.OK, MessageBoxImage.Exclamation,
@@ -192,6 +192,7 @@ public partial class MainWindow
             if (SamcoSoftShared.LoadRemoteHcmDatabase(SamcoSoftShared.LoadedSettings.RemoteConnectionString, true, ref errorMessage, out SamcoAdd.RemoteDatalayer)) return true;
 
             WaitIndic.IsSplashScreenShown = false;
+            SplashScreenManager.CloseAll();
             WinUIMessageBox.Show(GetWindow(this),
                 "در ارتباط با پایگاه داده پذیرش مشکل زیر رخ داده است. لطفاً تنظیمات پایگاه داده را دوباره بررسی کنید." +
                 "\n" + ('\n' + errorMessage), "خطا در برقراری ارتباط", MessageBoxButton.OK, MessageBoxImage.Exclamation,

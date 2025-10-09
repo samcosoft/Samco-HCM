@@ -79,7 +79,7 @@ public partial class MainWindow
         //Set theme
         if (SamcoSoftShared.LoadedSettings?.AppThemeName != null) ApplicationThemeHelper.ApplicationThemeName = SamcoSoftShared.LoadedSettings?.AppThemeName;
         //Validate License
-        if (SamcoAdd.ValidateLicense(out var isTrial) == false || isTrial)
+        if (!SamcoAdd.ValidateLicense(out var isTrial) || isTrial)
         {
             WaitIndic.IsSplashScreenShown = false;
             SplashScreenManager.CloseAll();
@@ -103,7 +103,7 @@ public partial class MainWindow
             SamcoSoftShared.LoadedSettings!.Save();
         }
 
-        if (CheckDatabase() == false)
+        if (!CheckDatabase())
         {
             //Setup new database
             var dataSett = new SettingView();
@@ -125,7 +125,7 @@ public partial class MainWindow
 
         WaitIndic.IsSplashScreenShown = false;
         SplashScreenManager.CloseAll();
-        if (LoginUser() == false)
+        if (!LoginUser())
         {
             return;
         }
@@ -213,6 +213,7 @@ public partial class MainWindow
             if (SamcoSoftShared.LoadHcmDatabase(SamcoSoftShared.LoadedSettings.ConnectionString, false, ref errorMessage)) return true;
 
             WaitIndic.IsSplashScreenShown = false;
+            SplashScreenManager.CloseAll();
             WinUIMessageBox.Show(GetWindow(this), "در ارتباط با پایگاه داده مشکل زیر رخ داده است. لطفاً تنظیمات پایگاه داده را دوباره بررسی کنید." + "\n" + ('\n' + errorMessage), "خطا در برقراری ارتباط", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None, MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign, FloatingMode.Adorner, true);
         }
 
