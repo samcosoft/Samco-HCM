@@ -38,11 +38,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
         <PackageReference Include="DevExpress.Wpf" Version="25.2.*" />
-        <PackageReference Include="DevExpress.Wpf.Spreadsheet" Version="25.2.7" />
+        <PackageReference Include="DevExpress.Wpf.Spreadsheet" Version="25.2.6-pre-26075" />
         <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="25.2.*" />
-        <PackageReference Include="DevExpress.Xpo" Version="25.2.7" />
+        <PackageReference Include="DevExpress.Xpo" Version="25.2.6-pre-26075" />
         <PackageReference Include="FontAwesome6.Pro.Fonts" Version="2.5.1" />
         <PackageReference Include="HandyControls" Version="3.6.0" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />

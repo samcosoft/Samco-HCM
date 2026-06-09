@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
-    <PackageReference Include="DevExpress.Data" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Images" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Wpf.Controls" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Wpf.Core" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Wpf.Dialogs" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="25.2.7" />
-    <PackageReference Include="DevExpress.Xpo" Version="25.2.7" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="DevExpress.Data" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Images" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Wpf.Controls" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Wpf.Core" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Wpf.Dialogs" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="25.2.6-pre-26075" />
+    <PackageReference Include="DevExpress.Xpo" Version="25.2.6-pre-26075" />
     <PackageReference Include="FontAwesome6.Pro.Fonts" Version="2.5.1" />
     <PackageReference Include="HandyControls" Version="3.6.0" />
     <PackageReference Include="HandyControls.Lang.fa" Version="3.6.0" />

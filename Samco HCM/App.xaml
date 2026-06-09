@@ -21,13 +21,12 @@
                 Nothing
             </system:String>
             <!--<system:Boolean x:Key="ClosedDay">false</system:Boolean>-->
-            <FontFamily x:Key="IranSansX">pack://application:,,,/Fonts/#IRANSansX</FontFamily>
-            <FontFamily x:Key="Vazir">pack://application:,,,/Fonts/#Vazirmatn</FontFamily>
-            <FontFamily x:Key="FontAwesomeSolid">pack://application:,,,/Fonts/#Font Awesome 6 Pro Solid</FontFamily>
-            <FontFamily x:Key="FontAwesomeBrand">pack://application:,,,/Fonts/#Font Awesome 6 Brands Regular</FontFamily>
+            <FontFamily x:Key="IranSansX">./Fonts/#IRANSansX</FontFamily>
+            <FontFamily x:Key="Vazir">./Fonts/#Vazirmatn</FontFamily>
+            <FontFamily x:Key="FontAwesomeSolid">./Fonts/#Font Awesome 6 Pro Solid</FontFamily>
+            <FontFamily x:Key="FontAwesomeBrand">./Fonts/#Font Awesome 6 Brands Regular</FontFamily>
             <samcoHcmShared:BackColorMaker x:Key="BackColor"/>
             <fa6:ImageSourceConverter x:Key="ImageSourceConverter"/>
-
             <!--Set Styles-->
             <Style TargetType="dxwui:PageAdornerControl">
                 <Setter Property="HeaderTemplate">

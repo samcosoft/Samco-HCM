@@ -406,11 +406,11 @@ public partial class NewVisitView : IDisposable
 
         _selVisit = (LabVisits)FactorGrid.SelectedItem;
         _patientInfo = _selVisit.Patient;
-        if (_selVisit.paid && !_selVisit.isFree)
-        {
-            MainNotify.ShowWarning("خطا در ویرایش قبض", "این قبض پرداخت شده است. شما نمی‌توانید آن را ویرایش کنید");
-            return;
-        }
+        //if (_selVisit.paid && !_selVisit.isFree)
+        //{
+        //    MainNotify.ShowWarning("خطا در ویرایش قبض", "این قبض پرداخت شده است. شما نمی‌توانید آن را ویرایش کنید");
+        //    return;
+        //}
         if (_selVisit.Patient != null)
         {
             MelliCodeBx.Text = _selVisit.Patient.MelliCode;

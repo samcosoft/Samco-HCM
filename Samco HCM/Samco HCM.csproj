@@ -34,8 +34,10 @@
 	  <None Remove="Fonts\IRANSansX.ttf" />
 	  <None Remove="Fonts\Vazir-Bold.ttf" />
 	  <None Remove="Images\DentistrySplash.png" />
+	  <None Remove="Images\HCM-Small.png" />
 	  <None Remove="Images\HCM.png" />
 	  <None Remove="Images\HCM.svg" />
+	  <None Remove="Images\HCMSplash.png" />
 	  <None Remove="Images\Lock.png" />
 	  <None Remove="Images\SamcoActivation.png" />
 	</ItemGroup>
@@ -43,61 +45,41 @@
 	  <Content Include="Healthcare Icon final.ico" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Resource Include="Images\AllStatIcon.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\BillEditIcon.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\DailyStatIcon.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\DatabaseIcon.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\Dentist.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
+	  <Resource Include="Images\AllStatIcon.samco"/>
+	  <Resource Include="Images\BillEditIcon.samco"/>
+	  <Resource Include="Images\DailyStatIcon.samco"/>
+	  <Resource Include="Images\DatabaseIcon.samco"/>
+	  <Resource Include="Images\Dentist.samco"/>
 	  <Resource Include="Images\DentistrySplash.png" />
-	  <Resource Include="Images\Emergency.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\Laboratory.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
+	  <Resource Include="Images\Emergency.samco"/>
+	  <Resource Include="Images\HCM-Small.png" />
+	  <Resource Include="Images\HCMSplash.png" />
+	  <Resource Include="Images\Laboratory.samco"/>
 	  <Resource Include="Images\Lock.png" />
-	  <Resource Include="Images\ServiceInsuranceIcon.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\UserSettingIcon.samco">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Resource>
+	  <Resource Include="Images\ServiceInsuranceIcon.samco"/>
+	  <Resource Include="Images\UserSettingIcon.samco"/>
+	  <Resource Include="Images\HCM.png"/>
+	  <Resource Include="Images\HCM.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Resource Include="Fonts\FontAwesome 6 Brands.otf" />
 	  <Resource Include="Fonts\FontAwesome 6 Solid.otf" />
-	</ItemGroup>
-	<ItemGroup>
 	  <Resource Include="Fonts\IRANSansX.ttf" />
 	  <Resource Include="Fonts\Vazir-Bold.ttf" />
-	  <Resource Include="Images\HCM.png">
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Images\HCM.svg" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-		<PackageReference Include="DevExpress.Data" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Reporting.Core" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Win.Design" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.Controls" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.Core" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.Dialogs" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.Reporting" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.Themes.Win11Dark" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Wpf.Themes.Win11Light" Version="25.1.3" />
-		<PackageReference Include="DevExpress.Xpo" Version="25.1.3" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+		<PackageReference Include="DevExpress.Data" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Reporting.Core" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Win.Design" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.Controls" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.Core" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.Dialogs" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.LayoutControl" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.Reporting" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.Themes.Win11Dark" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Wpf.Themes.Win11Light" Version="25.2.7" />
+		<PackageReference Include="DevExpress.Xpo" Version="25.2.7" />
 		<PackageReference Include="FontAwesome6.Pro.Fonts" Version="2.5.1" />
 		<PackageReference Include="HandyControls" Version="3.6.0" />
 		<PackageReference Include="HandyControls.Lang.fa" Version="3.6.0" />
