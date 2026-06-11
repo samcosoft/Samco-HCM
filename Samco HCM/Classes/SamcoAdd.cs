@@ -97,6 +97,7 @@ namespace Samco_HCM.Classes
         {
             message = string.Empty;
             License.LicenseCode = licenseCode;
+           
 
             if (License.Status == LicenseStatus.Valid)
             {
