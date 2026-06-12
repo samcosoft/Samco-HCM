@@ -32,10 +32,10 @@ namespace Samco_HCM
         protected override void OnStartup(StartupEventArgs e)
         {
             ThemeManager.PreloadThemeResource(Theme.Win11SystemName);
-            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11SystemName;
+            ApplicationThemeHelper.ApplicationThemeName = Theme.Win11LightName;
             FontAwesome6.Fonts.FontAwesomeFonts.LoadStyles(new Uri("pack://application:,,,/Fonts/"),EFontAwesomeStyle.Brands,EFontAwesomeStyle.Solid);
-            base.OnStartup(e);
             ThemedWindow.RoundCorners = true;
+            base.OnStartup(e);
         }
 
         internal void SwitchToDarkTheme()

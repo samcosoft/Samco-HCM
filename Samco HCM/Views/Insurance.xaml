@@ -9,6 +9,7 @@
                       xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
                       xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
                       xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
+                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                       mc:Ignorable="d" FlowDirection="RightToLeft"
                       d:DesignHeight="600" d:DesignWidth="800">
     <dxwui:PageAdornerControl Header="صدور نوبت">
@@ -57,19 +58,26 @@
                                 <dxlc:LayoutGroup Orientation="Vertical" Name="EquipServiceColumn" View="Tabs">
                                     <dxlc:LayoutGroup Orientation="Vertical" Header="تجهیزات مصرفی" ItemSpace="10">
                                         <dxlc:LayoutItem>
-                                            <dxg:GridControl x:Name="EquipGrid" MaxHeight="200" EnableSmartColumnsGeneration="True" FontSize="16" SelectionMode="Row">
+                                            <dxg:GridControl x:Name="EquipGrid" MaxHeight="200" EnableSmartColumnsGeneration="True" FontSize="16" SelectionMode="Row" DetectNestedPropertyChanges="True">
                                                 <dxg:GridControl.View>
                                                     <dxg:TableView AllowEditing="True" AllowPerPixelScrolling="True" AutoWidth="True" NavigationStyle="Row"
                                                    SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowTotalSummary="True"
                                                    ShowFilterPanelMode="Never" ShowGroupPanel="False" EditFormShowMode="InlineHideRow"
-                                                   RowUpdated="EquipmentServiceGrid_OnRowUpdated"/>
+                                                   RowUpdated="EquipmentServiceGrid_OnRowUpdated" AllowBestFit="True" BestFitMode="AllRows"/>
                                                 </dxg:GridControl.View>
                                                 <dxg:GridColumn FieldName="EquipName.Name" ReadOnly="True" Header="نام تجهیز" IsSmart="True"/>
+                                                <dxg:GridColumn FieldName="EquipName.Price" ReadOnly="True" Header="قیمت واحد (تومان)" Width="Auto"
+                                                                IsSmart="True" EditFormVisible="False"/>
                                                 <dxg:GridColumn FieldName="Count" Header="تعداد" IsSmart="True">
                                                     <dxg:GridColumn.EditSettings>
                                                         <dxe:SpinEditSettings MinValue="1" IsFloatValue="False"/>
                                                     </dxg:GridColumn.EditSettings>
                                                 </dxg:GridColumn>
+                                                <dxg:GridColumn FieldName="TotalPrice" ReadOnly="True" Header="جمع (تومان)" Width="Auto"
+                                                                UnboundType="Decimal" UnboundExpression="[EquipName.Price] * [Count]" EditFormVisible="False"/>
+                                                <!--<dxg:GridControl.TotalSummary>
+                                                    <dxg:GridSummaryItem DisplayFormat="جمع: {0} تومان" FieldName="TotalPrice" SummaryType="Sum"/>
+                                                </dxg:GridControl.TotalSummary>-->
                                             </dxg:GridControl>
                                         </dxlc:LayoutItem>
                                         <dxlc:LayoutGroup>
@@ -95,19 +103,23 @@
                                     <dxlc:LayoutGroup Orientation="Vertical" Header="خدمات اضافی" ItemSpace="10">
                                         <dxlc:LayoutItem>
                                             <dxg:GridControl x:Name="ServiceGrid" MaxHeight="200" EnableSmartColumnsGeneration="True" FontSize="16"
-                                             SelectionMode="Row">
+                                             SelectionMode="Row" CustomUnboundColumnData="ServiceGrid_CustomUnboundColumnData">
                                                 <dxg:GridControl.View>
                                                     <dxg:TableView AllowEditing="True" AllowPerPixelScrolling="True" AutoWidth="True"
                                                    NavigationStyle="Row" SearchPanelNullText="برای جستجو در این محل تایپ کنید..." ShowTotalSummary="True"
                                                    ShowFilterPanelMode="Never" ShowGroupPanel="False" EditFormShowMode="InlineHideRow"
-                                                   RowUpdated="EquipmentServiceGrid_OnRowUpdated"/>
+                                                   RowUpdated="EquipmentServiceGrid_OnRowUpdated" AllowBestFit="True" BestFitMode="AllRows"/>
                                                 </dxg:GridControl.View>
-                                                <dxg:GridColumn FieldName="ServiceName.name" ReadOnly="True" Header="نام خدمت" IsSmart="True"/>
-                                                <dxg:GridColumn FieldName="Count" Header="تعداد" IsSmart="True">
+                                                <dxg:GridColumn FieldName="ServiceName.name" ReadOnly="True" Width="Auto" Header="نام خدمت" IsSmart="True"/>
+                                                <dxg:GridColumn FieldName="ServicePrice" ReadOnly="True" Width="Auto" Header="تعرفه خدمت (تومان)" IsSmart="True"
+                                                                UnboundType="Integer" EditFormVisible="False"/>
+                                                <dxg:GridColumn FieldName="Count" Header="تعداد" IsSmart="True" Width="Auto">
                                                     <dxg:GridColumn.EditSettings>
                                                         <dxe:SpinEditSettings MinValue="1" IsFloatValue="False"/>
                                                     </dxg:GridColumn.EditSettings>
                                                 </dxg:GridColumn>
+                                                <dxg:GridColumn FieldName="TotalPrice" ReadOnly="True" Header="جمع (تومان)" Width="Auto"
+                                                                UnboundType="Integer" UnboundExpression="[ServicePrice] * [Count]" EditFormVisible="False"/>
                                             </dxg:GridControl>
                                         </dxlc:LayoutItem>
                                         <dxlc:LayoutGroup>
@@ -134,8 +146,19 @@
                                     <dxe:ComboBoxEdit Name="PersonnelSelBx" Height="30" IncrementalFiltering="True" ImmediatePopup="True" AutoComplete="True" IsTextEditable="False" DisplayMember="Name" ValueMember="Oid"
                                                       Validate="PersonnelSelBx_Validate" InvalidValueBehavior="AllowLeaveEditor"/>
                                 </dxlc:LayoutItem>
-                                <dxlc:LayoutItem Label="مبلغ (تومان):" LabelPosition="Top">
-                                    <dxe:TextEdit x:Name="PriceBx" IsReadOnly="True" MaskType="Numeric" Mask="d" Validate="PriceBx_Validate"/>
+                                <dxlc:LayoutItem Label="هزینه خدمت (تومان):" LabelPosition="Top">
+                                    <dxe:TextEdit x:Name="ServicePriceBx" IsReadOnly="True" MaskType="Numeric" Mask="d" Validate="PriceBx_Validate"/>
+                                </dxlc:LayoutItem>
+                                <dxlc:LayoutGroup>
+                                    <dxlc:LayoutItem Label="هزینه تجهیزات مصرفی (تومان):" LabelPosition="Top">
+                                        <dxe:TextEdit x:Name="EquipmentPriceBx" IsReadOnly="True"/>
+                                    </dxlc:LayoutItem>
+                                    <dxlc:LayoutItem Label="هزینه خدمات اضافی (تومان):" LabelPosition="Top">
+                                        <dxe:TextEdit x:Name="AddonServicesPriceBx" IsReadOnly="True"/>
+                                    </dxlc:LayoutItem>
+                                </dxlc:LayoutGroup>
+                                <dxlc:LayoutItem Label="مبلغ قابل پرداخت (تومان):" LabelPosition="Top">
+                                    <dxe:TextEdit x:Name="PriceBx" IsReadOnly="True"/>
                                 </dxlc:LayoutItem>
                                 <dxlc:LayoutGroup Name="ButtonGroup" VerticalAlignment="Bottom" Margin="0,0,0,10">
                                     <Button x:Name="PrintBtn" Content="چاپ" IsDefault="True" Style="{StaticResource ButtonOk}" Click="PrintBtn_Click"/>

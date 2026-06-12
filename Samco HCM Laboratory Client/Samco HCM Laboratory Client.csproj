@@ -7,20 +7,22 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
         <ApplicationIcon>Lab Icon.ico</ApplicationIcon>
-        <Version>3.1.359.24133</Version>
-        <AssemblyVersion>3.1.359.24133</AssemblyVersion>
-        <FileVersion>3.1.359.24133</FileVersion>
+        <Version>3.1.359.2413</Version>
+        <AssemblyVersion>3.1.359.2413</AssemblyVersion>
+        <FileVersion>3.1.359.2413</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
       <ShouldCreateLogs>True</ShouldCreateLogs>
       <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
-      <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
-      <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+      <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+      <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
       <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
       <UpdatePackageVersion>False</UpdatePackageVersion>
       <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
       <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+      <AssemblyVersionSettings>None.None.IncrementWithResetOnIncrease.DayOfYearStamp</AssemblyVersionSettings>
+      <AssemblyFileVersionSettings>None.None.IncrementWithResetOnIncrease.DayOfYearStamp</AssemblyFileVersionSettings>
     </PropertyGroup>
 
     <ItemGroup>

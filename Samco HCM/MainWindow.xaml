@@ -26,7 +26,7 @@
             <Popup AllowsTransparency="True" Grid.Column="1" PlacementTarget="{Binding ElementName=ButtonConfig}" HorizontalOffset="-35" Name="PopupConfig" VerticalOffset="6" StaysOpen="False">
                 <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="4" Margin="16" Effect="{StaticResource EffectShadow2}" Padding="10">
                     <hc:UniformSpacingPanel VerticalSpacing="5" Orientation="Vertical" ItemHorizontalAlignment="Stretch" Spacing="10">
-                        <hc:Gravatar Name="ProfilePic" Style="{StaticResource GravatarCircleImg}"/>
+                        <hc:Gravatar Name="ProfilePic" Source="/Images/User.png" Style="{StaticResource GravatarCircleImg}"/>
                         <Label Content="{DynamicResource CurrentUserName}" FontFamily="{StaticResource Vazir}"
                                HorizontalContentAlignment="Center" Margin="0,5" MinHeight="35"/>
                         <hc:Divider Width="200" Margin="0,5"/>

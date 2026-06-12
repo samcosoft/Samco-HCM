@@ -54,11 +54,13 @@
                                             <dxg:DataControlDetailDescriptor ItemsSourcePath="EquipmentLists" ShowHeader="True">
                                                 <dxg:GridControl EnableRowUpdateOptimization="True">
                                                     <dxg:GridControl.View>
-                                                        <dxg:TableView DetailHeaderContent="تجهیزات استفاده شده" ShowGroupPanel="False" AllowEditing="False" ShowTotalSummary="True"/>
+                                                        <dxg:TableView DetailHeaderContent="تجهیزات استفاده شده" ShowGroupPanel="False" AllowEditing="False" ShowTotalSummary="True" AllowBestFit="True"
+                                                                       BestFitMode="AllRows"/>
                                                     </dxg:GridControl.View>
-                                                    <dxg:GridColumn FieldName="EquipName.Name" Header="نام وسیله"/>
-                                                    <dxg:GridColumn FieldName="Count" Header="تعداد"/>
-                                                    <dxg:GridColumn FieldName="Price" Header="قیمت" ReadOnly="True" UnboundType="Integer" UnboundExpression="[EquipName.Price] * [Count]"/>
+                                                    <dxg:GridColumn FieldName="EquipName.Name" Header="نام وسیله" Width="Auto"/>
+                                                    <dxg:GridColumn FieldName="Count" Header="تعداد" Width="Auto"/>
+                                                    <dxg:GridColumn FieldName="Price" Header="قیمت" ReadOnly="True" UnboundType="Integer"
+                                                                    UnboundExpression="[EquipName.Price] * [Count]" Width="Auto" MinWidth="170"/>
 
                                                     <dxg:GridControl.TotalSummary>
                                                         <dxg:GridSummaryItem DisplayFormat="مبلغ: {0} تومان" FieldName="Price" SummaryType="Sum"/>

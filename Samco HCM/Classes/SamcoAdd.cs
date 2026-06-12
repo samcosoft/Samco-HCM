@@ -33,13 +33,13 @@ namespace Samco_HCM.Classes
 
         internal static bool ValidateLicense(out bool isTrial)
         {
-            isTrial = true;
+            isTrial = false;
             License = new CryptoLicense
             {
                 LicenseServiceURL = "https://demo.samcosoft.ir/activation2/Service.asmx",
                 LicenseServiceSettingsFilePath = "%AppDomainAppPath%App_Data\\Samco HCM.xml",
                 ValidationKey = "AMAAMACFmfVL+4ktVtTILxQjYT+LChwE13ed4BnmXP8vg0xPGmjWd1tuu3qAmIwjH5sEK30DAAEAAQ==",
-                // Load license from the registry
+                // Load license from the file
                 StorageMode = LicenseStorageMode.ToFile
             };
 
@@ -54,6 +54,10 @@ namespace Samco_HCM.Classes
             {
                 License.LicenseCode = SamcoSoftShared.LoadedSettings!.ApplicationLicense;
             }
+
+#if DEBUG
+            return true;
+#endif
 
             // Validate the license using .Status property
             if (License.Status == LicenseStatus.Valid)
@@ -97,7 +101,7 @@ namespace Samco_HCM.Classes
         {
             message = string.Empty;
             License.LicenseCode = licenseCode;
-           
+
 
             if (License.Status == LicenseStatus.Valid)
             {

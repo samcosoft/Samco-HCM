@@ -58,14 +58,15 @@ public partial class Statistics : IDisposable
         if (SamcoAdd.UserIsAdmin())
         {
             UserSelLab.Visibility = Visibility.Visible;
+            UserSelLab.IsEnabled = true;
             UserSelCbx.SelectAllItems();
             GridCont.View.ShowFilterPanelMode = DevExpress.Xpf.Grid.ShowFilterPanelMode.Default;
         }
         else
         {
-            UserSelLab.Visibility = Visibility.Collapsed;
+            UserSelLab.IsEnabled = false;
             UserSelCbx.SelectedItem =
-                UserSelCbx.Items.Cast<Users>().Where(x => x.Oid == SamcoSoftShared.CurrentUser!.Oid);
+                UserSelCbx.Items.Cast<ComboBoxEditItem>().FirstOrDefault(x => x.Tag.ToString() == SamcoSoftShared.CurrentUser!.Oid.ToString());
             GridCont.View.ShowFilterPanelMode = DevExpress.Xpf.Grid.ShowFilterPanelMode.Never;
         }
         LoadGridData();

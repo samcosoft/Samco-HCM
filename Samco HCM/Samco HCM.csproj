@@ -5,11 +5,11 @@
 		<UseWPF>true</UseWPF>
 		<AssemblyName>Samco_HCM</AssemblyName>
 		<RootNamespace>Samco_HCM</RootNamespace>
-		<Version>3.0.13.23204</Version>
+		<Version>3.1.259.163</Version>
 		<Configurations>Debug;Release</Configurations>
 		<Copyright>Copyright © Samco Software Group 2017 - 2023</Copyright>
-		<FileVersion>3.0.295.24133</FileVersion>
-		<AssemblyVersion>3.0.295.24133</AssemblyVersion>
+		<FileVersion>3.1.259.163</FileVersion>
+		<AssemblyVersion>3.1.259.163</AssemblyVersion>
 		<LangVersion>latest</LangVersion>
 		<PublishReadyToRun>true</PublishReadyToRun>
 		<ApplicationIcon>Healthcare Icon final.ico</ApplicationIcon>
@@ -20,6 +20,16 @@
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DefineConstants>TRACE;Core</DefineConstants>
+		<ShouldCreateLogs>True</ShouldCreateLogs>
+		<AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
+		<UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+		<UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
+		<UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+		<AssemblyVersionSettings>None.None.IncrementWithResetOnIncrease.DayOfYearStamp</AssemblyVersionSettings>
+		<UpdatePackageVersion>False</UpdatePackageVersion>
+		<AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+		<InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+		<AssemblyFileVersionSettings>None.None.IncrementWithResetOnIncrease.DayOfYearStamp</AssemblyFileVersionSettings>
 	</PropertyGroup>
 	<ItemGroup>
 		<Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
@@ -40,25 +50,27 @@
 	  <None Remove="Images\HCMSplash.png" />
 	  <None Remove="Images\Lock.png" />
 	  <None Remove="Images\SamcoActivation.png" />
+	  <None Remove="Images\User.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Include="Healthcare Icon final.ico" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Resource Include="Images\AllStatIcon.samco"/>
-	  <Resource Include="Images\BillEditIcon.samco"/>
-	  <Resource Include="Images\DailyStatIcon.samco"/>
-	  <Resource Include="Images\DatabaseIcon.samco"/>
-	  <Resource Include="Images\Dentist.samco"/>
+	  <Resource Include="Images\AllStatIcon.samco" />
+	  <Resource Include="Images\BillEditIcon.samco" />
+	  <Resource Include="Images\DailyStatIcon.samco" />
+	  <Resource Include="Images\DatabaseIcon.samco" />
+	  <Resource Include="Images\Dentist.samco" />
 	  <Resource Include="Images\DentistrySplash.png" />
-	  <Resource Include="Images\Emergency.samco"/>
+	  <Resource Include="Images\Emergency.samco" />
 	  <Resource Include="Images\HCM-Small.png" />
 	  <Resource Include="Images\HCMSplash.png" />
-	  <Resource Include="Images\Laboratory.samco"/>
+	  <Resource Include="Images\Laboratory.samco" />
 	  <Resource Include="Images\Lock.png" />
-	  <Resource Include="Images\ServiceInsuranceIcon.samco"/>
-	  <Resource Include="Images\UserSettingIcon.samco"/>
-	  <Resource Include="Images\HCM.png"/>
+	  <Resource Include="Images\ServiceInsuranceIcon.samco" />
+	  <Resource Include="Images\User.png" />
+	  <Resource Include="Images\UserSettingIcon.samco" />
+	  <Resource Include="Images\HCM.png" />
 	  <Resource Include="Images\HCM.svg" />
 	</ItemGroup>
 	<ItemGroup>

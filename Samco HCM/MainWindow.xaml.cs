@@ -23,7 +23,7 @@ namespace Samco_HCM;
 
 public partial class MainWindow
 {
-    private readonly Timer _timer = new(1000);
+    private readonly Timer _timer = new(new TimeSpan(0, 1, 0));
     private const string SettingFileName = "HCMSettings";
 
     public MainWindow()
@@ -242,13 +242,8 @@ public partial class MainWindow
         NavFrame.Navigate(new Dashboard());
         NavFrame.Journal.ClearNavigationHistory();
         NavFrame.Journal.ClearNavigationCache();
-
         //Load profile photo
-        if (SamcoSoftShared.CurrentUser?.Avatar == null)
-        {
-            ProfilePic.Id = SamcoSoftShared.CurrentUser!.Username;
-        }
-        else
+        if (SamcoSoftShared.CurrentUser?.Avatar != null)
         {
             ProfilePic.Source = SamcoSoftShared.LoadImage(SamcoSoftShared.CurrentUser!.Avatar);
         }
@@ -294,7 +289,7 @@ public partial class MainWindow
         SamcoSoftShared.CurrentUser = null;
         Application.Current.Resources["CurrentUserName"] = string.Empty;
         ProfilePic.Id = string.Empty;
-        ProfilePic.Source = null;
+        ProfilePic.Source = new BitmapImage(new Uri(new Uri("pack://application:,,,/"), "./Images/User.png"));
         LoginUser();
     }
 }

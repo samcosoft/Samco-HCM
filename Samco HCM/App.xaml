@@ -14,7 +14,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <hc:ThemeResources UsingSystemTheme="True"/>
+                <hc:ThemeResources RequestedTheme="Light"/>
                 <hc:Theme/>
             </ResourceDictionary.MergedDictionaries>
             <system:String x:Key="CurrentUserName">
@@ -40,7 +40,8 @@
                                 <TextBlock Foreground="White" Text="{Binding}" FontSize="30" VerticalAlignment="Center" FontFamily="{StaticResource Vazir}"/>
                                 <dxlc:LayoutGroup Grid.Column="1" HorizontalAlignment="Right">
                                     <dx:DXBorder CornerRadius="10" Background="#A0FFFFFF" HorizontalAlignment="Right" Padding="5">
-                                        <dx:DXImage Source="{dx:SvgImageSource Uri=../Images/HCM.svg, UsePalette=False}" Height="70"/>
+                                        <!--<dx:DXImage Source="{dx:SvgImageSource Uri=Images/HCM.svg, UsePalette=False}" Height="70"/>-->
+                                        <dx:DXImage Source="/Images/HCM.svg" Height="70"/>
                                     </dx:DXBorder>
                                 </dxlc:LayoutGroup>
                             </Grid>

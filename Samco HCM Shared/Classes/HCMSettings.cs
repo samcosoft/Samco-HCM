@@ -52,6 +52,10 @@ namespace Samco_HCM_Shared.Classes
         {
             get
             {
+#if DEBUG
+                if (DatabaseType == DatabaseTypes.MicrosoftSQLServer)
+                    return MSSqlConnectionProvider.GetConnectionString("localhost\\sqlexpress", "Ferdowsi");
+#endif
                 switch (DatabaseType)
                 {
                     case DatabaseTypes.MicrosoftSQLServer:

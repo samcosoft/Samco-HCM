@@ -66,7 +66,7 @@
             this.Detail.Dpi = 254F;
             this.Detail.HeightF = 50F;
             this.Detail.Name = "Detail";
-            this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
+            this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0F, 0F, 0F, 0F, 254F);
             this.Detail.SubBands.AddRange(new DevExpress.XtraReports.UI.SubBand[] {
             this.SubBand1});
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
@@ -78,8 +78,7 @@
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.repTable.BorderWidth = 2F;
             this.repTable.Dpi = 254F;
-            this.repTable.Font = new DevExpress.Drawing.DXFont("Vazir", 9.900001F, DevExpress.Drawing.DXFontStyle.Regular, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(0)))});
+            this.repTable.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 10F);
             this.repTable.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.repTable.Name = "repTable";
             this.repTable.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
@@ -129,8 +128,7 @@
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.XrTable1.BorderWidth = 2F;
             this.XrTable1.Dpi = 254F;
-            this.XrTable1.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Bold, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(0)))});
+            this.XrTable1.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F, DevExpress.Drawing.DXFontStyle.Bold);
             this.XrTable1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.XrTable1.Name = "XrTable1";
             this.XrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
@@ -170,7 +168,7 @@
             this.TopMargin.Dpi = 254F;
             this.TopMargin.HeightF = 0F;
             this.TopMargin.Name = "TopMargin";
-            this.TopMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
+            this.TopMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0F, 0F, 0F, 0F, 254F);
             this.TopMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // BottomMargin
@@ -178,7 +176,7 @@
             this.BottomMargin.Dpi = 254F;
             this.BottomMargin.HeightF = 4F;
             this.BottomMargin.Name = "BottomMargin";
-            this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
+            this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0F, 0F, 0F, 0F, 254F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // ReportHeader
@@ -208,11 +206,10 @@
             // titleLab
             // 
             this.titleLab.Dpi = 254F;
-            this.titleLab.Font = new DevExpress.Drawing.DXFont("Vazir", 12F, DevExpress.Drawing.DXFontStyle.Regular, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(0)))});
+            this.titleLab.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 12F);
             this.titleLab.LocationFloat = new DevExpress.Utils.PointFloat(30F, 240F);
             this.titleLab.Name = "titleLab";
-            this.titleLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.titleLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.titleLab.SizeF = new System.Drawing.SizeF(650F, 50F);
             this.titleLab.StylePriority.UseFont = false;
             this.titleLab.StylePriority.UseTextAlignment = false;
@@ -225,7 +222,7 @@
             this.toDateLabel.Font = new DevExpress.Drawing.DXFont("IRANSansX", 10F);
             this.toDateLabel.LocationFloat = new DevExpress.Utils.PointFloat(395F, 340F);
             this.toDateLabel.Name = "toDateLabel";
-            this.toDateLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.toDateLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.toDateLabel.SizeF = new System.Drawing.SizeF(285F, 50F);
             this.toDateLabel.StylePriority.UseFont = false;
             this.toDateLabel.StylePriority.UseTextAlignment = false;
@@ -245,7 +242,7 @@
             this.fromDateLabel.Font = new DevExpress.Drawing.DXFont("IRANSansX", 10F);
             this.fromDateLabel.LocationFloat = new DevExpress.Utils.PointFloat(110F, 340F);
             this.fromDateLabel.Name = "fromDateLabel";
-            this.fromDateLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.fromDateLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.fromDateLabel.SizeF = new System.Drawing.SizeF(285F, 50F);
             this.fromDateLabel.StylePriority.UseFont = false;
             this.fromDateLabel.StylePriority.UseTextAlignment = false;
@@ -258,7 +255,7 @@
             this.XrLabel2.Font = new DevExpress.Drawing.DXFont("IRANSansX", 8F);
             this.XrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(30F, 340F);
             this.XrLabel2.Name = "XrLabel2";
-            this.XrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel2.SizeF = new System.Drawing.SizeF(80F, 50F);
             this.XrLabel2.StylePriority.UseFont = false;
             this.XrLabel2.StylePriority.UseTextAlignment = false;
@@ -272,7 +269,7 @@
             new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
             this.nameLabel.LocationFloat = new DevExpress.Utils.PointFloat(250F, 290F);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.nameLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.nameLabel.SizeF = new System.Drawing.SizeF(430F, 50F);
             this.nameLabel.StylePriority.UseFont = false;
             this.nameLabel.StylePriority.UseTextAlignment = false;
@@ -286,7 +283,7 @@
             new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
             this.XrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(30F, 290F);
             this.XrLabel11.Name = "XrLabel11";
-            this.XrLabel11.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel11.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel11.SizeF = new System.Drawing.SizeF(220F, 50F);
             this.XrLabel11.StylePriority.UseFont = false;
             this.XrLabel11.StylePriority.UseTextAlignment = false;
@@ -296,12 +293,11 @@
             // HeaderLab
             // 
             this.HeaderLab.Dpi = 254F;
-            this.HeaderLab.Font = new DevExpress.Drawing.DXFont("Vazir", 8.249999F, DevExpress.Drawing.DXFontStyle.Regular, DevExpress.Drawing.DXGraphicsUnit.Point, new DevExpress.Drawing.DXFontAdditionalProperty[] {
-            new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(0)))});
+            this.HeaderLab.Font = new DevExpress.Drawing.DXFont("Vazirmatn", 8F);
             this.HeaderLab.LocationFloat = new DevExpress.Utils.PointFloat(30F, 0F);
             this.HeaderLab.Multiline = true;
             this.HeaderLab.Name = "HeaderLab";
-            this.HeaderLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.HeaderLab.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.HeaderLab.SizeF = new System.Drawing.SizeF(475F, 220F);
             this.HeaderLab.StylePriority.UseFont = false;
             this.HeaderLab.StylePriority.UseTextAlignment = false;
@@ -341,7 +337,7 @@
             new DevExpress.Drawing.DXFontAdditionalProperty("GdiCharSet", ((byte)(178)))});
             this.XrPageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 14.99986F);
             this.XrPageInfo1.Name = "XrPageInfo1";
-            this.XrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrPageInfo1.PageInfo = DevExpress.XtraPrinting.PageInfo.DateTime;
             this.XrPageInfo1.SizeF = new System.Drawing.SizeF(339.2001F, 50F);
             this.XrPageInfo1.StylePriority.UseFont = false;
@@ -354,7 +350,7 @@
             this.XrLabel5.Font = new DevExpress.Drawing.DXFont("Microsoft Sans Serif", 8.1F);
             this.XrLabel5.LocationFloat = new DevExpress.Utils.PointFloat(350.0001F, 14.99986F);
             this.XrLabel5.Name = "XrLabel5";
-            this.XrLabel5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.XrLabel5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5F, 5F, 0F, 0F, 254F);
             this.XrLabel5.SizeF = new System.Drawing.SizeF(349.9999F, 50F);
             this.XrLabel5.StylePriority.UseFont = false;
             this.XrLabel5.StylePriority.UseTextAlignment = false;
@@ -371,8 +367,8 @@
             this.PageFooter});
             this.Dpi = 254F;
             this.Margins = new DevExpress.Drawing.DXMargins(0F, 0F, 0F, 4F);
-            this.PageHeight = 10;
-            this.PageWidth = 700;
+            this.PageHeightF = 10F;
+            this.PageWidthF = 700F;
             this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
             this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
             this.RequestParameters = false;
@@ -381,7 +377,7 @@
             this.RollPaper = true;
             this.ScriptLanguage = DevExpress.XtraReports.ScriptLanguage.VisualBasic;
             this.SnapGridSize = 25F;
-            this.Version = "23.2";
+            this.Version = "25.2";
             ((System.ComponentModel.ISupportInitialize)(this.repTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.XrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();

@@ -1,21 +1,22 @@
-﻿using System;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.DataProcessing.InMemoryDataProcessor;
+using DevExpress.Xpf.Editors;
+using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.Navigation;
+using DevExpress.Xpf.Printing;
+using DevExpress.Xpf.WindowsUI.Navigation;
 using DevExpress.Xpo;
 using HCMData;
-using System.Collections.Generic;
-using System.Linq;
-using DevExpress.Xpf.WindowsUI.Navigation;
-using System.Windows;
+using Microsoft.VisualBasic;
 using Samco_HCM.Classes;
+using Samco_HCM.Reports;
+using Samco_HCM_Shared;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using DevExpress.Data.Filtering;
-using DevExpress.Xpf.Editors;
-using DevExpress.Xpf.Navigation;
-using Microsoft.VisualBasic;
-using Samco_HCM_Shared;
-using DevExpress.Xpf.Grid;
-using DevExpress.Xpf.Printing;
-using Samco_HCM.Reports;
+using System.Linq;
+using System.Windows;
 
 namespace Samco_HCM.Views;
 
@@ -79,8 +80,8 @@ public partial class Insurance : IDisposable
 
             foreach (var role in _selService.ProviderRole.Split(';'))
             {
-                if(SamcoAdd.ShiftList.ContainsKey(role))
-                    personnelList.AddRange(SamcoAdd.ShiftList[role].Select(x=>_session1.GetObjectByKey<Personnel>(x)));
+                if (SamcoAdd.ShiftList.ContainsKey(role))
+                    personnelList.AddRange(SamcoAdd.ShiftList[role].Select(x => _session1.GetObjectByKey<Personnel>(x)));
             }
 
             PersonnelSelBx.ItemsSource = personnelList;
@@ -143,7 +144,27 @@ public partial class Insurance : IDisposable
     private void InsuranceTileClick(object sender, EventArgs e)
     {
         _selInsurance = _session1.GetObjectByKey<insuranceType>(int.Parse(((TileBarItem)sender).Tag.ToString()!));
+        SetInsurance();
+    }
+
+    private void SetInsurance()
+    {
         SelectedInsNameBx.Text = _selInsurance.name;
+
+        // Get price
+        var servicePrice = GetPrice(_selService, 1);
+        ServicePriceBx.Text = servicePrice.ToString();
+
+        if (servicePrice == 0)
+        {
+            MainNotify.ShowWarning("عدم تعریف تعرفه", $"برای خدمت {_selService.name} تعرفه‌ای تعریف نشده است. لطفاً مبلغ را به صورت دستی وارد کنید.");
+            ServicePriceBx.IsReadOnly = false;
+        }
+        else
+        {
+            ServicePriceBx.IsReadOnly = true;
+        }
+        ServiceGrid.RefreshData();
         GetTotalPrice();
     }
 
@@ -160,7 +181,7 @@ public partial class Insurance : IDisposable
         }
 
         _selInsurance = lastPerson.insType;
-        SelectedInsNameBx.Text = _selInsurance.name;
+        SetInsurance();
         GetTotalPrice();
     }
 
@@ -191,38 +212,42 @@ public partial class Insurance : IDisposable
         if (_selInsurance == null) return 0;
 
         // Get price
-        var servicePrice = GetPrice(_selService, int.Parse(NumberBx.Value.ToString(CultureInfo.InvariantCulture)));
 
-        if (servicePrice == 0)
+        if (string.IsNullOrEmpty(ServicePriceBx.Text) || !int.TryParse(ServicePriceBx.Text, out var servicePrice))
         {
-            MainNotify.ShowWarning("عدم تعریف تعرفه", $"برای خدمت {_selService.name} تعرفه‌ای تعریف نشده است.");
+            ServicePriceBx.Text = "0";
+            servicePrice = 0;
         }
+
+        if (includeServices)
+            servicePrice *= (int)NumberBx.Value;
 
         if (includeServices)
         {  // calculate other services
             if (_addonServices.Count != 0)
             {
+                AddonServicesPriceBx.Text = _addonServices.Sum(itm => GetPrice(itm.ServiceName, itm.Count)).ToString();
                 servicePrice += _addonServices.Sum(itm => GetPrice(itm.ServiceName, itm.Count));
+            }
+            else
+            {
+                AddonServicesPriceBx.Text = "0";
             }
         }
 
         // calculate Equipment price
         if (_equipmentList.Count != 0)
         {
+            EquipmentPriceBx.Text = _equipmentList.Sum(itm => itm.EquipName.Price * itm.Count).ToString();
             servicePrice += _equipmentList.Sum(itm => itm.EquipName.Price * itm.Count);
-        }
-
-        if (servicePrice == 0)
-        {
-            // Check if service is available
-            MainNotify.ShowInformation("عدم تعریف تعرفه", "لطفاً مبلغ را به صورت دستی وارد کنید.");
-            PriceBx.IsReadOnly = false;
         }
         else
         {
-            PriceBx.IsReadOnly = true;
-            PriceBx.Text = servicePrice.ToString();
+            EquipmentPriceBx.Text = "0";
         }
+
+        if (includeServices)
+            PriceBx.Text = servicePrice.ToString();
 
         return servicePrice;
     }
@@ -252,7 +277,7 @@ public partial class Insurance : IDisposable
 
     private void PriceBx_Validate(object sender, ValidationEventArgs e)
     {
-        if (e.Value is null)
+        if (e.Value is null || !int.TryParse(e.Value.ToString(), out var res) || res < 0)
         {
             e.SetError("انتخاب بیمه یا وارد نمودن مبلغ دریافتی الزامی است.");
             ButtonGroup.IsEnabled = false;
@@ -261,6 +286,7 @@ public partial class Insurance : IDisposable
         {
             ButtonGroup.IsEnabled = true;
             e.SetError(default);
+            GetTotalPrice();
         }
     }
     private void PersonnelSelBx_Validate(object sender, ValidationEventArgs e)
@@ -300,6 +326,7 @@ public partial class Insurance : IDisposable
             return;
         _equipmentList.Remove((EquipmentList)EquipGrid.SelectedItem);
         EquipGrid.RefreshData();
+        EquipGrid.UnselectAll();
         GetTotalPrice();
     }
 
@@ -325,6 +352,7 @@ public partial class Insurance : IDisposable
         ServiceCount.Value = 1;
         ServiceCombo.Focus();
         ServiceGrid.RefreshData();
+        ServiceGrid.UnselectAll();
         GetTotalPrice();
     }
 
@@ -344,7 +372,7 @@ public partial class Insurance : IDisposable
     }
     private bool SaveRecord()
     {
-        if (MelliCodeBx.HasValidationError | PriceBx.HasValidationError | PersonnelSelBx.HasValidationError)
+        if (MelliCodeBx.HasValidationError | ServicePriceBx.HasValidationError | PersonnelSelBx.HasValidationError)
         {
             MainNotify.ShowWarning("خطا در ثبت اطلاعات", "لطفاً اطلاعات خواسته شده را به صورت کامل وارد کنید.");
             return false;
@@ -407,7 +435,7 @@ public partial class Insurance : IDisposable
                 insType = _session1.GetObjectByKey<insuranceType>(_selInsurance.Oid),
                 service = _session1.GetObjectByKey<HealthServices>(_selService.Oid),
                 patient = patInfo,
-                price = GetTotalPrice(false),
+                price = GetPrice(_selService, 1),
                 user = _session1.GetObjectByKey<Users>(SamcoSoftShared.CurrentUser!.Oid),
                 visitDate = DateAndTime.Now,
                 isFullPrice = CloseDayCbx.IsChecked.GetValueOrDefault(false),
@@ -428,7 +456,7 @@ public partial class Insurance : IDisposable
                         insType = _session1.GetObjectByKey<insuranceType>(_selInsurance.Oid),
                         service = _session1.GetObjectByKey<HealthServices>(itm.ServiceName.Oid),
                         patient = patInfo,
-                        price = GetPrice(itm.ServiceName, itm.Count),
+                        price = GetPrice(itm.ServiceName, 1),
                         user = _session1.GetObjectByKey<Users>(SamcoSoftShared.CurrentUser!.Oid),
                         visitDate = DateAndTime.Now,
                         isFullPrice = CloseDayCbx.IsChecked.GetValueOrDefault(false),
@@ -458,8 +486,15 @@ public partial class Insurance : IDisposable
         report.Parameters["MelliCode"].Value = MelliCodeBx.Text;
         try
         {
-           PrintHelper.PrintDirect(report);
-           MainNotify.ShowInformation("صدور قبض","قبض صادر شد.");
+            //#if DEBUG
+            //            PrintHelper.ShowRibbonPrintPreviewDialog(Application.Current.MainWindow, report);
+
+            //#else
+            //            PrintHelper.PrintDirect(report);
+
+            //#endif
+            PrintHelper.PrintDirect(report);
+            MainNotify.ShowInformation("صدور قبض", "قبض صادر شد.");
 
         }
         catch (Exception ex)
@@ -480,6 +515,25 @@ public partial class Insurance : IDisposable
     {
         _session1?.Dispose();
         ((IDisposable)InsuranceBar)?.Dispose();
+    }
+
+    private void ServiceGrid_CustomUnboundColumnData(object sender, GridColumnDataEventArgs e)
+    {
+        if (e.IsGetData)
+        {
+            var addonService = (HealthServices)(e.GetListSourceFieldValue("ServiceName"));
+
+            if (e.Column.FieldName == "ServicePrice")
+            {
+                if (addonService != null)
+                {
+                    var price = GetPrice(addonService, 1);
+                    e.Value = price;
+                    if (price <= 0)
+                        MainNotify.ShowWarning("خدمات اضافی", $"برای خدمت {addonService.name} با بیمه فعلی تعرفه ای تعریف نشده است.");
+                }
+            }
+        }
     }
 }
 public class AddonService : INotifyPropertyChanged
